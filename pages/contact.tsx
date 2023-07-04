@@ -1,0 +1,33 @@
+import Head from "next/head";
+import Sidebar from "../../components/Sidebar";
+
+const Contact = () => {
+    return (
+
+        <>
+            <Head>
+                <title>
+                    Contact Page
+                </title>
+            </Head>
+            <div className="container-fluid">
+                <div className="row flex-nowrap">
+                    <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                        <div className="d-flex flex-column px-0 pt-0 text-white min-vh-100">
+
+                            <Sidebar />
+                        </div>
+                    </div>
+                    <div className="col py-3">
+
+                        <h1>
+                            Contact Page
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Contact;
