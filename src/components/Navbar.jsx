@@ -1,6 +1,10 @@
 import React from 'react';
 import 'bootstrap/js/dist/dropdown';
-import avatarImage from '../assests/avatarImg.png'; // Replace with the actual path to your avatar image
+import avatarImage from '../assests/avatarImg.png';
+import { Link } from 'react-router-dom';
+
+
+
 
 const Navbar = ({ Toggle }) => {
   return (
@@ -16,9 +20,8 @@ const Navbar = ({ Toggle }) => {
       <div className="collapse navbar-collapse" id="collapsibleNavId">
         <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
           <li className="nav-item dropdown">
-            <a
+            <Link to=''
               className="nav-link dropdown-toggle text-white"
-              href="#"
               id="dropdownId"
               data-bs-toggle="dropdown"
               aria-haspopup="true"
@@ -30,11 +33,11 @@ const Navbar = ({ Toggle }) => {
                 className="rounded-circle"
                 style={{ width: '30px', height: '30px', marginRight: '5px' }}
               />
-            </a>
+            </Link>
             <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownId">
-              <a className="dropdown-item">Profile</a>
-              <a className="dropdown-item">Setting</a>
-              <a className="dropdown-item">Logout</a>
+              <Link to='' className="dropdown-item">Profile</Link>
+              <Link to='' className="dropdown-item">Setting</Link>
+              <Link to='' className="dropdown-item">Logout</Link>
             </div>
           </li>
         </ul>

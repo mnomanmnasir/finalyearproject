@@ -1,8 +1,7 @@
 import React from 'react';
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
-import { BiSpeedometer2, BiHome, BiBarChartSquare } from 'react-icons/bi';
-import Dashboard from '../container/Dashboard';
+
 
 
 const Sidebar = () => {

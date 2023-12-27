@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from './components/Sidebar';
@@ -11,7 +10,6 @@ import Customers from './container/Customer'
 import Product from './container/Product'
 import Login from './container/SignIn';
 import SignUp from './container/SignUp'
-import SignIn from './container/SignIn'
 import Report from './container/Report'
 
 const App = () => {
@@ -32,13 +30,13 @@ const App = () => {
           )}
           <div className="col">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/user" element={<User />} />
-              <Route path="/product" element={<Product />}></Route>
-              <Route path="/report" element={<Report />}></Route>
-              <Route path="/customer" element={<Customers />}></Route>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/signup" element={<SignUp />}></Route>
+              <Route path="/" element={<Dashboard Toggle={Toggle} />} />
+              <Route path="/user" element={<User Toggle={Toggle}/>} />
+              <Route path="/product" element={<Product Toggle={Toggle} />}></Route>
+              <Route path="/report" element={<Report Toggle={Toggle} />}></Route>
+              <Route path="/customer" element={<Customers Toggle={Toggle} />}></Route>
+              <Route path="/login" element={<Login Toggle={Toggle} />}></Route>
+              <Route path="/signup" element={<SignUp Toggle={Toggle} />}></Route>
             </Routes>
           </div>
         </div>
