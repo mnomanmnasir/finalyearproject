@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
-
+import { BiBarChart, BiPieChart, BiPurchaseTag } from 'react-icons/bi';
 
 
 const Sidebar = () => {
@@ -12,36 +12,39 @@ const Sidebar = () => {
                 <span className="brand-name fs-4">WMS</span>
             </div>
             <hr className="text-dark" />
-            {/* <Link to={'/home'} className="sidebar-item">
-                <BiBarChartSquare />
-                <span>Dashboard</span>
-            </Link> */}
             <div className="list-group list-group-flush">
                 <Link to='/' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <i className="bi bi-speedometer2 fs-5 me-3"></i>
-                    <span className='fs-5'>Dashboard</span>
+                    <span>Dashboard</span>
                 </Link>
 
                 <Link to='user' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <i className="bi bi-house fs-5 me-3"></i>
-                    <span className='fs-5'>User</span>
+                    <span >User</span>
                 </Link>
-                <Link to='product' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                <Link to='sales' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <i className="bi bi-table fs-5 me-3"></i>
-                    <span className='fs-5'>Product</span>
+                    <span >Sales</span>
                 </Link>
-                <Link to='report' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2" href='/report'>
+                <Link to='inventory' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <i className="bi bi-clipboard-data fs-5 me-3"></i>
-                    <span className='fs-5'>Report</span>
+                    <span >Inventory</span>
                 </Link>
-                <Link to='customer' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2" href='/customer'>
-                    <i className="bi bi-people fs-5 me-3"></i>
-                    <span className='fs-5'>Customers</span>
+                <Link to='purchase' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiPurchaseTag className="fs-5 me-3" />
+                    <span >Purchase</span>
                 </Link>
-              
-              <Link to='login' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
-                    <i className="bi bi-power fs-5 me-3"></i>
-                    <span className='fs-5'>Logout</span>
+                <Link to='piechart' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiPieChart className="fs-5 me-3" />
+                    <span>Pie Chart</span>
+                </Link>
+                <Link to='barchart' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiBarChart className="fs-5 me-3" />
+                    <span>Bar Chart</span>
+                </Link>
+                <Link to='linechart' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiBarChart className="fs-5 me-3" />
+                    <span >Line Chart</span>
                 </Link>
             </div>
         </div>

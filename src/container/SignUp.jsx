@@ -5,7 +5,7 @@ const Customer = () => {
     return(
         <>
         <div>
-            Customer Page
+            SignOut Page
         </div>
         </>
     )

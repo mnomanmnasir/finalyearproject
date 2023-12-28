@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReactApexChart from 'react-apexcharts';
 import '../styles/cardchart.css'
-
+// import { BsArrowUp } from 'react-icons/bs';
 
 const CardWithChart = () => {
 
@@ -48,7 +48,7 @@ const CardWithChart = () => {
         <div className="container-fluid">
             <div className="row g-3 my-2">
                 <div className="col-md-3">
-                    <div className="p-3 bg-light-blue shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div className="p-3 bg-green shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 230
@@ -61,7 +61,7 @@ const CardWithChart = () => {
                     </div>
                 </div>
                 <div className="col-md-3">
-                    <div className="p-3 bg-light-blue shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div className="p-3 bg-orange shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 2450
@@ -74,7 +74,7 @@ const CardWithChart = () => {
                     </div>
                 </div>
                 <div className="col-md-3">
-                    <div className="p-3 bg-light-blue shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div className="p-3 bg-pink shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 2250
@@ -87,7 +87,7 @@ const CardWithChart = () => {
                     </div>
                 </div>
                 <div className="col-md-3">
-                    <div className="p-3 bg-light-blue shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div className="p-3 bg-aqua shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 80%

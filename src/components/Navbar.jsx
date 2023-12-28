@@ -2,14 +2,16 @@ import React from 'react';
 import 'bootstrap/js/dist/dropdown';
 import avatarImage from '../assests/avatarImg.png';
 import { Link } from 'react-router-dom';
-
+// import { useAuth } from '../container/AuthContext';
 
 
 
 const Navbar = ({ Toggle }) => {
+
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark px-2">
-      <i className="navbar-brand bi bi-justify-left fs-4" onClick={Toggle}></i>
+<i className="navbar-brand bi bi-justify-left fs-4 text-black" onClick={Toggle}></i>
       <button
         className="navbar-toggle d-lg-none"
         type="button"
@@ -35,9 +37,9 @@ const Navbar = ({ Toggle }) => {
               />
             </Link>
             <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownId">
-              <Link to='' className="dropdown-item">Profile</Link>
-              <Link to='' className="dropdown-item">Setting</Link>
-              <Link to='' className="dropdown-item">Logout</Link>
+              {/* <Link to='' className="dropdown-item">Profile</Link> */}
+              <Link to='signIn' className="dropdown-item">Logout</Link>
+              {/* <Link to='' className="dropdown-item">Logout</Link> */}
             </div>
           </li>
         </ul>

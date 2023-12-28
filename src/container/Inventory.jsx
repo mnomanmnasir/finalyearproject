@@ -3,18 +3,17 @@ import PopUp from './Modal';
 import Navbar from '../components/Navbar';
 
 
-const User = ({Toggle}) => {
-
-
+const Inventory = ({Toggle}) => {
+ 
     return (
         <>
         <Navbar Toggle={Toggle}/>
-            <div>
-               <PopUp title='User Orders'/> 
-            </div>
+            
+                <PopUp title='Inventory Order'/>
+        
         </>
     )
 }
 
 
-export default User;
+export default Inventory;

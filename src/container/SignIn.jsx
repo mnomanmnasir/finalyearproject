@@ -1,15 +1,18 @@
 import React from 'react'
 
 
-const Customer = () => {
-    return(
-        <>
-        <div>
-            Customer Page
-        </div>
-        </>
+
+const SignIn = () => {
+    return (
+<>
+<div>
+
+SignIn Page
+
+</div>
+</>
     )
 }
 
 
-export default Customer;
+export default SignIn;

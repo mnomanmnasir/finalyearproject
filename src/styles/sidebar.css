@@ -1,37 +1,37 @@
 .list-group a {
 
-    background-color: lightblue;
+    background-color: white;
     color: black;
     cursor: pointer;
-  }
-  
-  
-  
-  .list-group-item:hover {
+}
+
+
+
+.list-group-item:hover {
     background-color: black;
     /* Change background color on hover if needed */
-  }
-  
-  .list-group a:hover {
-  
-    background-color: lightblue;
-    color: white;
+}
+
+.list-group a:hover {
+
+    background-color: white;
+    color: black;
     cursor: pointer;
-  }
-  
-  /* Reset some default styles */
-  * {
+}
+
+/* Reset some default styles */
+* {
     box-sizing: border-box;
-  }
-  
-  /* Body styles */
-  body {
+}
+
+/* Body styles */
+body {
     font-family: 'Arial', sans-serif;
-  }
-  
-  /* Sidebar styles */
-  .sidebar {
-    background-color: lightblue;
+}
+
+/* Sidebar styles */
+.sidebar {
+    background-color: white;
     /* Sidebar background color */
     width: 230px;
     height: 100vh;
@@ -42,34 +42,32 @@
     /* Adjust the radius as needed */
     border-bottom-left-radius: 20px;
     /* Adjust the radius as needed */
-  
-  }
-  
-  /* Sidebar header styles */
-  .sidebar-header {
+
+}
+
+/* Sidebar header styles */
+.sidebar-header {
     text-align: center;
     color: #fff;
     padding-bottom: 20px;
-  }
-  
-  /* Sidebar item styles */
-  .sidebar-item {
+}
+
+/* Sidebar item styles */
+.sidebar-item {
     display: flex;
     align-items: center;
     padding: 10px;
     color: #fff;
     text-decoration: none;
     transition: background-color 0.3s ease;
-  }
-  
-  /* Hover effect on sidebar items */
-  .sidebar-item:hover {
+}
+
+/* Hover effect on sidebar items */
+.sidebar-item:hover {
     background-color: #555;
-  }
-  
-  /* Example: Highlight the active item */
-  .active {
+}
+
+/* Example: Highlight the active item */
+.active {
     background-color: #555;
-  }
-  
-  
+}
