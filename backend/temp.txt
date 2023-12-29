@@ -1,0 +1,17 @@
+social
+    /api/v1/socials
+    /api/v1/social/:id
+    /api/v1/social
+    /api/v1/social
+    /api/v1/social
+connection
+    /api/v1/connections
+    /api/v1/connection/:id
+    /api/v1/connection
+    /api/v1/connection
+    /api/v1/connection
+user
+    /api/v1/signup
+    /api/v1/signin
+    /api/v1/users
+    /api/v1/user
