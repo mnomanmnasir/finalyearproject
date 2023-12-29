@@ -17,10 +17,19 @@ const Sidebar = () => {
                     <i className="bi bi-speedometer2 fs-5 me-3"></i>
                     <span>Dashboard</span>
                 </Link>
+                <Link to='warehouse' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiPurchaseTag className="fs-5 me-3" />
+                    <span >Warehouse</span>
+                </Link>
 
                 <Link to='user' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <i className="bi bi-house fs-5 me-3"></i>
                     <span >User</span>
+                </Link>
+
+                <Link to='products' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiPurchaseTag className="fs-5 me-3" />
+                    <span >Products</span>
                 </Link>
                 <Link to='sales' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <i className="bi bi-table fs-5 me-3"></i>
@@ -34,6 +43,7 @@ const Sidebar = () => {
                     <BiPurchaseTag className="fs-5 me-3" />
                     <span >Purchase</span>
                 </Link>
+
                 <Link to='piechart' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <BiPieChart className="fs-5 me-3" />
                     <span>Pie Chart</span>

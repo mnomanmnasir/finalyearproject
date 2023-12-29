@@ -5,13 +5,7 @@ const Warehouse = mongoose.model(
     new mongoose.Schema({
         name: { type: String, required: true },
         address: { type: String, required: true },
-        // firstName: String,
-        // lastName: String,
         capacity: String,
-        // user: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: "User"
-        // },
         supervisor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"

@@ -15,6 +15,8 @@ import LineChart from './container/LineChart';
 import Navbar from './components/Navbar';
 import SignIn from './container/SignIn'
 import { useAuth } from './container/AuthContext';
+import Product from './container/Product';
+import Warehouse from './container/Warehouse';
 
 
 const App = () => {
@@ -47,6 +49,8 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Dashboard Toggle={Toggle} />} />
                 <Route path="/user" element={<User Toggle={Toggle} />} />
+                <Route path="/products" element={<Product Toggle={Toggle} />} />
+                <Route path="/warehouse" element={<Warehouse Toggle={Toggle} />} />
                 <Route path="/sales" element={<Sales Toggle={Toggle} />}></Route>
                 <Route path="/inventory" element={<Inventory Toggle={Toggle} />}></Route>
                 <Route path="/purchase" element={<Purchase Toggle={Toggle} />}></Route>

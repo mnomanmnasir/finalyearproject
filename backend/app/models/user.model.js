@@ -7,10 +7,6 @@ const User = mongoose.model(
     password: { type: String, required: true },
     firstName: String,
     lastName: String,
-    card: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Card"
-    },
     status: String,
     last_login: Date,
     roles: [

@@ -7,7 +7,7 @@ const app = express();
 require('dotenv').config();
 
 let corsOptions = {
-  origin: [`http://${process.env.HOST}`,`http://${process.env.HOST}:${process.env.PORT}`, `http://${process.env.HOST}:5173`, `http://${process.env.HOST}:5500`, `http://127.0.0.1:5500`],
+  origin: [`http://${process.env.HOST}`,`http://${process.env.HOST}:${process.env.PORT}`,`http://localhost:3000`],
 };
 
 app.use(cors(corsOptions));

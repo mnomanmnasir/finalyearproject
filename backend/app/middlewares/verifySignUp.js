@@ -4,6 +4,7 @@ const User = db.user;
 const Card = db.card;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
+  // console.log(req)
   // Username
   // User.findOne({
   //   username: req.body.username
@@ -18,37 +19,37 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   //     return;
   //   }
 
-    // Email
-    User.findOne({
-      email: req.body.email
-    }).exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      if (user) {
-        res.status(400).send({ message: "Failed! Email is already in use!" });
-        return;
-      }
+  // Email
+  User.findOne({
+    email: req.body.email
+  }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (user) {
+      res.status(400).send({ message: "Failed! Email is already in use!" });
+      return;
+    }
 
-      next();
-    });
-//   });
+    next();
+  });
+  //   });
 };
 checkDuplicateCard = (req, res, next) => {
-    Card.findOne({
-      cardId: req.body.cardId
-    }).exec((err, card) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
-      if (card) {
-        res.status(400).send({ message: "Failed! Card is already in use!" });
-        return;
-      }
-      next();
-    });
+  Card.findOne({
+    cardId: req.body.cardId
+  }).exec((err, card) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (card) {
+      res.status(400).send({ message: "Failed! Card is already in use!" });
+      return;
+    }
+    next();
+  });
 };
 
 checkRolesExisted = (req, res, next) => {
