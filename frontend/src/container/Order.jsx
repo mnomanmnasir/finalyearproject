@@ -120,7 +120,7 @@ const OrderManager = () => {
 
 export const OrderTable = ({ orders, onEdit, onDelete }) => {
     return (
-        <table className="table">
+        <table className="table table-hover">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -140,13 +140,10 @@ export const OrderTable = ({ orders, onEdit, onDelete }) => {
                         <td>{order.orderDate}</td>
                         <td>{order.status}</td>
                         <td>
-                            <Button variant="light" onClick={() => onEdit(order)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(order)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button
-                                variant="light"
-                                onClick={() => onDelete(order.id)}
-                            >
+                            <Button variant="light" className='btn-sm' onClick={() => onDelete(order.id)}>
                                 <BsTrash />
                             </Button>
                         </td>

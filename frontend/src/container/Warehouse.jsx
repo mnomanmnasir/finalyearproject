@@ -6,7 +6,7 @@ import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 
 
-const Warehouse = ({Toggle}) => {
+const Warehouse = ({ Toggle }) => {
     return (
         <div>
             <Navbar Toggle={Toggle} />
@@ -84,7 +84,7 @@ const WarehouseManager = () => {
                 <h4>Warehouses</h4>
                 <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add Warehouse</Button>
             </div>
-            
+
             <WarehouseTable warehouses={warehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
@@ -106,10 +106,12 @@ const WarehouseManager = () => {
 };
 
 export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
+    // const row = [{ id: "name", title: "Name" }, { id: "address", title: "Address" }, { id: "capacity", title: "Capacity" }, { id: "supervisor", title: "Supervisor" }, { id: "temperatureControlled", title: "Temperature" }, { id: "status", title: "Status" }, { id: "actions", title: "Actions" }];
     return (
-        <table className="table">
+        <table className="table table-hover">
             <thead>
                 <tr>
+                    {/* {row.map((column, index) => <th key={index}>{column.title}</th>)} */}
                     <th>Name</th>
                     <th>Address</th>
                     <th>Capacity</th>
@@ -121,7 +123,7 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {warehouses.map((warehouse) => (
-                    <tr key={warehouse.id}>
+                    <tr key={warehouse.id} className='justify-content-center'>
                         <td>{warehouse.name}</td>
                         <td>{warehouse.address}</td>
                         <td>{warehouse.capacity}</td>
@@ -129,10 +131,10 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
                         <td>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
                         <td>{warehouse.status}</td>
                         <td>
-                            <Button variant="light" onClick={() => onEdit(warehouse)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="light" onClick={() => onDelete(warehouse.id)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse.id)}>
                                 <BsTrash />
                             </Button>
                         </td>

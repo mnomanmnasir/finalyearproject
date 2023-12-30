@@ -4,6 +4,7 @@ import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
+import Axios from 'axios';
 
 const Product = ({ Toggle }) => {
     return (
@@ -33,10 +34,23 @@ const ProductManager = () => {
         created_by: ''
     });
 
-    // Fetch products function (dummy implementation)
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchProductsFromAPI = async () => {
+        try {
+            const response = await Axios.get('http://localhost:8080/api/v1/products');
+            setProducts(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
+    // Fetch users when the component mounts
     useEffect(() => {
-        // Replace with real API call
-        // setProducts(fetchProductsFromAPI());
+        fetchProductsFromAPI();
     }, []);
 
     const openModalToAdd = () => {

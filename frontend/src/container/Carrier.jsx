@@ -116,7 +116,7 @@ const CarrierManager = () => {
 
 export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
     return (
-        <table className="table">
+        <table className="table table-hover">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -132,10 +132,10 @@ export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
                         <td>{carrier.contactPerson}</td>
                         <td>{carrier.contactNumber}</td>
                         <td>
-                            <Button variant="light" onClick={() => onEdit(carrier)}>
+                            <Button className='btn-sm' variant="light" onClick={() => onEdit(carrier)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button
+                            <Button className='btn-sm'
                                 variant="light"
                                 onClick={() => onDelete(carrier.id)}
                             >
