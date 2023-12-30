@@ -5,46 +5,46 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 
-const Customer = ({ Toggle }) => {
+const Carrier = ({ Toggle }) => {
     return (
         <div>
             <Navbar Toggle={Toggle} />
-            {/* Customer */}
-            <CustomerManager />
+            {/* Carrier */}
+            <CarrierManager />
         </div>
     );
 };
 
-export default Customer;
+export default Carrier;
 
-const CustomerManager = () => {
-    const [customers, setCustomers] = useState(customerData);
+const CarrierManager = () => {
+    const [carriers, setCarriers] = useState(carrierData);
     const [showModal, setShowModal] = useState(false);
-    const [currentCustomer, setCurrentCustomer] = useState({
+    const [currentCarrier, setCurrentCarrier] = useState({
         id: null,
         name: '',
+        contactPerson: '',
         contactNumber: '',
-        email: '',
     });
 
-    // Fetch customers function (dummy implementation)
+    // Fetch carriers function (dummy implementation)
     useEffect(() => {
         // Replace with real API call
-        // setCustomers(fetchCustomersFromAPI());
+        // setCarriers(fetchCarriersFromAPI());
     }, []);
 
     const openModalToAdd = () => {
-        setCurrentCustomer({
+        setCurrentCarrier({
             id: null,
             name: '',
+            contactPerson: '',
             contactNumber: '',
-            email: '',
         });
         setShowModal(true);
     };
 
-    const openModalToEdit = (customer) => {
-        setCurrentCustomer(customer);
+    const openModalToEdit = (carrier) => {
+        setCurrentCarrier(carrier);
         setShowModal(true);
     };
 
@@ -52,60 +52,60 @@ const CustomerManager = () => {
         setShowModal(false);
     };
 
-    const saveCustomer = () => {
-        if (currentCustomer.id) {
-            // Update customer in the list
-            setCustomers(
-                customers.map((c) =>
-                    c.id === currentCustomer.id ? currentCustomer : c
+    const saveCarrier = () => {
+        if (currentCarrier.id) {
+            // Update carrier in the list
+            setCarriers(
+                carriers.map((c) =>
+                    c.id === currentCarrier.id ? currentCarrier : c
                 )
             );
-            toast.success('Customer updated successfully');
+            toast.success('Carrier updated successfully');
         } else {
-            // Add new customer
-            const newCustomerWithId = { ...currentCustomer, id: Date.now() };
-            setCustomers([...customers, newCustomerWithId]);
-            toast.success('Customer added successfully');
+            // Add new carrier
+            const newCarrierWithId = { ...currentCarrier, id: Date.now() };
+            setCarriers([...carriers, newCarrierWithId]);
+            toast.success('Carrier added successfully');
         }
         setShowModal(false);
     };
 
-    const deleteCustomer = (customerId) => {
-        setCustomers(customers.filter((c) => c.id !== customerId));
-        toast.info('Customer deleted successfully');
+    const deleteCarrier = (carrierId) => {
+        setCarriers(carriers.filter((c) => c.id !== carrierId));
+        toast.info('Carrier deleted successfully');
     };
 
     return (
-        <div className="customer-manager">
+        <div className="carrier-manager">
             <div className="d-flex justify-content-between">
-                <h3>Customer</h3>
+                <h3>Carrier</h3>
                 <Button className="mb-3" onClick={openModalToAdd}>
-                    Add Customer
+                    Add Carrier
                 </Button>
             </div>
-            <CustomerTable
-                customers={customers}
+            <CarrierTable
+                carriers={carriers}
                 onEdit={openModalToEdit}
-                onDelete={deleteCustomer}
+                onDelete={deleteCarrier}
             />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {currentCustomer.id ? 'Edit Customer' : 'Add Customer'}
+                        {currentCarrier.id ? 'Edit Carrier' : 'Add Carrier'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <CustomerForm
-                        customer={currentCustomer}
-                        setCustomer={setCurrentCustomer}
+                    <CarrierForm
+                        carrier={currentCarrier}
+                        setCarrier={setCurrentCarrier}
                     />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={saveCustomer}>
-                        {currentCustomer.id ? 'Save Changes' : 'Add Customer'}
+                    <Button variant="primary" onClick={saveCarrier}>
+                        {currentCarrier.id ? 'Save Changes' : 'Add Carrier'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -114,30 +114,30 @@ const CustomerManager = () => {
     );
 };
 
-export const CustomerTable = ({ customers, onEdit, onDelete }) => {
+export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
     return (
         <table className="table">
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Contact Person</th>
                     <th>Contact Number</th>
-                    <th>Email</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {customers.map((customer) => (
-                    <tr key={customer.id}>
-                        <td>{customer.name}</td>
-                        <td>{customer.contactNumber}</td>
-                        <td>{customer.email}</td>
+                {carriers.map((carrier) => (
+                    <tr key={carrier.id}>
+                        <td>{carrier.name}</td>
+                        <td>{carrier.contactPerson}</td>
+                        <td>{carrier.contactNumber}</td>
                         <td>
-                            <Button variant="light" onClick={() => onEdit(customer)}>
+                            <Button variant="light" onClick={() => onEdit(carrier)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
                                 variant="danger"
-                                onClick={() => onDelete(customer.id)}
+                                onClick={() => onDelete(carrier.id)}
                             >
                                 <BsTrash />
                             </Button>
@@ -149,15 +149,28 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
     );
 };
 
-export const CustomerForm = ({ customer, setCustomer }) => {
+export const CarrierForm = ({ carrier, setCarrier }) => {
     return (
         <Form>
             <Form.Group>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                     type="text"
-                    value={customer.name}
-                    onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
+                    value={carrier.name}
+                    onChange={(e) =>
+                        setCarrier({ ...carrier, name: e.target.value })
+                    }
+                    required
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Contact Person</Form.Label>
+                <Form.Control
+                    type="text"
+                    value={carrier.contactPerson}
+                    onChange={(e) =>
+                        setCarrier({ ...carrier, contactPerson: e.target.value })
+                    }
                     required
                 />
             </Form.Group>
@@ -165,19 +178,10 @@ export const CustomerForm = ({ customer, setCustomer }) => {
                 <Form.Label>Contact Number</Form.Label>
                 <Form.Control
                     type="text"
-                    value={customer.contactNumber}
+                    value={carrier.contactNumber}
                     onChange={(e) =>
-                        setCustomer({ ...customer, contactNumber: e.target.value })
+                        setCarrier({ ...carrier, contactNumber: e.target.value })
                     }
-                    required
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                    type="email"
-                    value={customer.email}
-                    onChange={(e) => setCustomer({ ...customer, email: e.target.value })}
                     required
                 />
             </Form.Group>
@@ -185,18 +189,18 @@ export const CustomerForm = ({ customer, setCustomer }) => {
     );
 };
 
-const customerData = [
+const carrierData = [
     {
         id: 1,
-        name: 'Customer 1',
+        name: 'Carrier 1',
+        contactPerson: 'John Doe',
         contactNumber: '123-456-7890',
-        email: 'customer1@example.com',
     },
     {
         id: 2,
-        name: 'Customer 2',
+        name: 'Carrier 2',
+        contactPerson: 'Jane Doe',
         contactNumber: '987-654-3210',
-        email: 'customer2@example.com',
     },
-    // ... add more customer data as needed
+    // ... add more carrier data as needed
 ];

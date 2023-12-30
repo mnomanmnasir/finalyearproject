@@ -13,7 +13,7 @@ const User = ({ Toggle }) => {
     return (
         <div>
             <Navbar Toggle={Toggle} />
-            User
+            {/* User */}
             < UserManager />
         </div >
     );
@@ -137,7 +137,10 @@ const UserManager = () => {
 
     return (
         <div className="user-manager">
-            <Button className="mb-3" onClick={openModalToAdd}>Add User</Button>
+            <div className="d-flex justify-content-between">
+                <h3>Users</h3>
+                <Button className="mb-3" onClick={openModalToAdd}>Add User</Button>
+            </div>
             {loading ? (
                 <p>Loading...</p>
             ) : error ? (

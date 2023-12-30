@@ -17,6 +17,11 @@ import SignIn from './container/SignIn'
 import { useAuth } from './container/AuthContext';
 import Product from './container/Product';
 import Warehouse from './container/Warehouse';
+import Supplier from './container/Supplier';
+import Carrier from './container/Carrier';
+import Customer from './container/Customer';
+import Order from './container/Order';
+import Shipment from './container/Shipment';
 
 
 const App = () => {
@@ -49,10 +54,15 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Dashboard Toggle={Toggle} />} />
                 <Route path="/user" element={<User Toggle={Toggle} />} />
+                <Route path="/customers" element={<Customer Toggle={Toggle} />} />
                 <Route path="/products" element={<Product Toggle={Toggle} />} />
+                <Route path="/suppliers" element={<Supplier Toggle={Toggle} />} />
                 <Route path="/warehouse" element={<Warehouse Toggle={Toggle} />} />
+                <Route path="/carrier" element={<Carrier Toggle={Toggle} />} />
                 <Route path="/sales" element={<Sales Toggle={Toggle} />}></Route>
                 <Route path="/inventory" element={<Inventory Toggle={Toggle} />}></Route>
+                <Route path="/orders" element={<Order Toggle={Toggle} />}></Route>
+                <Route path="/shipments" element={<Shipment Toggle={Toggle} />}></Route>
                 <Route path="/purchase" element={<Purchase Toggle={Toggle} />}></Route>
                 <Route path="/barchart" element={<BarChart Toggle={Toggle} />}></Route>
                 <Route path="/piechart" element={<PieChart Toggle={Toggle} />}></Route>

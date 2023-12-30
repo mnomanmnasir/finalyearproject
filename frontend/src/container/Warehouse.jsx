@@ -10,7 +10,7 @@ const Warehouse = ({Toggle}) => {
     return (
         <div>
             <Navbar Toggle={Toggle} />
-            Warehouse 
+            {/* Warehouse  */}
             <WarehouseManager />
         </div>
     );
@@ -80,7 +80,11 @@ const WarehouseManager = () => {
 
     return (
         <div className="warehouse-manager">
-            <Button className="mb-3" onClick={openModalToAdd}>Add Warehouse</Button>
+            <div className="d-flex justify-content-between">
+                <h3>Warehouses</h3>
+                <Button className="mb-3" onClick={openModalToAdd}>Add Warehouse</Button>
+            </div>
+            
             <WarehouseTable warehouses={warehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>

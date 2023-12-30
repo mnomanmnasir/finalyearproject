@@ -5,11 +5,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
 
-const Product = ({Toggle}) => {
+const Product = ({ Toggle }) => {
     return (
         <div>
             <Navbar Toggle={Toggle} />
-            Product
+            {/* Product */}
             <ProductManager />
         </div>
     );
@@ -85,7 +85,10 @@ const ProductManager = () => {
 
     return (
         <div className="product-manager">
-            <Button className="mb-3" onClick={openModalToAdd}>Add Product</Button>
+            <div className="d-flex justify-content-between">
+                <h3>Products</h3>
+                <Button className="mb-3" onClick={openModalToAdd}>Add Product</Button>
+            </div>
             <ProductTable products={products} onEdit={openModalToEdit} onDelete={deleteProduct} />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>

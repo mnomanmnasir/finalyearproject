@@ -15,10 +15,10 @@ const Purchase = mongoose.model(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        items: [
+        products: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Item"
+                ref: "Product"
             }
         ],
         created_on: { type: Date, default: Date.now, required: true },
