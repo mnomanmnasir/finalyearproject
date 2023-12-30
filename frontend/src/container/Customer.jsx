@@ -79,7 +79,7 @@ const CustomerManager = () => {
         <div className="customer-manager">
             <div className="d-flex justify-content-between">
                 <h3>Customer</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Customer
                 </Button>
             </div>
@@ -136,7 +136,7 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="danger"
+                                variant="light"
                                 onClick={() => onDelete(customer.id)}
                             >
                                 <BsTrash />

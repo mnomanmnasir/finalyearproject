@@ -33,7 +33,7 @@ body {
 .sidebar {
     background-color: white;
     /* Sidebar background color */
-    width: 230px;
+    width: 16vw;
     height: 100vh;
     position: fixed;
     top: 0;

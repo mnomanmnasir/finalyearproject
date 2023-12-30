@@ -81,7 +81,7 @@ const SupplierManager = () => {
         <div className="supplier-manager">
             <div className="d-flex justify-content-between">
                 <h3>Suppliers</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Supplier
                 </Button>
             </div>
@@ -140,7 +140,7 @@ export const SupplierTable = ({ suppliers, onEdit, onDelete }) => {
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="danger"
+                                variant="light"
                                 onClick={() => onDelete(supplier.id)}
                             >
                                 <BsTrash />

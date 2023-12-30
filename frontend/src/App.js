@@ -45,11 +45,11 @@ const App = () => {
         <div className="container-fluid bg-light">
           <div className="row">
             {toggle && (
-              <div className="col-2 bg-white vh-100 postion-fixed">
+              <div className="col-2 bg-white">
                 <Sidebar onLogout={handleLogout} />
               </div>
             )}
-            <div className={`col ${authenticated && toggle ? '' : 'col'}`}>
+            <div className={`col-${ !toggle ? '12' : '10'}`}>
               {authenticated && <Navbar Toggle={Toggle} onLogout={handleLogout} />}
               <Routes>
                 <Route path="/" element={<Dashboard Toggle={Toggle} />} />

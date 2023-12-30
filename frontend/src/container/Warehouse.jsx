@@ -81,8 +81,8 @@ const WarehouseManager = () => {
     return (
         <div className="warehouse-manager">
             <div className="d-flex justify-content-between">
-                <h3>Warehouses</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>Add Warehouse</Button>
+                <h4>Warehouses</h4>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add Warehouse</Button>
             </div>
             
             <WarehouseTable warehouses={warehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
@@ -132,7 +132,7 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
                             <Button variant="light" onClick={() => onEdit(warehouse)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="danger" onClick={() => onDelete(warehouse.id)}>
+                            <Button variant="light" onClick={() => onDelete(warehouse.id)}>
                                 <BsTrash />
                             </Button>
                         </td>

@@ -87,7 +87,7 @@ const ProductManager = () => {
         <div className="product-manager">
             <div className="d-flex justify-content-between">
                 <h3>Products</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>Add Product</Button>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add Product</Button>
             </div>
             <ProductTable products={products} onEdit={openModalToEdit} onDelete={deleteProduct} />
             <Modal show={showModal} onHide={closeModal}>
@@ -138,7 +138,7 @@ export const ProductTable = ({ products, onEdit, onDelete }) => {
                             <Button variant="light" onClick={() => onEdit(product)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="danger" onClick={() => onDelete(product.id)}>
+                            <Button variant="light" onClick={() => onDelete(product.id)}>
                                 <BsTrash />
                             </Button>
                         </td>

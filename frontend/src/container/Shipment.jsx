@@ -85,7 +85,7 @@ const ShipmentManager = () => {
         <div className="shipment-manager">
             <div className="d-flex justify-content-between">
                 <h3>Shipment</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Shipment
                 </Button>
             </div>
@@ -148,7 +148,7 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="danger"
+                                variant="light"
                                 onClick={() => onDelete(shipment.id)}
                             >
                                 <BsTrash />

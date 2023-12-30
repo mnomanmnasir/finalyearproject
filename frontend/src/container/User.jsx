@@ -139,7 +139,7 @@ const UserManager = () => {
         <div className="user-manager">
             <div className="d-flex justify-content-between">
                 <h3>Users</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>Add User</Button>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add User</Button>
             </div>
             {loading ? (
                 <p>Loading...</p>
@@ -207,7 +207,7 @@ export const UserTable = ({ users, onEdit, onDelete }) => {
                             <Button variant="light" onClick={() => onEdit(user)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="danger" onClick={() => onDelete(user._id)}>
+                            <Button variant="light" onClick={() => onDelete(user._id)}>
                                 <BsTrash />
                             </Button>
                         </td>

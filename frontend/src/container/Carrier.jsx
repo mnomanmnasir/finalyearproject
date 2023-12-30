@@ -79,7 +79,7 @@ const CarrierManager = () => {
         <div className="carrier-manager">
             <div className="d-flex justify-content-between">
                 <h3>Carrier</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Carrier
                 </Button>
             </div>
@@ -136,7 +136,7 @@ export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="danger"
+                                variant="light"
                                 onClick={() => onDelete(carrier.id)}
                             >
                                 <BsTrash />

@@ -87,7 +87,7 @@ const InventoryManager = () => {
         <div className="inventory-manager">
             <div className="d-flex justify-content-between">
                 <h3>Inventory</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>
+                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Inventory
                 </Button>
             </div>
@@ -152,7 +152,7 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="danger"
+                                variant="light"
                                 onClick={() => onDelete(item.id)}
                             >
                                 <BsTrash />
