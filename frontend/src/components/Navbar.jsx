@@ -11,14 +11,8 @@ const Navbar = ({ Toggle }) => {
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark px-2">
-<i className="navbar-brand bi bi-justify-left fs-4 text-black" onClick={Toggle}></i>
-      <button
-        className="navbar-toggle d-lg-none"
-        type="button"
-        data-bs-toggle="collapse"
-        data-aria-expanded="false"
-        aria-label="Toggle navigation"
-      ></button>
+      <i className="navbar-brand bi bi-justify-left fs-4 text-black" onClick={Toggle}></i>
+
       <div className="collapse navbar-collapse" id="collapsibleNavId">
         <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
           <li className="nav-item dropdown">

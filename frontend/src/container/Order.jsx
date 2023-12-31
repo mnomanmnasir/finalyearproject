@@ -4,6 +4,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
+
+
 
 const Order = ({ Toggle }) => {
     return (
@@ -80,12 +83,17 @@ const OrderManager = () => {
     };
 
     return (
-        <div className="order-manager">
+        <div className="order-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Orders</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+                <h3 className='mt-4'>Orders</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Order
-                </Button>
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                    </button>
+                </caption>
             </div>
             <OrderTable
                 orders={orders}
@@ -120,8 +128,8 @@ const OrderManager = () => {
 
 export const OrderTable = ({ orders, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Name</th>
                     <th>Customer ID</th>

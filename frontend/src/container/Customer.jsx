@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
+
 
 const Customer = ({ Toggle }) => {
     return (
@@ -76,12 +78,15 @@ const CustomerManager = () => {
     };
 
     return (
-        <div className="customer-manager">
+        <div className="customer-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Customer</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
-                    Add Customer
-                </Button>
+                <h3 className='mt-4'>Customer</h3>
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                        {/* Add Customer */}
+                    </button>
+                </caption>
             </div>
             <CustomerTable
                 customers={customers}
@@ -116,13 +121,13 @@ const CustomerManager = () => {
 
 export const CustomerTable = ({ customers, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Name</th>
                     <th>Contact Number</th>
                     <th>Email</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -131,14 +136,13 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
                         <td>{customer.name}</td>
                         <td>{customer.contactNumber}</td>
                         <td>{customer.email}</td>
-                        <td>
+                        <td className='text-center'>
                             <Button variant="light" onClick={() => onEdit(customer)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
                                 variant="light"
-                                onClick={() => onDelete(customer.id)}
-                            >
+                                onClick={() => onDelete(customer.id)}>
                                 <BsTrash />
                             </Button>
                         </td>

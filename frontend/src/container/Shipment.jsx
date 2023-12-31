@@ -4,6 +4,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
+
+
 
 const Shipment = ({ Toggle }) => {
     return (
@@ -82,12 +85,17 @@ const ShipmentManager = () => {
     };
 
     return (
-        <div className="shipment-manager">
+        <div className="shipment-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Shipment</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+                <h3 className='mt-4'>Shipment</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Shipment
-                </Button>
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                    </button>
+                </caption>
             </div>
             <ShipmentTable
                 shipments={shipments}
@@ -122,8 +130,8 @@ const ShipmentManager = () => {
 
 export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Name</th>
                     <th>Date</th>
@@ -131,7 +139,7 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
                     <th>Status</th>
                     <th>Order ID</th>
                     <th>Carrier ID</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -143,7 +151,7 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
                         <td>{shipment.status}</td>
                         <td>{shipment.orderId}</td>
                         <td>{shipment.carrierId}</td>
-                        <td>
+                        <td className='text-center'>
                             <Button variant="light" onClick={() => onEdit(shipment)}>
                                 <BsPencilSquare />
                             </Button>

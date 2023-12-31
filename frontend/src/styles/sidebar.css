@@ -33,10 +33,11 @@ body {
 .sidebar {
     background-color: white;
     /* Sidebar background color */
-    width: 16vw;
+    width: 17vw;
     height: 100vh;
     position: fixed;
     top: 0;
+    overflow: auto;
     left: 0;
     border-top-left-radius: 20px;
     /* Adjust the radius as needed */

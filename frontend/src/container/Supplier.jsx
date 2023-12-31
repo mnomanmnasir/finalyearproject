@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
+
 
 const Supplier = ({ Toggle }) => {
     return (
@@ -78,12 +80,17 @@ const SupplierManager = () => {
     };
 
     return (
-        <div className="supplier-manager">
+        <div className="supplier-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Suppliers</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+                <h3 className='mt-4'>Suppliers</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Supplier
-                </Button>
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                    </button>
+                </caption>
             </div>
             <SupplierTable
                 suppliers={suppliers}
@@ -118,14 +125,14 @@ const SupplierManager = () => {
 
 export const SupplierTable = ({ suppliers, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Supplier Name</th>
                     <th>Contact Person</th>
                     <th>Contact Number</th>
                     <th>Email</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -135,7 +142,7 @@ export const SupplierTable = ({ suppliers, onEdit, onDelete }) => {
                         <td>{supplier.contactPerson}</td>
                         <td>{supplier.contactNumber}</td>
                         <td>{supplier.email}</td>
-                        <td>
+                        <td className='text-center'>
                             <Button variant="light" onClick={() => onEdit(supplier)}>
                                 <BsPencilSquare />
                             </Button>

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import ReactApexChart from 'react-apexcharts';
 import '../styles/cardchart.css'
 // import { BsArrowUp } from 'react-icons/bs';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 const CardWithChart = () => {
 
@@ -16,6 +19,7 @@ const CardWithChart = () => {
     });
 
     useEffect(() => {
+
         // Dynamically update chart options when the component mounts
         setOptions({
             chart: {
@@ -41,6 +45,7 @@ const CardWithChart = () => {
                 },
             },
         });
+        AOS.init();
     }, []);
 
 
@@ -48,7 +53,7 @@ const CardWithChart = () => {
         <div className="container-fluid">
             <div className="row g-3 my-2">
                 <div className="col-md-3">
-                    <div className="p-3 bg-green shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div data-aos="flip-right" data-aos-easing="linear" data-aos-duration="600" className="p-3 bg-green shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 230
@@ -61,7 +66,7 @@ const CardWithChart = () => {
                     </div>
                 </div>
                 <div className="col-md-3">
-                    <div className="p-3 bg-orange shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div data-aos="flip-right" data-aos-easing="linear" data-aos-duration="700" className="p-3 bg-orange shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 2450
@@ -74,7 +79,7 @@ const CardWithChart = () => {
                     </div>
                 </div>
                 <div className="col-md-3">
-                    <div className="p-3 bg-pink shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div data-aos="flip-right" data-aos-easing="linear" data-aos-duration="800" className="p-3 bg-pink shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 2250
@@ -87,7 +92,7 @@ const CardWithChart = () => {
                     </div>
                 </div>
                 <div className="col-md-3">
-                    <div className="p-3 bg-aqua shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div data-aos="flip-right" data-aos-easing="linear" data-aos-duration="900" className="p-3 bg-aqua shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                             <h3 className='fs-2'>
                                 80%
