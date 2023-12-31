@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Product = mongoose.model(
     "Product",
     new mongoose.Schema({
-        sku: { type: String, required: true },
+        sku: { type: String },
         name: { type: String, required: true },
         description: String,
         unitPrice: { type: Number, required: true },
@@ -13,7 +13,7 @@ const Product = mongoose.model(
         depth: String,
         HazardousMaterial: Boolean,
         created_on: { type: Date, default: Date.now, required: true },
-        created_by: { type: String, required: true },
+        created_by: { type: String },
         updated_on: Date,
         updated_by: String,
     })

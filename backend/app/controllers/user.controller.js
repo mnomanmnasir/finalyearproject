@@ -384,16 +384,6 @@ const emailFunction = (userEmail, verification, file) => {
   let handlebars = require('handlebars');
   let fs = require('fs').promises;
 
-  // const smtpTransport = nodemailer.createTransport({
-  //     service: 'gmail',
-  //     host: 'smtp.gmail.com',
-  //     // secure: true,
-  //     // port: mailConfig.port,
-  //     auth: {
-  //       user: 'buzzycommerce2@gmail.com',
-  //       pass: 'jeov dwzh rclx gcce'
-  //     }
-  // });
   const smtpTransport = nodemailer.createTransport({
     service: 'outlook',
     host: 'smtp-mail.outlook.com',

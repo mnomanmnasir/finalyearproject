@@ -1,3 +1,4 @@
+
 // import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from './components/Sidebar';
@@ -23,6 +24,7 @@ import Customer from './container/Customer';
 import Order from './container/Order';
 import Shipment from './container/Shipment';
 
+export const baseUrl = "http://localhost:8080/api/v1";
 
 const App = () => {
 
@@ -81,3 +83,4 @@ const App = () => {
 }
 
 export default App;
+

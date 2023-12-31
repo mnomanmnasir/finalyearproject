@@ -10,8 +10,9 @@ module.exports = function (app) {
         next();
     });
 
-    app.get("/api/v1/purchase", controller.getPurchases);
-    app.post("/api/v1/purchase", controller.cardAuth);
-    app.put("/api/v1/purchase", controller.signinWithCard);
-    app.delete("/api/v1/purchase", controller.refreshToken);
+    app.get("/api/v1/purchases", controller.getPurchases);
+    // app.get("/api/v1/purchase", controller.getPurchases);
+    app.post("/api/v1/purchase", controller.createPurchases);
+    app.put("/api/v1/purchase", controller.updatePurchases);
+    app.delete("/api/v1/purchase", controller.deletePurchases);
 };

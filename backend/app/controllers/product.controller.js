@@ -32,8 +32,17 @@ exports.getProductById = async (req, res) => {
 // Update a product by ID
 exports.updateProduct= async (req, res) => {
     try {
-        const updatedProduct = await res.product.set(req.body);
-        await updatedProduct.save();
+        // Assuming 'id' is passed as a URL parameter
+        const productId = req.body._id;
+        const productData = req.body;
+
+        // Find the product by id and update it
+        const updatedProduct = await Product.findByIdAndUpdate(productId, productData, { new: true });
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
         res.json(updatedProduct);
     } catch (error) {
         res.status(400).json({ message: error.message });

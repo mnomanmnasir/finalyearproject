@@ -9,7 +9,7 @@ const Purchase = mongoose.model(
         email: String,
         pay: String,
         advance: String,
-        status: Boolean,
+        status: String,
         referance: String,
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -17,12 +17,18 @@ const Purchase = mongoose.model(
         },
         products: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Product"
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Product"
+                },
+                quantity: {
+                    type: Number,
+                    required: true
+                }
             }
         ],
         created_on: { type: Date, default: Date.now, required: true },
-        created_by: { type: String, required: true },
+        created_by: String,
         updated_on: Date,
         updated_by: String,
     })
