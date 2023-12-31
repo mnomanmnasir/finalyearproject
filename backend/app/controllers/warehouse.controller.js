@@ -25,7 +25,7 @@ exports.getAllWarehouses = async (req, res) => {
 // Get a Single Warehouse
 exports.getWarehouse = async (req, res) => {
     try {
-        const warehouse = await Warehouse.findById(req.params.id);
+        const warehouse = await Warehouse.findById(req.body._id);
         if (!warehouse) {
             return res.status(404).send();
         }
@@ -38,7 +38,7 @@ exports.getWarehouse = async (req, res) => {
 // Update a Warehouse
 exports.updateWarehouse = async (req, res) => {
     try {
-        const warehouse = await Warehouse.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const warehouse = await Warehouse.findByIdAndUpdate(req.body._id, req.body, { new: true, runValidators: true });
         if (!warehouse) {
             return res.status(404).send();
         }

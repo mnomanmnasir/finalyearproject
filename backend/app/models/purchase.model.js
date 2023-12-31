@@ -17,8 +17,14 @@ const Purchase = mongoose.model(
         },
         products: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Product"
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Product"
+                },
+                quantity: {
+                    type: Number,
+                    required: true
+                }
             }
         ],
         created_on: { type: Date, default: Date.now, required: true },

@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const Inventory = mongoose.model(
     "Inventory",
     new mongoose.Schema({
-        name: String,
-        quantityOnHand: Number,
-        quantityReserved: Number,
+        name: { type: String, default: "" },
+        quantityOnHand: { type: Number, default: 0 },
+        quantityReserved: { type: Number, default: 0 },
         product: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product"
