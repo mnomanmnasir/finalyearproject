@@ -7,10 +7,9 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 
-const Customer = ({ Toggle }) => {
+const Customer = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
             {/* Customer */}
             <CustomerManager />
         </div>
@@ -78,7 +77,7 @@ const CustomerManager = () => {
     };
 
     return (
-        <div className="customer-manager mt-3">
+        <div className="customer-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Customer</h3>
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
@@ -124,24 +123,24 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
                 <tr>
-                    <th>Name</th>
-                    <th>Contact Number</th>
-                    <th>Email</th>
+                    <th className='text-center'>Name</th>
+                    <th className='text-center'>Contact Number</th>
+                    <th className='text-center'>Email</th>
                     <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {customers.map((customer) => (
-                    <tr key={customer.id}>
-                        <td>{customer.name}</td>
-                        <td>{customer.contactNumber}</td>
-                        <td>{customer.email}</td>
+                    <tr className='text-center' key={customer.id}>
+                        <td className='text-center'>{customer.name}</td>
+                        <td className='text-center'>{customer.contactNumber}</td>
+                        <td className='text-center'>{customer.email}</td>
                         <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(customer)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(customer)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="light"
+                                variant="light" className='btn-sm'
                                 onClick={() => onDelete(customer.id)}>
                                 <BsTrash />
                             </Button>

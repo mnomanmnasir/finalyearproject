@@ -8,10 +8,9 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import Axios from 'axios';
 import { baseUrl } from '../App';
 
-const Inventory = ({ Toggle }) => {
+const Inventory = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
             {/* Inventory */}
             <InventoryManager />
         </div>
@@ -141,25 +140,20 @@ const InventoryManager = () => {
     };
 
     return (
-        <div className="inventory-manager mt-3">
-            <div className='m-2'>
-                <div className="d-flex justify-content-between">
-                    <h3 className='mt-4'>Inventory</h3>
-                    {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
-                    Add Inventory
+
+        <div className="inventory-manager mt-3 m-3">
+            <div className="d-flex justify-content-between">
+                <h3 className='mt-4'>Inventory</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                 </Button> */}
-                    <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                        <button className="btn btn-secondary" disabled onClick={openModalToAdd}>
-                            <AiOutlinePlus className="me-2" /> Inventory
-                        </button>
-                    </caption>
-                </div>
-                <InventoryTable
-                    inventory={inventory}
-                    onEdit={openModalToEdit}
-                    onDelete={deleteInventoryItem}
-                />
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                        Inventory
+                    </button>
+                </caption>
             </div>
+            <InventoryTable inventory={inventory} onEdit={openModalToEdit} onDelete={deleteInventoryItem} />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
@@ -191,7 +185,7 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
 
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
-                <tr>
+                <tr className='text-center'>
                     <th>Name</th>
                     <th className='text-center'>Quantity On Hand</th>
                     <th className='text-center'>Quantity Reserved</th>
@@ -215,11 +209,11 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
                         {/* <td>{item.warehouseId}</td>
                         <td>{item.warehouseName}</td> */}
                         <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(item)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(item)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="light"
+                                variant="light" className='btn-sm'
                                 onClick={() => onDelete(item.id)}
                                 disabled
                             >

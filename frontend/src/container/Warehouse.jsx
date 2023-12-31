@@ -7,11 +7,14 @@ import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
 import { baseUrl } from "../App"
+import { AiOutlinePlus } from 'react-icons/ai';
+
+
 
 const Warehouse = ({ Toggle }) => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
+
             {/* Warehouse  */}
             <WarehouseManager />
         </div>
@@ -94,10 +97,18 @@ const WarehouseManager = () => {
     };
 
     return (
-        <div className="warehouse-manager">
+        <div className="warehouse-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
-                <h4>Warehouses</h4>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add Warehouse</Button>
+                <h4 className='mt-4'>Warehouses</h4>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+
+                    Add Warehouse</Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                        Add Warehouse
+                    </button>
+                </caption>
             </div>
 
             <WarehouseTable warehouses={warehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
@@ -123,29 +134,29 @@ const WarehouseManager = () => {
 export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
     // const row = [{ _id: "name", title: "Name" }, { _id: "address", title: "Address" }, { _id: "capacity", title: "Capacity" }, { _id: "supervisor", title: "Supervisor" }, { _id: "temperatureControlled", title: "Temperature" }, { _id: "status", title: "Status" }, { _id: "actions", title: "Actions" }];
     return (
-        <table className="table table-hover">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     {/* {row.map((column, index) => <th key={index}>{column.title}</th>)} */}
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Capacity</th>
-                    <th>Supervisor</th>
-                    <th>Temperature Controlled</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Name</th>
+                    <th className='text-center'>Address</th>
+                    <th className='text-center'>Capacity</th>
+                    <th className='text-center'>Supervisor</th>
+                    <th className='text-center'>Temperature Controlled</th>
+                    <th className='text-center'>Status</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {warehouses.map((warehouse) => (
-                    <tr key={warehouse._id} className='justify-content-center'>
-                        <td>{warehouse.name}</td>
-                        <td>{warehouse.address}</td>
-                        <td>{warehouse.capacity}</td>
-                        <td>{warehouse.supervisor}</td>
-                        <td>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
-                        <td>{warehouse.status}</td>
-                        <td>
+                    <tr key={warehouse._id} className='justify-content-center text-center'>
+                        <td className='text-center'>{warehouse.name}</td>
+                        <td className='text-center'>{warehouse.address}</td>
+                        <td className='text-center'>{warehouse.capacity}</td>
+                        <td className='text-center'>{warehouse.supervisor}</td>
+                        <td className='text-center'>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
+                        <td className='text-center'>{warehouse.status}</td>
+                        <td className='text-center'>
                             <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
                                 <BsPencilSquare />
                             </Button>

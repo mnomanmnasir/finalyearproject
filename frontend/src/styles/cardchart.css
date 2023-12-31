@@ -4,17 +4,17 @@
 
 
 .bg-orange {
-    background-color: rgb(206, 170, 98);
+    background-color: rgb(214, 196, 156);
     /* Light Orange color */
 }
 
 .bg-pink {
-    background-color: lightpink;
+    background-color: rgb(194, 176, 193);
 }
 .bg-aqua{
-    background-color: rgba(108, 190, 199, 0.939) ;
+    background-color: rgba(193, 200, 227) ;
 }
 
 .bg-green{
-    background-color: rgba(115, 184, 127, 0.809);
+    background-color: rgb(195, 219, 215);
 }

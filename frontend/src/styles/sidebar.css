@@ -72,3 +72,10 @@ body {
 .active {
     background-color: #555;
 }
+
+
+.bi-outline{
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}

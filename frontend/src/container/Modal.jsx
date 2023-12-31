@@ -179,18 +179,18 @@ const PopUp = (props) => {
   const modalTitle = editItemId !== null ? 'Edit Item' : 'Add New Item';
 
   return (
-    <div className='table-container'>
+    <div className='table-container mt-3 m-3'>
       <caption className='text-black mt-4 fs-4 d-flex justify-content-between'>
         {title}
         <button className="btn btn-secondary" onClick={handleAddItem}>
         <AiOutlinePlus className="me-2" />
-          {/* Add Item */}
+          Add Sales
         </button>
       </caption>
       <ToastContainer />
       <table className="table table-hover table-bordered">
         <thead className='table-dark'>
-          <tr>
+          <tr className='text-center'>
             <th scope="col">#</th>
             <th scope="col">Order ID</th>
             <th scope="col">Person Name</th>
@@ -203,19 +203,19 @@ const PopUp = (props) => {
         </thead>
         <tbody>
           {tableData.map((item) => (
-            <tr key={item.id}>
-              <th scope="row">{item.id}</th>
-              <td>{item.Order_ID}</td>
-              <td>{item.personName}</td>
-              <td>{item.products}</td>
-              <td>{item.quantity}</td>
-              <td>{item.status}</td>
-              <td>{item.totalamount}</td>
+            <tr className='text-center' key={item.id}>
+              <th className='text-center' scope="row">{item.id}</th>
+              <td className='text-center'>{item.Order_ID}</td>
+              <td className='text-center'>{item.personName}</td>
+              <td className='text-center'>{item.products}</td>
+              <td className='text-center'>{item.quantity}</td>
+              <td className='text-center'>{item.status}</td>
+              <td className='text-center'>{item.totalamount}</td>
               <td className='text-center'>
-                <Button variant="light" onClick={() => handleEditItem(item.id)}>
+                <Button variant="light" className='btn-sm' onClick={() => handleEditItem(item.id)}>
                   <BsPencilSquare />
                 </Button>
-                <Button variant="light" onClick={() => handleDeleteItem(item.id)}>
+                <Button variant="light" className='btn-sm' onClick={() => handleDeleteItem(item.id)}>
                   <BsTrash />
                 </Button>
               </td>

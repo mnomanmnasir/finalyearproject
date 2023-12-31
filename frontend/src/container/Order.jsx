@@ -8,10 +8,9 @@ import { AiOutlinePlus } from 'react-icons/ai';
 
 
 
-const Order = ({ Toggle }) => {
+const Order = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
             {/* Order */}
             <OrderManager />
         </div>
@@ -83,15 +82,15 @@ const OrderManager = () => {
     };
 
     return (
-        <div className="order-manager mt-3">
+        <div className="order-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Orders</h3>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
-                    Add Order
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
+                Add Order
                     </button>
                 </caption>
             </div>
@@ -130,7 +129,7 @@ export const OrderTable = ({ orders, onEdit, onDelete }) => {
     return (
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
-                <tr>
+                <tr className='text-center'>
                     <th>Name</th>
                     <th>Customer ID</th>
                     <th>Customer Name</th>
@@ -141,7 +140,7 @@ export const OrderTable = ({ orders, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {orders.map((order) => (
-                    <tr key={order.id}>
+                    <tr className='text-center' key={order.id}>
                         <td>{order.name}</td>
                         <td>{order.customerId}</td>
                         <td>{order.customerName}</td>

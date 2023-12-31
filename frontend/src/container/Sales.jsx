@@ -3,13 +3,13 @@ import PopUp from './Modal';
 import Navbar from '../components/Navbar';
 
 
-const Sales= ({Toggle}) => {
+const Sales= () => {
  
 
 
     return (
         <>
-        <Navbar Toggle={Toggle}/>
+
             <div>
                 <PopUp title='Sales Order'/>
             </div>

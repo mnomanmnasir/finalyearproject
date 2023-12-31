@@ -7,11 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
 import { baseUrl } from '../App';
+import { AiOutlinePlus } from 'react-icons/ai';
 
-const Product = ({ Toggle }) => {
+
+
+const Product = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
             {/* Product */}
             <ProductManager />
         </div>
@@ -110,10 +112,18 @@ const ProductManager = () => {
     };
 
     return (
-        <div className="product-manager">
+        <div className="product-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
-                <h3>Products</h3>
-                <Button className="mb-3 btn-secondary btn-sm" disabled onClick={openModalToAdd}>Add Product</Button>
+                <h3 className='mt-4'>Products</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" disabled onClick={openModalToAdd}>
+                    
+                    Add Product</Button> */}
+                    <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                        Add Product
+                    </button>
+                </caption>
             </div>
             <ProductTable products={products} onEdit={openModalToEdit} onDelete={deleteProduct} />
             <Modal show={showModal} onHide={closeModal}>
@@ -137,12 +147,12 @@ const ProductManager = () => {
 
 export const ProductTable = ({ products, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
-                    <th>SKU</th>
-                    <th>Name</th>
-                    <th>Description</th>
+                    <th className='text-center'>SKU</th>
+                    <th className='text-center'>Name</th>
+                    <th className='text-center'>Description</th>
                     <th className='text-center'>Unit Price</th>
                     <th className='text-center'>Weight</th>
                     <th className='text-center'>width</th>
@@ -153,18 +163,18 @@ export const ProductTable = ({ products, onEdit, onDelete }) => {
             <tbody>
                 {products.map((product, index) => (
                     <tr key={index}>
-                        <td >{product.sku}</td>
-                        <td >{product.name}</td>
-                        <td >{product.description}</td>
+                        <td className='text-center' >{product.sku}</td>
+                        <td className='text-center'>{product.name}</td>
+                        <td className='text-center'>{product.description}</td>
                         <td className='text-center'>{product.unitPrice}</td>
                         <td className='text-center'>{product.weight}</td>
                         <td className='text-center'>{product.width}</td>
                         <td className='text-center'>{product.depth}</td>
                         <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(product)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(product)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="light" onClick={() => onDelete(product.id)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onDelete(product.id)}>
                                 <BsTrash />
                             </Button>
                         </td>

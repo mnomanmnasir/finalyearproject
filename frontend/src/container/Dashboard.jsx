@@ -8,11 +8,10 @@ import CardWithChart from './CardChart'
 
 
 
-const Dashboard = ({ Toggle }) => {
+const Dashboard = () => {
     return (
 
         <div className='px-3'>
-            <Navbar Toggle={Toggle} />
             <CardWithChart />
             <Chart />
             <Tables />
