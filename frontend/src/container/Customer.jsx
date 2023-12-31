@@ -83,7 +83,7 @@ const CustomerManager = () => {
                 <h3 className='mt-4'>Customer</h3>
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
+                        <AiOutlinePlus className="me-2" /> customer
                         {/* Add Customer */}
                     </button>
                 </caption>

@@ -12,6 +12,6 @@ module.exports = function (app) {
 
     app.get("/api/v1/inventory", controller.getAllInventory);
     // app.post("/api/v1/inventory", controller.createPurchases);
-    // app.put("/api/v1/inventory", controller.updatePurchases);
+    app.put("/api/v1/inventory", controller.updateInventory);
     // app.delete("/api/v1/inventory", controller.deletePurchases);
 };

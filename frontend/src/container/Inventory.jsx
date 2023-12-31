@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
-
+import Axios from 'axios';
+import { baseUrl } from '../App';
 
 const Inventory = ({ Toggle }) => {
     return (
@@ -23,32 +24,57 @@ const InventoryManager = () => {
     const [inventory, setInventory] = useState(inventoryData);
     const [showModal, setShowModal] = useState(false);
     const [currentInventory, setCurrentInventory] = useState({
-        id: null,
-        name: '',
+        _id: null,
+        name: "",
         quantityOnHand: 0,
         quantityReserved: 0,
-        productId: '',
-        productName: '',
-        warehouseId: '',
-        warehouseName: '',
+        product: {
+            _id: "",
+            sku: "",
+            name: "",
+            description: "",
+            unitPrice: 0,
+            weight: 0,
+            created_by: "",
+            created_on: ""
+        },
     });
 
-    // Fetch inventory function (dummy implementation)
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchInventoryFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/inventory');
+            setInventory(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
+    // Fetch users when the component mounts
     useEffect(() => {
-        // Replace with real API call
-        // setInventory(fetchInventoryFromAPI());
+        fetchInventoryFromAPI();
     }, []);
 
     const openModalToAdd = () => {
         setCurrentInventory({
-            id: null,
-            name: '',
+            _id: null,
+            name: "",
             quantityOnHand: 0,
             quantityReserved: 0,
-            productId: '',
-            productName: '',
-            warehouseId: '',
-            warehouseName: '',
+            product: {
+                _id: "",
+                sku: "",
+                name: "",
+                description: "",
+                unitPrice: 0,
+                weight: 0,
+                created_by: "",
+                created_on: ""
+            },
         });
         setShowModal(true);
     };
@@ -62,22 +88,51 @@ const InventoryManager = () => {
         setShowModal(false);
     };
 
-    const saveInventoryItem = () => {
-        if (currentInventory.id) {
-            // Update inventory item in the list
-            setInventory(
-                inventory.map((item) =>
-                    item.id === currentInventory.id ? currentInventory : item
-                )
-            );
-            toast.success('Inventory item updated successfully');
-        } else {
-            // Add new inventory item
-            const newItemWithId = { ...currentInventory, id: Date.now() };
-            setInventory([...inventory, newItemWithId]);
-            toast.success('Inventory item added successfully');
+    // const saveInventoryItem = () => {
+    //     if (currentInventory._id) {
+    //         // Update inventory item in the list
+    //         setInventory(
+    //             inventory.map((item) =>
+    //                 item.id === currentInventory._id ? currentInventory : item
+    //             )
+    //         );
+    //         toast.success('Inventory item updated successfully');
+    //     } else {
+    //         // Add new inventory item
+    //         const newItemWithId = { ...currentInventory, _id: Date.now() };
+    //         setInventory([...inventory, newItemWithId]);
+    //         toast.success('Inventory item added successfully');
+    //     }
+    //     setShowModal(false);
+    // };
+
+    const saveInventoryItem = async () => {
+        // const apiUrl = 'http://localhost/api/v1/inventory';
+
+        try {
+            let response;
+
+            if (currentInventory._id) {
+                // Update inventory item
+                response = await Axios.put(baseUrl + `/inventory`, currentInventory);
+                setInventory(
+                    inventory.map((item) =>
+                        item._id === currentInventory._id ? currentInventory : item
+                    )
+                );
+                toast.success('Inventory item updated successfully');
+            } else {
+                // Add new inventory item
+                response = await Axios.post(baseUrl + `/inventory`, currentInventory);
+                const newItemWithId = { ...currentInventory, _id: response.data._id }; // Use _id from the response
+                setInventory([...inventory, newItemWithId]);
+                toast.success('Inventory item added successfully');
+            }
+            setShowModal(false);
+        } catch (error) {
+            console.error('Error saving inventory item:', error);
+            toast.error('Error saving inventory item');
         }
-        setShowModal(false);
     };
 
     const deleteInventoryItem = (itemId) => {
@@ -87,22 +142,24 @@ const InventoryManager = () => {
 
     return (
         <div className="inventory-manager mt-3">
-            <div className="d-flex justify-content-between">
-                <h3 className='mt-4'>Inventory</h3>
-                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+            <div className='m-2'>
+                <div className="d-flex justify-content-between">
+                    <h3 className='mt-4'>Inventory</h3>
+                    {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Inventory
                 </Button> */}
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
-                    </button>
-                </caption>
+                    <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                        <button className="btn btn-secondary" disabled onClick={openModalToAdd}>
+                            <AiOutlinePlus className="me-2" /> Inventory
+                        </button>
+                    </caption>
+                </div>
+                <InventoryTable
+                    inventory={inventory}
+                    onEdit={openModalToEdit}
+                    onDelete={deleteInventoryItem}
+                />
             </div>
-            <InventoryTable
-                inventory={inventory}
-                onEdit={openModalToEdit}
-                onDelete={deleteInventoryItem}
-            />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
@@ -120,7 +177,7 @@ const InventoryManager = () => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={saveInventoryItem}>
-                        {currentInventory.id ? 'Save Changes' : 'Add Inventory Item'}
+                        {currentInventory._id ? 'Save Changes' : 'Add Inventory Item'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -131,36 +188,40 @@ const InventoryManager = () => {
 
 export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
     return (
+
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
                 <tr>
                     <th>Name</th>
-                    <th>Quantity On Hand</th>
-                    <th>Quantity Reserved</th>
-                    <th>Product ID</th>
-                    <th>Product Name</th>
-                    <th>Warehouse ID</th>
-                    <th>Warehouse Name</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Quantity On Hand</th>
+                    <th className='text-center'>Quantity Reserved</th>
+                    <th className='text-center'>Product Name</th>
+                    <th className='text-center'>Unit Price</th>
+                    {/* <th>Warehouse ID</th>
+                    <th>Warehouse Name</th> */}
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {inventory.map((item) => (
-                    <tr key={item.id}>
+                {inventory.map((item, index) => (
+                    <tr key={index}>
                         <td>{item.name}</td>
-                        <td>{item.quantityOnHand}</td>
-                        <td>{item.quantityReserved}</td>
-                        <td>{item.productId}</td>
-                        <td>{item.productName}</td>
-                        <td>{item.warehouseId}</td>
-                        <td>{item.warehouseName}</td>
-                        <td>
+                        <td className='text-center'>{item.quantityOnHand}</td>
+                        <td className='text-center'>{item.quantityReserved}</td>
+                        <td className='text-center'>{item.product ? item.product.name : 'N/A'}</td>
+                        <td className='text-center'>{item.product ? item.product.unitPrice : 'N/A'}</td>
+                        {/* <td className='text-center'>{item.product.name}</td>
+                        <td className='text-center'>{item.product.unitPrice}</td> */}
+                        {/* <td>{item.warehouseId}</td>
+                        <td>{item.warehouseName}</td> */}
+                        <td className='text-center'>
                             <Button variant="light" onClick={() => onEdit(item)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
                                 variant="light"
                                 onClick={() => onDelete(item.id)}
+                                disabled
                             >
                                 <BsTrash />
                             </Button>
@@ -188,6 +249,7 @@ export const InventoryForm = ({ inventoryItem, setInventoryItem }) => {
                 <Form.Label>Quantity On Hand</Form.Label>
                 <Form.Control
                     type="number"
+                    disabled
                     value={inventoryItem.quantityOnHand}
                     onChange={(e) => setInventoryItem({ ...inventoryItem, quantityOnHand: parseInt(e.target.value) || 0 })}
                     required
@@ -197,12 +259,13 @@ export const InventoryForm = ({ inventoryItem, setInventoryItem }) => {
                 <Form.Label>Quantity Reserved</Form.Label>
                 <Form.Control
                     type="number"
+                    disabled
                     value={inventoryItem.quantityReserved}
                     onChange={(e) => setInventoryItem({ ...inventoryItem, quantityReserved: parseInt(e.target.value) || 0 })}
                     required
                 />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
                 <Form.Label>Product ID</Form.Label>
                 <Form.Control
                     type="text"
@@ -219,8 +282,8 @@ export const InventoryForm = ({ inventoryItem, setInventoryItem }) => {
                     onChange={(e) => setInventoryItem({ ...inventoryItem, productName: e.target.value })}
                     required
                 />
-            </Form.Group>
-            <Form.Group>
+            </Form.Group> */}
+            {/* <Form.Group>
                 <Form.Label>Warehouse ID</Form.Label>
                 <Form.Control
                     type="text"
@@ -237,7 +300,7 @@ export const InventoryForm = ({ inventoryItem, setInventoryItem }) => {
                     onChange={(e) => setInventoryItem({ ...inventoryItem, warehouseName: e.target.value })}
                     required
                 />
-            </Form.Group>
+            </Form.Group> */}
         </Form>
     );
 };

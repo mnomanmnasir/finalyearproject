@@ -53,6 +53,8 @@ require("./app/routes/product.routes")(app);
 require("./app/routes/purchase.routes")(app);
 require("./app/routes/inventory.routes")(app);
 require("./app/routes/warehouse.routes")(app);
+require("./app/routes/customer.routes")(app);
+require("./app/routes/order.routes")(app);
 // require("./app/routes/social.routes")(app);
 // require("./app/routes/ticket.routes")(app);
 // require("./app/routes/card.routes")(app);

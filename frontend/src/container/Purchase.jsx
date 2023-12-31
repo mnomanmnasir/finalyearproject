@@ -11,7 +11,6 @@ const Purchase = ({ Toggle }) => {
     return (
         <div>
             <Navbar Toggle={Toggle} />
-
             <PurchaseManager />
         </div>
     );
@@ -48,6 +47,18 @@ const PurchaseManager = () => {
             setLoading(false);
         }
     };
+    // const [products, setProducts] = useState([]);
+
+    // const fetchProductsFromAPI = async () => {
+    //     try {
+    //         const response = await Axios.get(baseUrl + '/products');
+    //         setProducts(response.data);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         setError(error);
+    //         setLoading(false);
+    //     }
+    // };
 
     useEffect(() => {
         fetchPurchasesFromAPI();
@@ -61,6 +72,7 @@ const PurchaseManager = () => {
             email: '',
             pay: '',
             advance: "",
+            warehouseId: "",
             status: '',
             reference: '',
             // user: '',
@@ -79,22 +91,6 @@ const PurchaseManager = () => {
     };
 
     const savePurchase = () => {
-        // if (currentPurchase._id) {
-        //     // Update purchase in the list
-        //     setPurchases(
-        //         purchases.map((p) =>
-        //             p._id === currentPurchase._id ? currentPurchase : p
-        //         )
-        //     );
-        //     toast.success('Purchase updated successfully');
-        // } else {
-        //     // Add new purchase
-        //     console.log("adding purchase",currentPurchase);
-        //     const newPurchaseWithId = { ...currentPurchase, _id: Date.now() };
-        //     setPurchases([...purchases, newPurchaseWithId]);
-        //     toast.success('Purchase added successfully');
-        // }
-        // setShowModal(false);
 
         if (currentPurchase._id) {
             // Update purchase in the list
@@ -134,7 +130,7 @@ const PurchaseManager = () => {
     };
 
     return (
-        <div className="purchase-manager">
+        <div className="purchase-manager m-2">
             <div className="d-flex justify-content-between">
                 <h3>Purchase</h3>
                 <Button className="mb-3 btn-sm btn-secondary" onClick={openModalToAdd}>
@@ -172,56 +168,136 @@ const PurchaseManager = () => {
     );
 };
 
-export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
+
+const ProductModal = ({ showProductModal, handleCloseProductModal, data }) => {
+    // Example product data
+    // const products = [
+    //     { id: 1, name: 'Product 1', price: '$20.00' },
+    //     { id: 2, name: 'Product 2', price: '$25.00' },
+    //     // Add more products as needed
+    // ];
+
     return (
-        <table className="table">
-            <thead>
-                <tr>
-                    <th>Company</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Payment</th>
-                    <th>Advance</th>
-                    <th>Status</th>
-                    <th>Reference</th>
-                    {/* <th>User</th> */}
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {purchases.map((purchase, index) => (
-                    <tr key={index}>
-                        <td>{purchase.company}</td>
-                        <td>{purchase.contact}</td>
-                        <td>{purchase.email}</td>
-                        <td>{purchase.pay}</td>
-                        <td>{purchase.advance}</td>
-                        <td>{purchase.status}</td>
-                        <td>{purchase.reference}</td>
-                        {/* <td>{purchase.user}</td> */}
-                        <td>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(purchase)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button
-                                variant="light"
-                                className='btn-sm'
-                                onClick={() => onDelete(purchase.id)}
-                            >
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Modal show={showProductModal} onHide={handleCloseProductModal}>
+            <Modal.Header closeButton>
+                <Modal.Title>Product List</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {/* Table to display products */}
+                {console.log(data)}
+                <table className="table" striped bordered hover>
+                    <thead>
+                        <tr>
+                            {/* <th>ID</th> */}
+                            {/* <th>ID</th> */}
+                            <th>Product Name</th>
+                            <th>quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((product, index) => (
+                            <tr key={index}>
+                                <td>{product.product.name}</td>
+                                <td>{product.quantity}</td>
+                                <td>{product.product.unitPrice}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseProductModal}>
+                    Close
+                </Button>
+                {/* Add additional buttons if needed */}
+            </Modal.Footer>
+        </Modal>
+    );
+};
+
+export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
+
+    const [productModal, setProductModal] = useState(false);
+    const [productData, setProductData] = useState([]);
+
+    const handleShowProductModal = (products) => {
+        setProductData(products);
+        setProductModal(true)
+    };
+    const handleCloseProductModal = () => setProductModal(false);
+
+    return (
+        <div>
+            <ProductModal showProductModal={productModal} data={productData} handleCloseProductModal={handleCloseProductModal} />
+
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th className='text-center'>Contact</th>
+                        <th className='text-center'>Email</th>
+                        <th className='text-center'>Payment</th>
+                        <th className='text-center'>Items</th>
+                        <th className='text-center'>Advance</th>
+                        <th className='text-center'>Status</th>
+                        <th className='text-center'>Reference</th>
+                        {/* <th>User</th> */}
+                        <th className='text-center'>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {purchases.map((purchase, index) => (
+                        <tr key={index}>
+                            <td>{purchase.company}</td>
+                            <td className='text-center'>{purchase.contact}</td>
+                            <td className='text-center'>{purchase.email}</td>
+                            <td className='text-center'>{purchase.pay}</td>
+                            <td className='text-center' onClick={() => handleShowProductModal(purchase.products)}>{purchase.products.length}</td>
+                            <td className='text-center'>{purchase.advance}</td>
+                            <td className='text-center'>{purchase.status}</td>
+                            <td className='text-center'>{purchase.reference}</td>
+                            {/* <td>{purchase.user}</td> */}
+                            <td className='text-center'>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(purchase)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button
+                                    variant="light"
+                                    className='btn-sm'
+                                    onClick={() => onDelete(purchase.id)}
+                                >
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 };
 
 export const PurchaseForm = ({ purchase, setPurchase }) => {
+    // const handleProductChange = (index, key, value) => {
+    //     const updatedProducts = [...purchase.products];
+    //     updatedProducts[index][key] = value;
+    //     setPurchase({ ...purchase, products: updatedProducts });
+    // };
     const handleProductChange = (index, key, value) => {
         const updatedProducts = [...purchase.products];
         updatedProducts[index][key] = value;
+
+        // If the product name is changed, update the unit price as well
+        if (key === 'name') {
+            const selectedProduct = products.find(product => product.name === value);
+            if (selectedProduct) {
+                updatedProducts[index]['_id'] = selectedProduct._id;
+                updatedProducts[index]['name'] = selectedProduct.name;
+                updatedProducts[index]['unitPrice'] = selectedProduct.unitPrice;
+            }
+        }
+
         setPurchase({ ...purchase, products: updatedProducts });
     };
 
@@ -237,6 +313,27 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
         updatedProducts.splice(index, 1);
         setPurchase({ ...purchase, products: updatedProducts });
     };
+
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+    const [products, setProducts] = useState([]);
+    const [id, setId] = useState('');
+
+    const fetchProductsFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/products');
+            setProducts(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        // fetchPurchasesFromAPI();
+        fetchProductsFromAPI();
+    }, []);
 
     return (
         <Form>
@@ -287,13 +384,26 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                         <div className="row" key={index} >
                             <div className="col-md-6">
                                 <Form.Label>Name</Form.Label>
-                                <Form.Control
+                                {/* <Form.Control
                                     type="text"
                                     placeholder="Product Name"
                                     value={product.name}
                                     onChange={(e) => handleProductChange(index, 'name', e.target.value)}
                                     required
+                                /> */}
+                                <input
+                                    list="productNames"
+                                    className="form-control"
+                                    placeholder="Product Name"
+                                    value={product.name}
+                                    onChange={(e) => handleProductChange(index, 'name', e.target.value)}
+                                    required
                                 />
+                                <datalist id="productNames">
+                                    {products.map((prod, idx) => (
+                                        <option key={idx} value={prod.name} onSelect={() => setId(prod._id)} />
+                                    ))}
+                                </datalist>
                             </div>
                             <div className="col-md-3 ">
                                 <Form.Label>Quantity</Form.Label>
@@ -332,8 +442,8 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                         <Form.Label>Payment</Form.Label>
                         <Form.Control
                             type="text"
-                            value={purchase.payment}
-                            onChange={(e) => setPurchase({ ...purchase, payment: e.target.value })}
+                            value={purchase.pay}
+                            onChange={(e) => setPurchase({ ...purchase, pay: e.target.value })}
                             required
                         />
                     </Form.Group>
@@ -385,6 +495,7 @@ const purchaseData = [
         status: 'Pending',
         reference: 'REF123',
         // user: 'User1',
+        warehouseId: 'p1',
         products: [
             { name: 'Product A', quantity: 10, unitPrice: 10 },
             { name: 'Product B', quantity: 20, unitPrice: 20 },
@@ -399,6 +510,7 @@ const purchaseData = [
         advance: "7000",
         status: 'Completed',
         reference: 'REF456',
+        warehouseId: 'p2',
         // user: 'User2',
         products: [
             { name: 'Product C', quantity: 15, unitPrice: 15 },
