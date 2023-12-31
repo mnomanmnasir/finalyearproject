@@ -52,7 +52,7 @@ const App = () => {
               </div>
             )}
             <div className={`col-${!toggle ? '12' : '10'}`}>
-              {authenticated && <Navbar Toggle={Toggle} onLogout={handleLogout} />}
+              <Navbar Toggle={Toggle} onLogout={handleLogout} />
               <Routes>
                 <Route path="/" element={<Dashboard Toggle={Toggle} />} />
                 <Route path="/user" element={<User Toggle={Toggle} />} />

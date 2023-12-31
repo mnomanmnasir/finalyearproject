@@ -7,10 +7,9 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 
-const Inventory = ({ Toggle }) => {
+const Inventory = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
             {/* Inventory */}
             <InventoryManager />
         </div>
@@ -86,15 +85,15 @@ const InventoryManager = () => {
     };
 
     return (
-        <div className="inventory-manager mt-3">
+        <div className="inventory-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Inventory</h3>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
-                    Add Inventory
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
+                        Add Inventory
                     </button>
                 </caption>
             </div>
@@ -133,7 +132,7 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
     return (
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
-                <tr>
+                <tr className='text-center'>
                     <th>Name</th>
                     <th>Quantity On Hand</th>
                     <th>Quantity Reserved</th>
@@ -146,7 +145,7 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {inventory.map((item) => (
-                    <tr key={item.id}>
+                    <tr className='text-center' key={item.id}>
                         <td>{item.name}</td>
                         <td>{item.quantityOnHand}</td>
                         <td>{item.quantityReserved}</td>
@@ -155,11 +154,11 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
                         <td>{item.warehouseId}</td>
                         <td>{item.warehouseName}</td>
                         <td>
-                            <Button variant="light" onClick={() => onEdit(item)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(item)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="light"
+                                variant="light" className='btn-sm'
                                 onClick={() => onDelete(item.id)}
                             >
                                 <BsTrash />

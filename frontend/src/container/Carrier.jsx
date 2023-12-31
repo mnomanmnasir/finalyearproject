@@ -7,10 +7,9 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 
-const Carrier = ({ Toggle }) => {
+const Carrier = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
             {/* Carrier */}
             <CarrierManager />
         </div>
@@ -78,15 +77,15 @@ const CarrierManager = () => {
     };
 
     return (
-        <div className="carrier-manager mt-3">
+        <div className="carrier-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Carrier</h3>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
-                    Add Carrier
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
+                Add Carrier
                     </button>
                 </caption>
             </div>
@@ -125,7 +124,7 @@ export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
     return (
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
-                <tr>
+                <tr className='text-center'>
                     <th>Name</th>
                     <th>Contact Person</th>
                     <th>Contact Number</th>
@@ -134,16 +133,16 @@ export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {carriers.map((carrier) => (
-                    <tr key={carrier.id}>
+                    <tr className='text-center' key={carrier.id}>
                         <td>{carrier.name}</td>
                         <td>{carrier.contactPerson}</td>
                         <td>{carrier.contactNumber}</td>
                         <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(carrier)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(carrier)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="light"
+                                variant="light" className='btn-sm' 
                                 onClick={() => onDelete(carrier.id)}
                             >
                                 <BsTrash />

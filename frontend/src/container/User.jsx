@@ -11,10 +11,10 @@ import Navbar from '../components/Navbar';
 
 
 
-const User = ({ Toggle }) => {
+const User = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
+
             {/* User */}
             < UserManager />
         </div >
@@ -138,7 +138,7 @@ const UserManager = () => {
     };
 
     return (
-        <div className="user-manager mt-3">
+        <div className="user-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Users</h3>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
@@ -147,6 +147,7 @@ const UserManager = () => {
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
+                        Add User
                     </button>
                 </caption>
             </div>
@@ -186,12 +187,12 @@ export const UserTable = ({ users, onEdit, onDelete }) => {
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
                 <tr>
-                    <th>Email</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Status</th>
-                    <th>Last Login</th>
-                    <th>Roles</th>
+                    <th className='text-center'>Email</th>
+                    <th className='text-center'>First Name</th>
+                    <th className='text-center'>Last Name</th>
+                    <th className='text-center'>Status</th>
+                    <th className='text-center'>Last Login</th>
+                    <th className='text-center'>Roles</th>
                     {/* <th>Created On</th>
                     <th>Created By</th>
                     <th>Updated On</th>
@@ -201,22 +202,22 @@ export const UserTable = ({ users, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {users.map((user, index) => (
-                    <tr key={index}>
-                        <td>{user.email}</td>
-                        <td>{user.firstName}</td>
-                        <td>{user.lastName}</td>
-                        <td>{user.status}</td>
-                        <td>{user.last_login ? user.last_login.toISOString() : ''}</td>
-                        <td>{user.name || user.roles[0].name}</td>
+                    <tr className='text-center' key={index}>
+                        <td className='text-center'>{user.email}</td>
+                        <td className='text-center'>{user.firstName}</td>
+                        <td className='text-center'>{user.lastName}</td>
+                        <td className='text-center'>{user.status}</td>
+                        <td className='text-center'>{user.last_login ? user.last_login.toISOString() : ''}</td>
+                        <td className='text-center'>{user.name || user.roles[0].name}</td>
                         {/* <td>{user.created_on ? user.created_on.toISOString() : ''}</td>
                         <td>{user.created_by}</td>
                         <td>{user.updated_on ? user.updated_on.toISOString() : ''}</td>
                         <td>{user.updated_by}</td> */}
                         <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(user)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(user)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="light" onClick={() => onDelete(user._id)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onDelete(user._id)}>
                                 <BsTrash />
                             </Button>
                         </td>

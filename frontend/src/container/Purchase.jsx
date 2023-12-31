@@ -6,12 +6,13 @@ import { BsPencilSquare, BsTrash, BsDashCircle } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { baseUrl } from '../App';
 import Axios from 'axios';
+import { AiOutlinePlus } from 'react-icons/ai';
 
-const Purchase = ({ Toggle }) => {
+
+
+const Purchase = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
-
             <PurchaseManager />
         </div>
     );
@@ -134,12 +135,17 @@ const PurchaseManager = () => {
     };
 
     return (
-        <div className="purchase-manager">
+        <div className="purchase-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
-                <h3>Purchase</h3>
-                <Button className="mb-3 btn-sm btn-secondary" onClick={openModalToAdd}>
-                    Add Purchase
-                </Button>
+                <h3 className='mt-4'>Purchase</h3>
+                {/* <Button className="mb-3 btn-sm btn-secondary" onClick={openModalToAdd}>
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                        Add Purchase
+                    </button>
+                </caption>
             </div>
             <PurchaseTable
                 purchases={purchases}
@@ -174,9 +180,9 @@ const PurchaseManager = () => {
 
 export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
-                <tr>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
+                <tr className='text-center'>
                     <th>Company</th>
                     <th>Contact</th>
                     <th>Email</th>
@@ -190,7 +196,7 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {purchases.map((purchase, index) => (
-                    <tr key={index}>
+                    <tr className='text-center' key={index}>
                         <td>{purchase.company}</td>
                         <td>{purchase.contact}</td>
                         <td>{purchase.email}</td>

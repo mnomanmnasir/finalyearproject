@@ -8,43 +8,8 @@ import 'aos/dist/aos.css';
 
 const CardWithChart = () => {
 
-    const [options, setOptions] = useState({
-        chart: {
-            height: 250,
-            type: 'radialBar',
-        },
-        series: [30],
-        labels: ['Progress'],
-
-    });
-
     useEffect(() => {
 
-        // Dynamically update chart options when the component mounts
-        setOptions({
-            chart: {
-                height: 150,
-                type: 'radialBar',
-            },
-            series: [70],
-            labels: ['Progress'],
-            plotOptions: {
-                radialBar: {
-                    hollow: {
-                        size: '70%',
-                    },
-                    dataLabels: {
-                        name: {
-                            show: true,
-                        },
-                        value: {
-                            show: true,
-                            fontSize: '12px', // Adjust the font size as needed
-                        },
-                    },
-                },
-            },
-        });
         AOS.init();
     }, []);
 
@@ -53,7 +18,7 @@ const CardWithChart = () => {
         <div className="container-fluid">
             <div className="row g-3 my-2">
                 <div className="col-md-3">
-                    <div data-aos="flip-right" data-aos-easing="linear" data-aos-duration="600" className="p-3 bg-green shadow-sm d-flex justify-content-around align-items-center rounded">
+                    <div data-aos="flip-right" data-aos-easing="linear" data-aos-duration="600" className="p-3 bg-green d-flex justify-content-around align-items-center shadow-sm rounded">
                         <div>
                             <h3 className='fs-2'>
                                 230
@@ -62,7 +27,7 @@ const CardWithChart = () => {
                                 Products
                             </h3>
                         </div>
-                        <ReactApexChart options={options} series={options.series} type="radialBar" height={150} />
+                        <i className="bi bi-cart-plus p-3 fs-1"></i>
                     </div>
                 </div>
                 <div className="col-md-3">
@@ -75,7 +40,8 @@ const CardWithChart = () => {
                                 Sales
                             </h3>
                         </div>
-                        <ReactApexChart options={options} series={options.series} type="radialBar" height={150} />
+                        <i className="bi bi-currency-dollar p-3 fs-1"></i>
+
                     </div>
                 </div>
                 <div className="col-md-3">
@@ -88,7 +54,7 @@ const CardWithChart = () => {
                                 Delivery
                             </h3>
                         </div>
-                        <ReactApexChart options={options} series={options.series} type="radialBar" height={150} />
+                        <i className="bi bi-truck p-3 fs-1"></i>
                     </div>
                 </div>
                 <div className="col-md-3">
@@ -101,7 +67,8 @@ const CardWithChart = () => {
                                 Increase
                             </h3>
                         </div>
-                        <ReactApexChart options={options} series={options.series} type="radialBar" height={150} />
+                        <i className="bi bi-graph-up-arrow p-3 fs-1"></i>
+
                     </div>
                 </div>
             </div>

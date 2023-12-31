@@ -7,10 +7,9 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 
-const Supplier = ({ Toggle }) => {
+const Supplier = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
             {/* Supplier */}
             <SupplierManager />
         </div>
@@ -80,7 +79,7 @@ const SupplierManager = () => {
     };
 
     return (
-        <div className="supplier-manager mt-3">
+        <div className="supplier-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Suppliers</h3>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
@@ -89,6 +88,7 @@ const SupplierManager = () => {
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
+                        Add Supplier
                     </button>
                 </caption>
             </div>
@@ -127,27 +127,27 @@ export const SupplierTable = ({ suppliers, onEdit, onDelete }) => {
     return (
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
-                <tr>
+                <tr className='text-center'>
                     <th>Supplier Name</th>
                     <th>Contact Person</th>
                     <th>Contact Number</th>
                     <th>Email</th>
-                    <th className='text-center'>Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {suppliers.map((supplier) => (
-                    <tr key={supplier.id}>
+                    <tr className='text-center' key={supplier.id}>
                         <td>{supplier.supplierName}</td>
                         <td>{supplier.contactPerson}</td>
                         <td>{supplier.contactNumber}</td>
                         <td>{supplier.email}</td>
-                        <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(supplier)}>
+                        <td>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(supplier)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="light"
+                                variant="light" className='btn-sm'
                                 onClick={() => onDelete(supplier.id)}
                             >
                                 <BsTrash />

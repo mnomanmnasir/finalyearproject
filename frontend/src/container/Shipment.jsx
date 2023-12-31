@@ -8,10 +8,10 @@ import { AiOutlinePlus } from 'react-icons/ai';
 
 
 
-const Shipment = ({ Toggle }) => {
+const Shipment = () => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
+
             {/* Shipment */}
             <ShipmentManager />
         </div>
@@ -85,15 +85,15 @@ const ShipmentManager = () => {
     };
 
     return (
-        <div className="shipment-manager mt-3">
+        <div className="shipment-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Shipment</h3>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
-                    Add Shipment
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
+                        Add Shipment
                     </button>
                 </caption>
             </div>
@@ -132,7 +132,7 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
     return (
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
-                <tr>
+                <tr className='text-center'>
                     <th>Name</th>
                     <th>Date</th>
                     <th>Arrival Date</th>
@@ -144,7 +144,7 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {shipments.map((shipment) => (
-                    <tr key={shipment.id}>
+                    <tr className='text-center' key={shipment.id}>
                         <td>{shipment.name}</td>
                         <td>{shipment.date}</td>
                         <td>{shipment.arrivalDate}</td>
@@ -152,11 +152,11 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
                         <td>{shipment.orderId}</td>
                         <td>{shipment.carrierId}</td>
                         <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(shipment)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(shipment)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="light"
+                                variant="light" className='btn-sm'
                                 onClick={() => onDelete(shipment.id)}
                             >
                                 <BsTrash />
