@@ -4,7 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
-
+import Axios from 'axios';
+import BaseUrl from "../App"
 
 const Warehouse = ({ Toggle }) => {
     return (
@@ -31,10 +32,23 @@ const WarehouseManager = () => {
         status: '',
     });
 
-    // Fetch warehouses function (dummy implementation)
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchWarehousesFromAPI = async () => {
+        try {
+            const response = await Axios.get(BaseUrl + '/warehouse');
+            setWarehouses(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
+    // Fetch users when the component mounts
     useEffect(() => {
-        // Replace with real API call
-        // setWarehouses(fetchWarehousesFromAPI());
+        fetchWarehousesFromAPI();
     }, []);
 
     const openModalToAdd = () => {
