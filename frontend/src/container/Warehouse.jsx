@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
-import BaseUrl from "../App"
+import { baseUrl } from "../App"
 
 const Warehouse = ({ Toggle }) => {
     return (
@@ -23,7 +23,7 @@ const WarehouseManager = () => {
     const [warehouses, setWarehouses] = useState(warehouseData);
     const [showModal, setShowModal] = useState(false);
     const [currentWarehouse, setCurrentWarehouse] = useState({
-        id: null,
+        _id: null,
         name: '',
         address: '',
         capacity: 0,
@@ -37,7 +37,7 @@ const WarehouseManager = () => {
 
     const fetchWarehousesFromAPI = async () => {
         try {
-            const response = await Axios.get(BaseUrl + '/warehouse');
+            const response = await Axios.get(baseUrl + '/warehouse');
             setWarehouses(response.data);
             setLoading(false);
         } catch (error) {
@@ -53,7 +53,7 @@ const WarehouseManager = () => {
 
     const openModalToAdd = () => {
         setCurrentWarehouse({
-            id: null,
+            _id: null,
             name: '',
             address: '',
             capacity: 0,
@@ -74,13 +74,13 @@ const WarehouseManager = () => {
     };
 
     const saveWarehouse = () => {
-        if (currentWarehouse.id) {
+        if (currentWarehouse._id) {
             // Update warehouse in the list
-            setWarehouses(warehouses.map(wh => wh.id === currentWarehouse.id ? currentWarehouse : wh));
+            setWarehouses(warehouses.map(wh => wh._id === currentWarehouse._id ? currentWarehouse : wh));
             toast.success('Warehouse updated successfully');
         } else {
             // Add new warehouse
-            const newWarehouseWithId = { ...currentWarehouse, id: Date.now() };
+            const newWarehouseWithId = { ...currentWarehouse, _id: Date.now() };
             setWarehouses([...warehouses, newWarehouseWithId]);
             toast.success('Warehouse added successfully');
         }
@@ -88,7 +88,7 @@ const WarehouseManager = () => {
     };
 
     const deleteWarehouse = (warehouseId) => {
-        setWarehouses(warehouses.filter(wh => wh.id !== warehouseId));
+        setWarehouses(warehouses.filter(wh => wh._id !== warehouseId));
         toast.info('Warehouse deleted successfully');
     };
 
@@ -102,7 +102,7 @@ const WarehouseManager = () => {
             <WarehouseTable warehouses={warehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{currentWarehouse.id ? 'Edit Warehouse' : 'Add Warehouse'}</Modal.Title>
+                    <Modal.Title>{currentWarehouse._id ? 'Edit Warehouse' : 'Add Warehouse'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <WarehouseForm warehouse={currentWarehouse} setWarehouse={setCurrentWarehouse} />
@@ -110,7 +110,7 @@ const WarehouseManager = () => {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>Close</Button>
                     <Button variant="primary" onClick={saveWarehouse}>
-                        {currentWarehouse.id ? 'Save Changes' : 'Add Warehouse'}
+                        {currentWarehouse._id ? 'Save Changes' : 'Add Warehouse'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -120,7 +120,7 @@ const WarehouseManager = () => {
 };
 
 export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
-    // const row = [{ id: "name", title: "Name" }, { id: "address", title: "Address" }, { id: "capacity", title: "Capacity" }, { id: "supervisor", title: "Supervisor" }, { id: "temperatureControlled", title: "Temperature" }, { id: "status", title: "Status" }, { id: "actions", title: "Actions" }];
+    // const row = [{ _id: "name", title: "Name" }, { _id: "address", title: "Address" }, { _id: "capacity", title: "Capacity" }, { _id: "supervisor", title: "Supervisor" }, { _id: "temperatureControlled", title: "Temperature" }, { _id: "status", title: "Status" }, { _id: "actions", title: "Actions" }];
     return (
         <table className="table table-hover">
             <thead>
@@ -137,7 +137,7 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {warehouses.map((warehouse) => (
-                    <tr key={warehouse.id} className='justify-content-center'>
+                    <tr key={warehouse._id} className='justify-content-center'>
                         <td>{warehouse.name}</td>
                         <td>{warehouse.address}</td>
                         <td>{warehouse.capacity}</td>
@@ -148,7 +148,7 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
                             <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse.id)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse._id)}>
                                 <BsTrash />
                             </Button>
                         </td>
@@ -226,7 +226,7 @@ export const WarehouseForm = ({ warehouse, setWarehouse }) => {
 
 const warehouseData = [
     {
-        id: 1,
+        _id: 1,
         name: 'Warehouse 1',
         address: 'Address 1',
         capacity: 1000,
@@ -235,7 +235,7 @@ const warehouseData = [
         status: 'Active',
     },
     {
-        id: 2,
+        _id: 2,
         name: 'Warehouse 2',
         address: 'Address 2',
         capacity: 2000,
