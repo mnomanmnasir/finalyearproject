@@ -4,8 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash, BsDashCircle } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
-import { AiOutlinePlus } from 'react-icons/ai';
-
+import { baseUrl } from '../App';
+import Axios from 'axios';
 
 const Purchase = ({ Toggle }) => {
     return (
@@ -23,35 +23,47 @@ const PurchaseManager = () => {
     const [purchases, setPurchases] = useState(purchaseData);
     const [showModal, setShowModal] = useState(false);
     const [currentPurchase, setCurrentPurchase] = useState({
-        id: null,
+        _id: null,
         company: '',
         contact: '',
         email: '',
-        payment: '',
-        advance: 0,
+        pay: '',
+        advance: '',
         status: '',
         reference: '',
-        user: '',
+        // user: '',
         products: [],
     });
 
-    // Fetch purchases function (dummy implementation)
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchPurchasesFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/purchases');
+            setPurchases(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        // Replace with real API call
-        // setPurchases(fetchPurchasesFromAPI());
+        fetchPurchasesFromAPI();
     }, []);
 
     const openModalToAdd = () => {
         setCurrentPurchase({
-            id: null,
+            _id: null,
             company: '',
             contact: '',
             email: '',
-            payment: '',
-            advance: 0,
+            pay: '',
+            advance: "",
             status: '',
             reference: '',
-            user: '',
+            // user: '',
             products: [],
         });
         setShowModal(true);
@@ -67,41 +79,67 @@ const PurchaseManager = () => {
     };
 
     const savePurchase = () => {
-        if (currentPurchase.id) {
+        // if (currentPurchase._id) {
+        //     // Update purchase in the list
+        //     setPurchases(
+        //         purchases.map((p) =>
+        //             p._id === currentPurchase._id ? currentPurchase : p
+        //         )
+        //     );
+        //     toast.success('Purchase updated successfully');
+        // } else {
+        //     // Add new purchase
+        //     console.log("adding purchase",currentPurchase);
+        //     const newPurchaseWithId = { ...currentPurchase, _id: Date.now() };
+        //     setPurchases([...purchases, newPurchaseWithId]);
+        //     toast.success('Purchase added successfully');
+        // }
+        // setShowModal(false);
+
+        if (currentPurchase._id) {
             // Update purchase in the list
-            setPurchases(
-                purchases.map((p) =>
-                    p.id === currentPurchase.id ? currentPurchase : p
-                )
-            );
-            toast.success('Purchase updated successfully');
+            console.log("updating purchase", currentPurchase);
+            Axios.put(baseUrl + "/purchase", currentPurchase)
+                .then(response => {
+                    setPurchases(
+                        purchases.map(p =>
+                            p._id === currentPurchase._id ? response.data : p
+                        )
+                    );
+                    toast.success('Purchase updated successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toast.error('Error updating purchase');
+                });
         } else {
             // Add new purchase
             console.log("adding purchase", currentPurchase);
-            const newPurchaseWithId = { ...currentPurchase, id: Date.now() };
-            setPurchases([...purchases, newPurchaseWithId]);
-            toast.success('Purchase added successfully');
+            Axios.post(baseUrl + "/purchase", currentPurchase)
+                .then(response => {
+                    setPurchases([...purchases, response.data]);
+                    toast.success('Purchase added successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toast.error('Error adding purchase');
+                });
         }
         setShowModal(false);
     };
 
     const deletePurchase = (purchaseId) => {
-        setPurchases(purchases.filter((p) => p.id !== purchaseId));
+        setPurchases(purchases.filter((p) => p._id !== purchaseId));
         toast.info('Purchase deleted successfully');
     };
 
     return (
-        <div className="purchase-manager mt-3">
+        <div className="purchase-manager">
             <div className="d-flex justify-content-between">
-                <h3 className='mt-4'>Purchase</h3>
-                {/* <Button className="mb-3" onClick={openModalToAdd}>
+                <h3>Purchase</h3>
+                <Button className="mb-3 btn-sm btn-secondary" onClick={openModalToAdd}>
                     Add Purchase
-                </Button> */}
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
-                    </button>
-                </caption>
+                </Button>
             </div>
             <PurchaseTable
                 purchases={purchases}
@@ -125,7 +163,7 @@ const PurchaseManager = () => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={savePurchase}>
-                        {currentPurchase.id ? 'Save Changes' : 'Add Purchase'}
+                        {currentPurchase._id ? 'Save Changes' : 'Add Purchase'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -136,8 +174,8 @@ const PurchaseManager = () => {
 
 export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
+        <table className="table">
+            <thead>
                 <tr>
                     <th>Company</th>
                     <th>Contact</th>
@@ -146,27 +184,28 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
                     <th>Advance</th>
                     <th>Status</th>
                     <th>Reference</th>
-                    <th>User</th>
-                    <th className='text-center'>Actions</th>
+                    {/* <th>User</th> */}
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {purchases.map((purchase) => (
-                    <tr key={purchase.id}>
+                {purchases.map((purchase, index) => (
+                    <tr key={index}>
                         <td>{purchase.company}</td>
                         <td>{purchase.contact}</td>
                         <td>{purchase.email}</td>
-                        <td>{purchase.payment}</td>
+                        <td>{purchase.pay}</td>
                         <td>{purchase.advance}</td>
                         <td>{purchase.status}</td>
                         <td>{purchase.reference}</td>
-                        <td>{purchase.user}</td>
-                        <td className='text-center'>
-                            <Button variant="light" onClick={() => onEdit(purchase)}>
+                        {/* <td>{purchase.user}</td> */}
+                        <td>
+                            <Button variant="light" className='btn-sm' onClick={() => onEdit(purchase)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
                                 variant="light"
+                                className='btn-sm'
                                 onClick={() => onDelete(purchase.id)}
                             >
                                 <BsTrash />
@@ -262,7 +301,7 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                                     type="number"
                                     placeholder="Quantity"
                                     value={product.quantity}
-                                    onChange={(e) => handleProductChange(index, 'quantity', parseInt(e.target.value) || 0)}
+                                    onChange={(e) => handleProductChange(index, 'quantity', parseInt(e.target.value) || '')}
                                     required
                                 />
                             </div>
@@ -272,7 +311,7 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                                     type="number"
                                     placeholder="Unit Price"
                                     value={product.unitPrice}
-                                    onChange={(e) => handleProductChange(index, 'unitPrice', parseInt(e.target.value) || 0)}
+                                    onChange={(e) => handleProductChange(index, 'unitPrice', parseInt(e.target.value) || '')}
                                     required
                                 />
                             </div>
@@ -312,15 +351,15 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                 </div>
             </div>
 
-            {/* <Form.Group>
+            <Form.Group>
                 <Form.Label>Status</Form.Label>
                 <Form.Control
                     type="text"
                     value={purchase.status}
                     onChange={(e) => setPurchase({ ...purchase, status: e.target.value })}
                     required
-            />
-            </Form.Group> */}
+                />
+            </Form.Group>
             <Form.Group>
                 <Form.Label>Reference</Form.Label>
                 <Form.Control
@@ -330,15 +369,6 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                     required
                 />
             </Form.Group>
-            {/* <Form.Group>
-                <Form.Label>User</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={purchase.user}
-                    onChange={(e) => setPurchase({ ...purchase, user: e.target.value })}
-                    required
-                />
-            </Form.Group> */}
 
         </Form>
     );
@@ -346,30 +376,30 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
 
 const purchaseData = [
     {
-        id: 1,
+        _id: 1,
         company: 'ABC Corp',
         contact: 'John Doe',
         email: 'john@example.com',
-        payment: 'Credit Card',
-        advance: 5000,
+        pay: 'Credit Card',
+        advance: "5000",
         status: 'Pending',
         reference: 'REF123',
-        user: 'User1',
+        // user: 'User1',
         products: [
             { name: 'Product A', quantity: 10, unitPrice: 10 },
             { name: 'Product B', quantity: 20, unitPrice: 20 },
         ],
     },
     {
-        id: 2,
+        _id: 2,
         company: 'XYZ Ltd',
         contact: 'Jane Smith',
         email: 'jane@example.com',
-        payment: 'Wire Transfer',
-        advance: 7000,
+        pay: 'Wire Transfer',
+        advance: "7000",
         status: 'Completed',
         reference: 'REF456',
-        user: 'User2',
+        // user: 'User2',
         products: [
             { name: 'Product C', quantity: 15, unitPrice: 15 },
             { name: 'Product D', quantity: 25, unitPrice: 25 },
@@ -377,3 +407,4 @@ const purchaseData = [
     },
     // ... add more purchase data as needed
 ];
+

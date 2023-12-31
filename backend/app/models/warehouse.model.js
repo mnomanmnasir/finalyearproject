@@ -5,15 +5,16 @@ const Warehouse = mongoose.model(
     new mongoose.Schema({
         name: { type: String, required: true },
         address: { type: String, required: true },
-        capacity: String,
+        capacity: { type: String, default: 0 },
         supervisor: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            default: null
         },
-        temperatureControlled : Boolean,
-        status: Boolean,
+        temperatureControlled: { type: Boolean, default: false },
+        status: { type: String, default: "active" },
         created_on: { type: Date, default: Date.now, required: true },
-        created_by: { type: String, required: true },
+        created_by: String,
         updated_on: Date,
         updated_by: String,
     })

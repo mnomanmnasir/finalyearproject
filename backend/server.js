@@ -50,6 +50,9 @@ app.get("/", (req, res) => {
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/product.routes")(app);
+require("./app/routes/purchase.routes")(app);
+require("./app/routes/inventory.routes")(app);
+require("./app/routes/warehouse.routes")(app);
 // require("./app/routes/social.routes")(app);
 // require("./app/routes/ticket.routes")(app);
 // require("./app/routes/card.routes")(app);

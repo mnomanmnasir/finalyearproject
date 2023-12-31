@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Col } from 'react-bootstrap';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
@@ -5,8 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
-import { AiOutlinePlus } from 'react-icons/ai';
-
+import { baseUrl } from '../App';
 
 const Product = ({ Toggle }) => {
     return (
@@ -41,7 +41,7 @@ const ProductManager = () => {
 
     const fetchProductsFromAPI = async () => {
         try {
-            const response = await Axios.get('http://localhost:8080/api/v1/products');
+            const response = await Axios.get(baseUrl + '/products');
             setProducts(response.data);
             setLoading(false);
         } catch (error) {
@@ -81,13 +81,23 @@ const ProductManager = () => {
     };
 
     const saveProduct = () => {
-        if (currentProduct.id) {
+        if (currentProduct._id) {
             // Update product in the list
-            setProducts(products.map(prod => prod.id === currentProduct.id ? currentProduct : prod));
-            toast.success('Product updated successfully');
+            Axios.put(baseUrl + "/product", currentProduct)
+                .then(response => {
+                    setProducts(products.map(prod => prod._id === currentProduct._id ? currentProduct : prod));
+                    toast.success('Product updated successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toast.error('Error updating product');
+                });
+
+            // setProducts(products.map(prod => prod.id === currentProduct.id ? currentProduct : prod));
+            // toast.success('Product updated successfully');
         } else {
             // Add new product
-            const newProductWithId = { ...currentProduct, id: Date.now() }; // Assign a unique ID
+            const newProductWithId = { ...currentProduct, _id: Date.now() }; // Assign a unique ID
             setProducts([...products, newProductWithId]);
             toast.success('Product added successfully');
         }
@@ -100,15 +110,10 @@ const ProductManager = () => {
     };
 
     return (
-        <div className="product-manager mt-3">
+        <div className="product-manager">
             <div className="d-flex justify-content-between">
-                <h3 className='mt-4'>Products</h3>
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
-                        {/* Add Product */}
-                    </button>
-                </caption>
+                <h3>Products</h3>
+                <Button className="mb-3 btn-secondary btn-sm" disabled onClick={openModalToAdd}>Add Product</Button>
             </div>
             <ProductTable products={products} onEdit={openModalToEdit} onDelete={deleteProduct} />
             <Modal show={showModal} onHide={closeModal}>
@@ -121,7 +126,7 @@ const ProductManager = () => {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>Close</Button>
                     <Button variant="primary" onClick={saveProduct}>
-                        {currentProduct.id ? 'Save Changes' : 'Add Product'}
+                        {currentProduct._id ? 'Save Changes' : 'Add Product'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -132,8 +137,8 @@ const ProductManager = () => {
 
 export const ProductTable = ({ products, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
+        <table className="table">
+            <thead>
                 <tr>
                     <th>SKU</th>
                     <th>Name</th>
@@ -146,8 +151,8 @@ export const ProductTable = ({ products, onEdit, onDelete }) => {
                 </tr>
             </thead>
             <tbody>
-                {products.map((product) => (
-                    <tr key={product.id}>
+                {products.map((product, index) => (
+                    <tr key={index}>
                         <td >{product.sku}</td>
                         <td >{product.name}</td>
                         <td >{product.description}</td>
@@ -264,8 +269,7 @@ export const ProductForm = ({ product, setProduct }) => {
                     onChange={(e) => setProduct({ ...product, HazardousMaterial: e.target.checked })}
                 />
             </Form.Group>
-
-            <Form.Group>
+            {/* <Form.Group>
                 <Form.Label>Created By</Form.Label>
                 <Form.Control
                     type="text"
@@ -273,7 +277,7 @@ export const ProductForm = ({ product, setProduct }) => {
                     onChange={(e) => setProduct({ ...product, created_by: e.target.value })}
                     required
                 />
-            </Form.Group>
+            </Form.Group> */}
         </Form>
     );
 };
@@ -281,7 +285,7 @@ export const ProductForm = ({ product, setProduct }) => {
 
 const data = [
     {
-        id: 1,
+        _id: 1,
         sku: 'SKU001',
         name: 'Product 1',
         description: 'Description of Product 1',
@@ -290,10 +294,10 @@ const data = [
         width: 5,
         depth: 2,
         HazardousMaterial: false,
-        created_by: 'Admin'
+        // created_by: 'Admin'
     },
     {
-        id: 2,
+        _id: 2,
         sku: 'SKU002',
         name: 'Product 2',
         description: 'Description of Product 2',
@@ -302,10 +306,10 @@ const data = [
         width: 6,
         depth: 3,
         HazardousMaterial: true,
-        created_by: 'Admin'
+        // created_by: 'Admin'
     },
     {
-        id: 3,
+        _id: 3,
         sku: 'SKU003',
         name: 'Product 3',
         description: 'Description of Product 3',
@@ -314,7 +318,8 @@ const data = [
         width: 7,
         depth: 4,
         HazardousMaterial: false,
-        created_by: 'User'
+        // created_by: 'User'
     },
     // ... add more products as needed
+
 ]
