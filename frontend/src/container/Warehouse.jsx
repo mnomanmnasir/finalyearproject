@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 
 const Warehouse = ({ Toggle }) => {
@@ -79,10 +80,18 @@ const WarehouseManager = () => {
     };
 
     return (
-        <div className="warehouse-manager">
+        <div className="warehouse-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h4>Warehouses</h4>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add Warehouse</Button>
+                <h4 className='mt-4'>Warehouses</h4>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+                    <AiOutlinePlus className="me-2" />
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                        {/* Add Warehouse */}
+                    </button>
+                </caption>
             </div>
 
             <WarehouseTable warehouses={warehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
@@ -108,8 +117,8 @@ const WarehouseManager = () => {
 export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
     // const row = [{ id: "name", title: "Name" }, { id: "address", title: "Address" }, { id: "capacity", title: "Capacity" }, { id: "supervisor", title: "Supervisor" }, { id: "temperatureControlled", title: "Temperature" }, { id: "status", title: "Status" }, { id: "actions", title: "Actions" }];
     return (
-        <table className="table table-hover">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     {/* {row.map((column, index) => <th key={index}>{column.title}</th>)} */}
                     <th>Name</th>
@@ -118,7 +127,7 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
                     <th>Supervisor</th>
                     <th>Temperature Controlled</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -130,12 +139,12 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
                         <td>{warehouse.supervisor}</td>
                         <td>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
                         <td>{warehouse.status}</td>
-                        <td>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
-                                <BsPencilSquare />
+                        <td className='text-center'>
+                            <Button variant="light" onClick={() => onEdit(warehouse)}>
+                                <BsPencilSquare className="bi my-1 me-2 fs-0" />
                             </Button>
-                            <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse.id)}>
-                                <BsTrash />
+                            <Button variant="light" onClick={() => onDelete(warehouse.id)}>
+                                <BsTrash className="bi my-0 me-1 fs-0" />
                             </Button>
                         </td>
                     </tr>

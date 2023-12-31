@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
+import { AiOutlinePlus } from 'react-icons/ai';
+
 
 const Product = ({ Toggle }) => {
     return (
@@ -98,10 +100,15 @@ const ProductManager = () => {
     };
 
     return (
-        <div className="product-manager">
+        <div className="product-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Products</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add Product</Button>
+                <h3 className='mt-4'>Products</h3>
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                        {/* Add Product */}
+                    </button>
+                </caption>
             </div>
             <ProductTable products={products} onEdit={openModalToEdit} onDelete={deleteProduct} />
             <Modal show={showModal} onHide={closeModal}>
@@ -125,8 +132,8 @@ const ProductManager = () => {
 
 export const ProductTable = ({ products, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>SKU</th>
                     <th>Name</th>

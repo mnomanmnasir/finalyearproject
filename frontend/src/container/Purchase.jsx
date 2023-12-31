@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash, BsDashCircle } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
+
 
 const Purchase = ({ Toggle }) => {
     return (
@@ -75,7 +77,7 @@ const PurchaseManager = () => {
             toast.success('Purchase updated successfully');
         } else {
             // Add new purchase
-            console.log("adding purchase",currentPurchase);
+            console.log("adding purchase", currentPurchase);
             const newPurchaseWithId = { ...currentPurchase, id: Date.now() };
             setPurchases([...purchases, newPurchaseWithId]);
             toast.success('Purchase added successfully');
@@ -89,12 +91,17 @@ const PurchaseManager = () => {
     };
 
     return (
-        <div className="purchase-manager">
+        <div className="purchase-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Purchase</h3>
-                <Button className="mb-3" onClick={openModalToAdd}>
+                <h3 className='mt-4'>Purchase</h3>
+                {/* <Button className="mb-3" onClick={openModalToAdd}>
                     Add Purchase
-                </Button>
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                    </button>
+                </caption>
             </div>
             <PurchaseTable
                 purchases={purchases}
@@ -129,8 +136,8 @@ const PurchaseManager = () => {
 
 export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Company</th>
                     <th>Contact</th>
@@ -140,7 +147,7 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
                     <th>Status</th>
                     <th>Reference</th>
                     <th>User</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -154,12 +161,12 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
                         <td>{purchase.status}</td>
                         <td>{purchase.reference}</td>
                         <td>{purchase.user}</td>
-                        <td>
+                        <td className='text-center'>
                             <Button variant="light" onClick={() => onEdit(purchase)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="danger"
+                                variant="light"
                                 onClick={() => onDelete(purchase.id)}
                             >
                                 <BsTrash />

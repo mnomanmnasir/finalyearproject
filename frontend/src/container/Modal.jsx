@@ -3,6 +3,9 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AiOutlinePlus } from 'react-icons/ai';
+
+
 
 const PopUp = (props) => {
   const [tableData, setTableData] = useState([
@@ -177,15 +180,16 @@ const PopUp = (props) => {
 
   return (
     <div className='table-container'>
-      <caption className='text-black mt-5 fs-4 d-flex justify-content-between'>
+      <caption className='text-black mt-4 fs-4 d-flex justify-content-between'>
         {title}
-        <button className="btn btn-primary" onClick={handleAddItem}>
-          Add Item
+        <button className="btn btn-secondary" onClick={handleAddItem}>
+        <AiOutlinePlus className="me-2" />
+          {/* Add Item */}
         </button>
       </caption>
       <ToastContainer />
-      <table className="table caption-top bg-white mt-2">
-        <thead>
+      <table className="table table-hover table-bordered">
+        <thead className='table-dark'>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Order ID</th>
@@ -194,7 +198,7 @@ const PopUp = (props) => {
             <th scope="col">Quantity</th>
             <th scope="col">Status</th>
             <th scope="col">Total Amount</th>
-            <th scope="col">Actions</th>
+            <th scope="col" className='text-center'>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -207,11 +211,11 @@ const PopUp = (props) => {
               <td>{item.quantity}</td>
               <td>{item.status}</td>
               <td>{item.totalamount}</td>
-              <td>
-                <Button variant="primary-light" onClick={() => handleEditItem(item.id)}>
+              <td className='text-center'>
+                <Button variant="light" onClick={() => handleEditItem(item.id)}>
                   <BsPencilSquare />
                 </Button>
-                <Button variant="danger-light" onClick={() => handleDeleteItem(item.id)}>
+                <Button variant="light" onClick={() => handleDeleteItem(item.id)}>
                   <BsTrash />
                 </Button>
               </td>

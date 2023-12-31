@@ -4,10 +4,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Axios from 'axios'; // Import Axios
-
+import { AiOutlinePlus } from 'react-icons/ai';
 // import React from 'react'
 import PopUp from './Modal';
 import Navbar from '../components/Navbar';
+
+
 
 const User = ({ Toggle }) => {
     return (
@@ -136,10 +138,17 @@ const UserManager = () => {
     };
 
     return (
-        <div className="user-manager">
+        <div className="user-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Users</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>Add User</Button>
+                <h3 className='mt-4'>Users</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+                    Add User
+                    </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                    </button>
+                </caption>
             </div>
             {loading ? (
                 <p>Loading...</p>
@@ -174,8 +183,8 @@ const UserManager = () => {
 
 export const UserTable = ({ users, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Email</th>
                     <th>First Name</th>
@@ -187,7 +196,7 @@ export const UserTable = ({ users, onEdit, onDelete }) => {
                     <th>Created By</th>
                     <th>Updated On</th>
                     <th>Updated By</th> */}
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -198,12 +207,12 @@ export const UserTable = ({ users, onEdit, onDelete }) => {
                         <td>{user.lastName}</td>
                         <td>{user.status}</td>
                         <td>{user.last_login ? user.last_login.toISOString() : ''}</td>
-                        <td>{user.name||user.roles[0].name}</td>
+                        <td>{user.name || user.roles[0].name}</td>
                         {/* <td>{user.created_on ? user.created_on.toISOString() : ''}</td>
                         <td>{user.created_by}</td>
                         <td>{user.updated_on ? user.updated_on.toISOString() : ''}</td>
                         <td>{user.updated_by}</td> */}
-                        <td>
+                        <td className='text-center'>
                             <Button variant="light" onClick={() => onEdit(user)}>
                                 <BsPencilSquare />
                             </Button>
