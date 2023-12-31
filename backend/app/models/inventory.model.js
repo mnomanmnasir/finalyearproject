@@ -15,7 +15,7 @@ const Inventory = mongoose.model(
             ref: "Warehouse"
         },
         created_on: { type: Date, default: Date.now, required: true },
-        created_by: { type: String, required: true },
+        created_by: String,
         updated_on: Date,
         updated_by: String,
     })

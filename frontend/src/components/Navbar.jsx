@@ -3,7 +3,7 @@ import 'bootstrap/js/dist/dropdown';
 import avatarImage from '../assests/avatarImg.png';
 import { Link } from 'react-router-dom';
 // import { useAuth } from '../container/AuthContext';
-
+import { BsBoxArrowInRight } from "react-icons/bs";
 
 
 const Navbar = ({ Toggle }) => {
@@ -38,7 +38,7 @@ const Navbar = ({ Toggle }) => {
             </Link>
             <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownId">
               {/* <Link to='' className="dropdown-item">Profile</Link> */}
-              <Link to='signIn' className="dropdown-item">Logout</Link>
+              <Link to='signIn' className="dropdown-item"><BsBoxArrowInRight /> Logout</Link>
               {/* <Link to='' className="dropdown-item">Logout</Link> */}
             </div>
           </li>

@@ -23,6 +23,7 @@ import Customer from './container/Customer';
 import Order from './container/Order';
 import Shipment from './container/Shipment';
 
+export const baseUrl = "http://localhost:8080/api/v1";
 
 const App = () => {
 
@@ -49,7 +50,7 @@ const App = () => {
                 <Sidebar onLogout={handleLogout} />
               </div>
             )}
-            <div className={`col-${ !toggle ? '12' : '10'}`}>
+            <div className={`col-${!toggle ? '12' : '10'}`}>
               {authenticated && <Navbar Toggle={Toggle} onLogout={handleLogout} />}
               <Routes>
                 <Route path="/" element={<Dashboard Toggle={Toggle} />} />
