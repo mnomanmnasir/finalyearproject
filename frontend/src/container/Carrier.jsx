@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
+
 
 const Carrier = ({ Toggle }) => {
     return (
@@ -76,12 +78,17 @@ const CarrierManager = () => {
     };
 
     return (
-        <div className="carrier-manager">
+        <div className="carrier-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Carrier</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+                <h3 className='mt-4'>Carrier</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Carrier
-                </Button>
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                    </button>
+                </caption>
             </div>
             <CarrierTable
                 carriers={carriers}
@@ -116,13 +123,13 @@ const CarrierManager = () => {
 
 export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Name</th>
                     <th>Contact Person</th>
                     <th>Contact Number</th>
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -131,11 +138,11 @@ export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
                         <td>{carrier.name}</td>
                         <td>{carrier.contactPerson}</td>
                         <td>{carrier.contactNumber}</td>
-                        <td>
-                            <Button className='btn-sm' variant="light" onClick={() => onEdit(carrier)}>
+                        <td className='text-center'>
+                            <Button variant="light" onClick={() => onEdit(carrier)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button className='btn-sm'
+                            <Button
                                 variant="light"
                                 onClick={() => onDelete(carrier.id)}
                             >

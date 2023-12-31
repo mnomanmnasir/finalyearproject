@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
+import { AiOutlinePlus } from 'react-icons/ai';
+
 
 const Inventory = ({ Toggle }) => {
     return (
@@ -84,12 +86,17 @@ const InventoryManager = () => {
     };
 
     return (
-        <div className="inventory-manager">
+        <div className="inventory-manager mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Inventory</h3>
-                <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+                <h3 className='mt-4'>Inventory</h3>
+                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add Inventory
-                </Button>
+                </Button> */}
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="me-2" />
+                    </button>
+                </caption>
             </div>
             <InventoryTable
                 inventory={inventory}
@@ -124,8 +131,8 @@ const InventoryManager = () => {
 
 export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
     return (
-        <table className="table">
-            <thead>
+        <table className="table table-hover table-bordered">
+            <thead className='table-dark'>
                 <tr>
                     <th>Name</th>
                     <th>Quantity On Hand</th>

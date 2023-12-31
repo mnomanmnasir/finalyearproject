@@ -1,78 +1,88 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
-import { BiBarChart, BiPieChart, BiPurchaseTag } from 'react-icons/bi';
-
+import { BiChart,BiShoppingBag ,BiPackage, BiArchive, BiTrafficCone, BiMessageAltEdit,BiSupport, BiLogoProductHunt, BiSolidUserAccount, BiSolidDashboard, BiPieChart, BiPurchaseTag, BiCube, BiCart } from 'react-icons/bi';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Sidebar = () => {
+
+    useEffect(() => {
+        AOS.init();
+    }, [])
+
     return (
-        <div className="sidebar p-2 h-100 overflow-auto" style={{}}>
-            <div className='d-flex m-3'>
-                <i className="bi bi-search me-3 fs-4 "></i>
+        <div className="sidebar h-100" style={{}}>
+            <div className='d-flex m-3' data-aos="fade-right" data-aos-duration="1000">
+                <BiCube className="bi my-1 me-2 fs-3" />
                 <span className="brand-name fs-4">WMS</span>
             </div>
             <hr className="text-dark" />
-            <div className="list-group list-group-flush">
-                <Link to='/' className="list-group-item list-group-item-action d-flex align-items-center pb-3 ">
-                    <i className="bi bi-speedometer2 fs-5 me-3"></i>
+            <div className="list-group list-group-flush" data-aos="fade-right" data-aos-easing="linear" data-aos-duration="1000">
+                <Link to='/' data-aos="fade-right" data-aos-duration="700" className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                <BiSolidDashboard className="bi my-1 me-2 fs-5"/>
                     <span>Dashboard</span>
                 </Link>
-                <Link to='warehouse' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <BiPurchaseTag className="fs-5 me-3" />
+                <Link to='warehouse' data-aos="fade-right" data-aos-duration="900" className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiPurchaseTag className="fs-5 me-2 my-1 bi" />
+                {/* <BiSolidDashboard className="bi my-1 me-2 fs-5"/> */}
+
                     <span >Warehouse</span>
                 </Link>
 
-                <Link to='user' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <i className="bi bi-house fs-5 me-3"></i>
+                <Link to='user' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                <BiSolidUserAccount className="bi my-1 me-2 fs-5"/>
+
                     <span >User</span>
                 </Link>
-                <Link to='customers' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <i className="bi bi-house fs-5 me-3"></i>
+                <Link to='customers' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                   <BiMessageAltEdit className="bi my-1 me-2 fs-5" />
                     <span >Customers</span>
                 </Link>
-                <Link to='suppliers' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <BiPurchaseTag className="fs-5 me-3" />
-                    <span >Suppliers</span>
-                </Link>
-                <Link to='products' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <BiPurchaseTag className="fs-5 me-3" />
+
+                <Link to='products' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiLogoProductHunt className="bi my-1 me-2 fs-5" />
                     <span >Products</span>
                 </Link>
-
-                <Link to='sales' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <i className="bi bi-table fs-5 me-3"></i>
+                <Link to='suppliers' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiSupport className="bi my-1 me-2 fs-5" />
+                    <span >Suppliers</span>
+                </Link>
+                <Link to='sales' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiShoppingBag className='me-2 fs-5' />
                     <span >Sales</span>
                 </Link>
-                <Link to='carrier' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <i className="bi bi-table fs-5 me-3"></i>
+                <Link to='carrier' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                  <BiTrafficCone  className='bi my-1 me-2 fs-5'/>
                     <span >Carriers</span>
                 </Link>
-                <Link to='inventory' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <i className="bi bi-clipboard-data fs-5 me-3"></i>
+                <Link to='inventory' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                   <BiArchive className='bi my-1 me-2 fs-5' />
                     <span >Inventory</span>
                 </Link>
-                <Link to='orders' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <i className="bi bi-clipboard-data fs-5 me-3"></i>
+                <Link to='orders' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiCart className='bi my-1 me-2 fs-5' />
                     <span >Orders</span>
                 </Link>
-                <Link to='purchase' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <BiPurchaseTag className="fs-5 me-3" />
+                <Link to='purchase'  className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiShoppingBag className="fs-5 me-3" />
                     <span >Purchase</span>
                 </Link>
 
-                {/* <Link to='piechart' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
+                {/* <Link to='piechart' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <BiPieChart className="fs-5 me-3" />
                     <span>Pie Chart</span>
                 </Link> */}
-                <Link to='shipments' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
-                    <BiPieChart className="fs-5 me-3" />
+                <Link to='shipments' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
+                    <BiPackage className="fs-5 me-3" />
                     <span>Shipments</span>
                 </Link>
-                {/* <Link to='barchart' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
+                {/* <Link to='barchart' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <BiBarChart className="fs-5 me-3" />
                     <span>Bar Chart</span>
                 </Link>
-                <Link to='linechart' className="list-group-item list-group-item-action d-flex align-items-center py-3 ">
+                <Link to='linechart' className="list-group-item list-group-item-action d-flex align-items-center my-2 py-2">
                     <BiBarChart className="fs-5 me-3" />
                     <span >Line Chart</span>
                 </Link> */}
@@ -82,4 +92,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
