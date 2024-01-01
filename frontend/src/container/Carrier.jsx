@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
-
+import { baseUrl } from '../App';
+import Axios from 'axios';
 
 const Carrier = () => {
     return (
@@ -22,21 +23,33 @@ const CarrierManager = () => {
     const [carriers, setCarriers] = useState(carrierData);
     const [showModal, setShowModal] = useState(false);
     const [currentCarrier, setCurrentCarrier] = useState({
-        id: null,
+        _id: null,
         name: '',
         contactPerson: '',
         contactNumber: '',
     });
 
-    // Fetch carriers function (dummy implementation)
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchCarriersFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/carriers');
+            setCarriers(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        // Replace with real API call
-        // setCarriers(fetchCarriersFromAPI());
+        fetchCarriersFromAPI();
     }, []);
 
     const openModalToAdd = () => {
         setCurrentCarrier({
-            id: null,
+            _id: null,
             name: '',
             contactPerson: '',
             contactNumber: '',
@@ -53,27 +66,69 @@ const CarrierManager = () => {
         setShowModal(false);
     };
 
-    const saveCarrier = () => {
-        if (currentCarrier.id) {
-            // Update carrier in the list
-            setCarriers(
-                carriers.map((c) =>
-                    c.id === currentCarrier.id ? currentCarrier : c
-                )
-            );
-            toast.success('Carrier updated successfully');
-        } else {
-            // Add new carrier
-            const newCarrierWithId = { ...currentCarrier, id: Date.now() };
-            setCarriers([...carriers, newCarrierWithId]);
-            toast.success('Carrier added successfully');
+    // const saveCarrier = () => {
+    //     if (currentCarrier._id) {
+    //         // Update carrier in the list
+    //         setCarriers(
+    //             carriers.map((c) =>
+    //                 c._id === currentCarrier._id ? currentCarrier : c
+    //             )
+    //         );
+    //         toast.success('Carrier updated successfully');
+    //     } else {
+    //         // Add new carrier
+    //         const newCarrierWithId = { ...currentCarrier, _id: Date.now() };
+    //         setCarriers([...carriers, newCarrierWithId]);
+    //         toast.success('Carrier added successfully');
+    //     }
+    //     setShowModal(false);
+    // };
+
+
+    const saveCarrier = async () => {
+        // const apiUrl = `${baseUrl}/api/v1/carrier`;
+
+        try {
+            let response;
+
+            if (currentCarrier._id) {
+                // Update carrier - PUT request
+                response = await Axios.put(`${baseUrl}/carrier`, currentCarrier);
+                setCarriers(
+                    carriers.map((c) =>
+                        c._id === currentCarrier._id ? response.data : c
+                    )
+                );
+                toast.success('Carrier updated successfully');
+            } else {
+                // Add new carrier - POST request
+                response = await Axios.post(`${baseUrl}/carrier`, currentCarrier);
+                const newCarrierWithId = { ...currentCarrier, _id: response.data._id };
+                setCarriers([...carriers, newCarrierWithId]);
+                toast.success('Carrier added successfully');
+            }
+
+            setShowModal(false);
+        } catch (error) {
+            console.error('Error saving carrier', error);
+            toast.error('Error saving carrier');
         }
-        setShowModal(false);
     };
 
-    const deleteCarrier = (carrierId) => {
-        setCarriers(carriers.filter((c) => c.id !== carrierId));
-        toast.info('Carrier deleted successfully');
+    // const deleteCarrier = (carrierId) => {
+    //     setCarriers(carriers.filter((c) => c._id !== carrierId));
+    //     toast.info('Carrier deleted successfully');
+    // };
+
+    const deleteCarrier = async (carrierId) => {
+        try {
+            await Axios.delete(`${baseUrl}/api/v1/carrier`, { carrierId: carrierId });
+            setCarriers(carriers.filter((c) => c._id !== carrierId));
+            toast.info('Carrier deleted successfully');
+        } catch (error) {
+            console.error('Error deleting carrier', error);
+            toast.error('Error deleting carrier');
+        }
     };
 
     return (
@@ -85,7 +140,7 @@ const CarrierManager = () => {
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
-                Add Carrier
+                        Add Carrier
                     </button>
                 </caption>
             </div>
@@ -97,7 +152,7 @@ const CarrierManager = () => {
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {currentCarrier.id ? 'Edit Carrier' : 'Add Carrier'}
+                        {currentCarrier._id ? 'Edit Carrier' : 'Add Carrier'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -111,7 +166,7 @@ const CarrierManager = () => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={saveCarrier}>
-                        {currentCarrier.id ? 'Save Changes' : 'Add Carrier'}
+                        {currentCarrier._id ? 'Save Changes' : 'Add Carrier'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -133,7 +188,7 @@ export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {carriers.map((carrier) => (
-                    <tr className='text-center' key={carrier.id}>
+                    <tr className='text-center' key={carrier._id}>
                         <td>{carrier.name}</td>
                         <td>{carrier.contactPerson}</td>
                         <td>{carrier.contactNumber}</td>
@@ -142,8 +197,8 @@ export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
                                 <BsPencilSquare />
                             </Button>
                             <Button
-                                variant="light" className='btn-sm' 
-                                onClick={() => onDelete(carrier.id)}
+                                variant="light" className='btn-sm'
+                                onClick={() => onDelete(carrier._id)}
                             >
                                 <BsTrash />
                             </Button>
@@ -197,13 +252,13 @@ export const CarrierForm = ({ carrier, setCarrier }) => {
 
 const carrierData = [
     {
-        id: 1,
+        _id: 1,
         name: 'Carrier 1',
         contactPerson: 'John Doe',
         contactNumber: '123-456-7890',
     },
     {
-        id: 2,
+        _id: 2,
         name: 'Carrier 2',
         contactPerson: 'Jane Doe',
         contactNumber: '987-654-3210',

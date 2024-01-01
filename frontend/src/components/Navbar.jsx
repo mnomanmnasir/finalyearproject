@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FaChevronDown } from 'react-icons/fa';
+import Cookies from 'js-cookie';
 
 
-
-const Navbar = ({ Toggle }) => {
+const Navbar = ({ Toggle, onLogout }) => {
 
   useEffect(() => {
     AOS.init();
@@ -25,7 +25,7 @@ const Navbar = ({ Toggle }) => {
           <li className="nav-item dropdown">
             <div className='d-flex'>
               {/* <h5 className='my-1 mx-3 border border-rounded-circle'>hello</h5> */}
-              <div class="border border-secondary py-1 px-2 mb-1 mx-2 rounded-pill border-opacity-25">success border</div>
+              <div class="border border-secondary py-1 px-2 mb-1 mx-2 rounded-pill border-opacity-25">{Cookies.get("name")}</div>
               <img
                 src={avatarImage}
                 alt="User Avatar"
@@ -43,7 +43,7 @@ const Navbar = ({ Toggle }) => {
               </Link>
               <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownId">
                 {/* <Link to='' className="dropdown-item">Profile</Link> */}
-                <Link to='signIn' className="dropdown-item">Logout</Link>
+                <Link to='signIn' className="dropdown-item" onClick={onLogout}>Logout</Link>
                 {/* <Link to='' className="dropdown-item">Logout</Link> */}
               </div>
             </div>

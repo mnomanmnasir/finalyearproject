@@ -15,7 +15,7 @@ exports.createWarehouse = async (req, res) => {
 // Get All Warehouses
 exports.getAllWarehouses = async (req, res) => {
     try {
-        const warehouses = await Warehouse.find();
+        const warehouses = await Warehouse.find().populate("supervisor");
         res.status(200).send(warehouses);
     } catch (error) {
         res.status(500).send(error);

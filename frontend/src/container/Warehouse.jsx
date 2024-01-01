@@ -50,6 +50,7 @@ const WarehouseManager = () => {
         }
     };
 
+
     // Fetch users when the component mounts
     useEffect(() => {
         fetchWarehousesFromAPI();
@@ -77,18 +78,46 @@ const WarehouseManager = () => {
         setShowModal(false);
     };
 
-    const saveWarehouse = () => {
-        if (currentWarehouse._id) {
-            // Update warehouse in the list
-            setWarehouses(warehouses.map(wh => wh._id === currentWarehouse._id ? currentWarehouse : wh));
-            toast.success('Warehouse updated successfully');
-        } else {
-            // Add new warehouse
-            const newWarehouseWithId = { ...currentWarehouse, _id: Date.now() };
-            setWarehouses([...warehouses, newWarehouseWithId]);
-            toast.success('Warehouse added successfully');
+    // const saveWarehouse = () => {
+    //     if (currentWarehouse._id) {
+    //         // Update warehouse in the list
+    //         setWarehouses(warehouses.map(wh => wh._id === currentWarehouse._id ? currentWarehouse : wh));
+    //         toast.success('Warehouse updated successfully');
+    //     } else {
+    //         // Add new warehouse
+    //         const newWarehouseWithId = { ...currentWarehouse, _id: Date.now() };
+    //         setWarehouses([...warehouses, newWarehouseWithId]);
+    //         toast.success('Warehouse added successfully');
+    //     }
+    //     setShowModal(false);
+    // };
+
+    const saveWarehouse = async () => {
+        try {
+            let response;
+
+            if (currentWarehouse._id) {
+                // Update warehouse - PUT request
+                response = await Axios.put(`${baseUrl}/warehouse`, currentWarehouse);
+
+                setWarehouses(warehouses.map(wh =>
+                    wh._id === currentWarehouse._id ? response.data : wh
+                ));
+                toast.success('Warehouse updated successfully');
+            } else {
+                // Add new warehouse - POST request
+                response = await Axios.post(`${baseUrl}/warehouse`, currentWarehouse);
+
+                const newWarehouseWithId = { ...currentWarehouse, _id: response.data._id }; // Assuming the response contains the new ID
+                setWarehouses([...warehouses, newWarehouseWithId]);
+                toast.success('Warehouse added successfully');
+            }
+
+            setShowModal(false);
+        } catch (error) {
+            console.error('Error saving warehouse', error);
+            toast.error('Error saving warehouse');
         }
-        setShowModal(false);
     };
 
     const deleteWarehouse = (warehouseId) => {
@@ -97,7 +126,7 @@ const WarehouseManager = () => {
     };
 
     return (
-        <div className="warehouse-manager mt-3 m-3">
+        <div className="warehouse-manager mt-3 m-3 ">
             <div className="d-flex justify-content-between">
                 <h4 className='mt-4'>Warehouses</h4>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
@@ -153,7 +182,7 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
                         <td className='text-center'>{warehouse.name}</td>
                         <td className='text-center'>{warehouse.address}</td>
                         <td className='text-center'>{warehouse.capacity}</td>
-                        <td className='text-center'>{warehouse.supervisor}</td>
+                        <td className='text-center'>{warehouse.supervisor? warehouse.supervisor.firstName+" "+warehouse.supervisor.lastName:""}</td>
                         <td className='text-center'>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
                         <td className='text-center'>{warehouse.status}</td>
                         <td className='text-center'>
@@ -172,6 +201,25 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
 };
 
 export const WarehouseForm = ({ warehouse, setWarehouse }) => {
+
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+    const [users, setUsers] = useState([]);
+    const fetchUsersFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/users');
+            setUsers(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
+    // Fetch users when the component mounts
+    useEffect(() => {
+        fetchUsersFromAPI();
+    }, []);
     return (
         <Form>
             <Form.Group>
@@ -203,12 +251,25 @@ export const WarehouseForm = ({ warehouse, setWarehouse }) => {
             </Form.Group>
             <Form.Group>
                 <Form.Label>Supervisor</Form.Label>
-                <Form.Control
+                {/* <Form.Control
                     type="text"
                     value={warehouse.supervisor}
                     onChange={(e) => setWarehouse({ ...warehouse, supervisor: e.target.value })}
                     required
+                /> */}
+                <input
+                    list="supervisorNames"
+                    className="form-control"
+                    placeholder="Supervisor Name"
+                    value={warehouse.supervisor}
+                    onChange={(e) => setWarehouse({ ...warehouse, supervisor: (e.target.value).split(" ")[1] })}
+                    required
                 />
+                <datalist id="supervisorNames">
+                    {users.map((prod, idx) => (
+                        <option key={idx} value={prod.firstName +" "+ prod._id} />
+                    ))}
+                </datalist>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Temperature Controlled</Form.Label>

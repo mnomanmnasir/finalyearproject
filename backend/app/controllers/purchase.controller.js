@@ -1,14 +1,14 @@
 const db = require("../models");
 const { purchase: Purchase, product: Product, inventory: Inventory } = db;
 
-exports.getPurchases = async (req, res) => {
-    try {
-        const purchases = await Purchase.find().populate("products");
-        res.status(200).send(purchases);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-}
+// exports.getPurchases = async (req, res) => {
+//     try {
+//         const purchases = await Purchase.find().populate("products");
+//         res.status(200).send(purchases);
+//     } catch (error) {
+//         res.status(500).send(error);
+//     }
+// }
 
 // exports.getPurchase = async (req, res) => {
 //     try {

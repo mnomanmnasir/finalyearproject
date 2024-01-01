@@ -3,7 +3,7 @@ const { order: Order, product: Product, inventory: Inventory } = db;
 
 exports.getOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate("customer").populate("products.product");
+        const orders = await Order.find().populate("customer").populate("products").populate("products.product");
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching orders', error: error.message });

@@ -8,6 +8,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import Axios from 'axios';
 import { baseUrl } from '../App';
 
+
 const Inventory = () => {
     return (
         <div>

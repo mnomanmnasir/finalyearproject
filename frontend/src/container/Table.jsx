@@ -78,7 +78,7 @@ const Tables = () => {
     ];
 
     return (
-        <div className='row my-3 m-2 py-4'>
+        <div className='row my-3 m-2'>
             <div className='col-6'>
 
                 <Table striped bordered hover>
@@ -139,16 +139,18 @@ const Tables = () => {
                             <td>Aleem</td>
                             <td>usmanaleem@gmail.com</td>
                         </tr>
-                        
+
                     </tbody>
                 </Table>
             </div>
-                <div id="chart" className='col'>
+            <div id="chart" className='col'>
+                <div className='w-100 bg-white rounded p-3'>
                     <AreaChart options={chartOptions} series={chartSeries} curve='smooth' height={350} />
                 </div>
+            </div>
 
         </div>
-    );  
+    );
 };
 
 export default Tables;

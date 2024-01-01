@@ -59,13 +59,17 @@ const LineChart = () => {
 
     return (
         <>
-            <div className='row my-2 py-4'>
+            <div className='row m-2 py-4'>
                 <div id="chart" className='col-6'>
-                    <Chart options={chartOptions} series={chartSeries} type="area" height={350} />
+                    <div className='w-100 bg-white rounded p-3'>
+                        <Chart options={chartOptions} series={chartSeries} type="area" height={350} />
+                    </div>
                 </div>
-                
+
                 <div id="chart" className='col-6'>
-                    <Donut />
+                    <div className='w-100 bg-white rounded p-3'>
+                        <Donut />
+                    </div>
                 </div>
             </div>
         </>

@@ -27,7 +27,7 @@ const LineChart = () => {
   return (
     <>
       <div className='row my-2 py-5 m-3 p-5'>
-        <Chart options={chartOptions} series={chartSeries} type="donut" width={430} />
+        <Chart options={chartOptions} series={chartSeries} type="donut" width={400} />
       </div>
     </>
   )

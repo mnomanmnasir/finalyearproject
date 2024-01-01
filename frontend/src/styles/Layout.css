@@ -1,0 +1,11 @@
+/* The sidebar is off the screen by default */
+.sidebar-hidden {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* The sidebar slides in from the left */
+.sidebar-visible {
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+}

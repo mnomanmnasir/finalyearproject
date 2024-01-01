@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
-
+import { baseUrl } from '../App';
+import Axios from 'axios';
 
 const Customer = () => {
     return (
@@ -22,21 +23,33 @@ const CustomerManager = () => {
     const [customers, setCustomers] = useState(customerData);
     const [showModal, setShowModal] = useState(false);
     const [currentCustomer, setCurrentCustomer] = useState({
-        id: null,
+        _id: null,
         name: '',
         contactNumber: '',
         email: '',
     });
 
-    // Fetch customers function (dummy implementation)
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchCustomersFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/customers');
+            setCustomers(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        // Replace with real API call
-        // setCustomers(fetchCustomersFromAPI());
+        fetchCustomersFromAPI();
     }, []);
 
     const openModalToAdd = () => {
         setCurrentCustomer({
-            id: null,
+            _id: null,
             name: '',
             contactNumber: '',
             email: '',
@@ -53,27 +66,54 @@ const CustomerManager = () => {
         setShowModal(false);
     };
 
-    const saveCustomer = () => {
-        if (currentCustomer.id) {
-            // Update customer in the list
-            setCustomers(
-                customers.map((c) =>
-                    c.id === currentCustomer.id ? currentCustomer : c
-                )
-            );
-            toast.success('Customer updated successfully');
-        } else {
-            // Add new customer
-            const newCustomerWithId = { ...currentCustomer, id: Date.now() };
-            setCustomers([...customers, newCustomerWithId]);
-            toast.success('Customer added successfully');
+    const saveCustomer = async () => {
+        // const apiUrl = 'http://localhost/api/v1/customer';
+
+        try {
+            let response;
+
+            if (currentCustomer._id) {
+                // Update customer - PUT request
+                response = await Axios.put(baseUrl + `/customer`, currentCustomer);
+
+                setCustomers(
+                    customers.map((c) =>
+                        c._id === currentCustomer._id ? response.data : c
+                    )
+                );
+                toast.success('Customer updated successfully');
+            } else {
+                // Add new customer - POST request
+                response = await Axios.post(baseUrl + `/customer`, currentCustomer);
+
+                const newCustomerWithId = { ...currentCustomer, _id: response.data._id }; // Assuming the response contains the new ID
+                setCustomers([...customers, newCustomerWithId]);
+                toast.success('Customer added successfully');
+            }
+
+            setShowModal(false);
+        } catch (error) {
+            console.error('Error saving customer', error);
+            toast.error('Error saving customer');
         }
-        setShowModal(false);
     };
 
-    const deleteCustomer = (customerId) => {
-        setCustomers(customers.filter((c) => c.id !== customerId));
-        toast.info('Customer deleted successfully');
+    const deleteCustomer = async (customerId) => {
+        console.log(customerId)
+        try {
+            // Send the DELETE request to the server
+            await Axios.delete(baseUrl + "/customer", { customerId: "customerId" });
+
+            // Update the local state to reflect the deletion
+            setCustomers(customers.filter((c) => c._id !== customerId));
+
+            // Show a success message
+            toast.info('Customer deleted successfully');
+        } catch (error) {
+            // Log and show any error that occurs
+            console.error('Error deleting customer', error);
+            toast.error('Error deleting customer');
+        }
     };
 
     return (
@@ -95,7 +135,7 @@ const CustomerManager = () => {
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {currentCustomer.id ? 'Edit Customer' : 'Add Customer'}
+                        {currentCustomer._id ? 'Edit Customer' : 'Add Customer'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -109,7 +149,7 @@ const CustomerManager = () => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={saveCustomer}>
-                        {currentCustomer.id ? 'Save Changes' : 'Add Customer'}
+                        {currentCustomer._id ? 'Save Changes' : 'Add Customer'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -130,8 +170,8 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
                 </tr>
             </thead>
             <tbody>
-                {customers.map((customer) => (
-                    <tr className='text-center' key={customer.id}>
+                {customers.map((customer, index) => (
+                    <tr className='text-center' key={index}>
                         <td className='text-center'>{customer.name}</td>
                         <td className='text-center'>{customer.contactNumber}</td>
                         <td className='text-center'>{customer.email}</td>
@@ -141,7 +181,7 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
                             </Button>
                             <Button
                                 variant="light" className='btn-sm'
-                                onClick={() => onDelete(customer.id)}>
+                                onClick={() => onDelete(customer._id)}>
                                 <BsTrash />
                             </Button>
                         </td>
@@ -190,13 +230,13 @@ export const CustomerForm = ({ customer, setCustomer }) => {
 
 const customerData = [
     {
-        id: 1,
+        _id: 1,
         name: 'Customer 1',
         contactNumber: '123-456-7890',
         email: 'customer1@example.com',
     },
     {
-        id: 2,
+        _id: 2,
         name: 'Customer 2',
         contactNumber: '987-654-3210',
         email: 'customer2@example.com',

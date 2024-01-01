@@ -11,6 +11,7 @@ module.exports = function(app) {
   });
 
   app.get("/api/v1/products", controller.getAllProducts);
+  // app.get("/api/v1/products-count", controller.getProductCount);
   app.post("/api/v1/product", controller.createProduct);
   app.put("/api/v1/product", controller.updateProduct);
   app.delete("/api/v1/product", controller.deleteProduct);

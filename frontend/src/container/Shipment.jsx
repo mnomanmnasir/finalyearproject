@@ -6,6 +6,8 @@ import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 
+import { baseUrl } from '../App';
+import Axios from 'axios';
 
 
 const Shipment = () => {
@@ -24,7 +26,7 @@ const ShipmentManager = () => {
     const [shipments, setShipments] = useState(shipmentData);
     const [showModal, setShowModal] = useState(false);
     const [currentShipment, setCurrentShipment] = useState({
-        id: null,
+        _id: null,
         name: '',
         date: '',
         arrivalDate: '',
@@ -33,15 +35,27 @@ const ShipmentManager = () => {
         carrierId: '',
     });
 
-    // Fetch shipments function (dummy implementation)
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchShipmentsFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/shipments');
+            setShipments(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        // Replace with real API call
-        // setShipments(fetchShipmentsFromAPI());
+        fetchShipmentsFromAPI();
     }, []);
 
     const openModalToAdd = () => {
         setCurrentShipment({
-            id: null,
+            _id: null,
             name: '',
             date: '',
             arrivalDate: '',
@@ -61,27 +75,69 @@ const ShipmentManager = () => {
         setShowModal(false);
     };
 
-    const saveShipment = () => {
-        if (currentShipment.id) {
-            // Update shipment in the list
-            setShipments(
-                shipments.map((s) =>
-                    s.id === currentShipment.id ? currentShipment : s
-                )
-            );
-            toast.success('Shipment updated successfully');
-        } else {
-            // Add new shipment
-            const newShipmentWithId = { ...currentShipment, id: Date.now() };
-            setShipments([...shipments, newShipmentWithId]);
-            toast.success('Shipment added successfully');
+    // const saveShipment = () => {
+    //     if (currentShipment._id) {
+    //         // Update shipment in the list
+    //         setShipments(
+    //             shipments.map((s) =>
+    //                 s._id === currentShipment._id ? currentShipment : s
+    //             )
+    //         );
+    //         toast.success('Shipment updated successfully');
+    //     } else {
+    //         // Add new shipment
+    //         const newShipmentWithId = { ...currentShipment, id: Date.now() };
+    //         setShipments([...shipments, newShipmentWithId]);
+    //         toast.success('Shipment added successfully');
+    //     }
+    //     setShowModal(false);
+    // };
+
+    const saveShipment = async () => {
+        // const apiUrl = `${baseUrl}/api/v1/shipment`;
+
+        try {
+            let response;
+
+            if (currentShipment._id) {
+                // Update shipment - PUT request
+                response = await Axios.put(`${baseUrl}/shipment`, currentShipment);
+                setShipments(
+                    shipments.map((s) =>
+                        s._id === currentShipment._id ? response.data : s
+                    )
+                );
+                toast.success('Shipment updated successfully');
+            } else {
+                // Add new shipment - POST request
+                response = await Axios.post(`${baseUrl}/shipment`, currentShipment);
+                const newShipmentWithId = { ...currentShipment, _id: response.data._id };
+                setShipments([...shipments, newShipmentWithId]);
+                toast.success('Shipment added successfully');
+            }
+
+            setShowModal(false);
+        } catch (error) {
+            console.error('Error saving shipment', error);
+            toast.error('Error saving shipment');
         }
-        setShowModal(false);
     };
 
-    const deleteShipment = (shipmentId) => {
-        setShipments(shipments.filter((s) => s.id !== shipmentId));
-        toast.info('Shipment deleted successfully');
+
+    // const deleteShipment = (shipmentId) => {
+    //     setShipments(shipments.filter((s) => s._id !== shipmentId));
+    //     toast.info('Shipment deleted successfully');
+    // };
+
+    const deleteShipment = async (shipmentId) => {
+        try {
+            await Axios.delete(`${baseUrl}/${shipmentId}`);
+            setShipments(shipments.filter((s) => s._id !== shipmentId));
+            toast.info('Shipment deleted successfully');
+        } catch (error) {
+            console.error('Error deleting shipment', error);
+            toast.error('Error deleting shipment');
+        }
     };
 
     return (
@@ -105,7 +161,7 @@ const ShipmentManager = () => {
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {currentShipment.id ? 'Edit Shipment' : 'Add Shipment'}
+                        {currentShipment._id ? 'Edit Shipment' : 'Add Shipment'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -119,7 +175,7 @@ const ShipmentManager = () => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={saveShipment}>
-                        {currentShipment.id ? 'Save Changes' : 'Add Shipment'}
+                        {currentShipment._id ? 'Save Changes' : 'Add Shipment'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -129,6 +185,7 @@ const ShipmentManager = () => {
 };
 
 export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
+
     return (
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
@@ -144,20 +201,20 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {shipments.map((shipment) => (
-                    <tr className='text-center' key={shipment.id}>
+                    <tr className='text-center' key={shipment._id}>
                         <td>{shipment.name}</td>
                         <td>{shipment.date}</td>
                         <td>{shipment.arrivalDate}</td>
                         <td>{shipment.status}</td>
-                        <td>{shipment.orderId}</td>
-                        <td>{shipment.carrierId}</td>
+                        <td>{shipment.order ? shipment.order.name + " " + shipment.order._id : ""}</td>
+                        <td>{shipment.carrier ? shipment.carrier.name + " " + shipment.carrier._id : ""}</td>
                         <td className='text-center'>
                             <Button variant="light" className='btn-sm' onClick={() => onEdit(shipment)}>
                                 <BsPencilSquare />
                             </Button>
                             <Button
                                 variant="light" className='btn-sm'
-                                onClick={() => onDelete(shipment.id)}
+                                onClick={() => onDelete(shipment._id)}
                             >
                                 <BsTrash />
                             </Button>
@@ -170,6 +227,37 @@ export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
 };
 
 export const ShipmentForm = ({ shipment, setShipment }) => {
+    const [orders, setOrders] = useState([]);
+    const [carriers, setCarriers] = useState([]);
+
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
+
+    const fetchOrdersFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/orders');
+            setOrders(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+    const fetchCarrierFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/carriers');
+            setCarriers(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCarrierFromAPI();
+        fetchOrdersFromAPI();
+    }, []);
     return (
         <Form>
             <Form.Group>
@@ -181,34 +269,35 @@ export const ShipmentForm = ({ shipment, setShipment }) => {
                     required
                 />
             </Form.Group>
-            <Form.Group>
-                <Form.Label>Date</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={shipment.date}
-                    onChange={(e) => setShipment({ ...shipment, date: e.target.value })}
-                    required
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Arrival Date</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={shipment.arrivalDate}
-                    onChange={(e) => setShipment({ ...shipment, arrivalDate: e.target.value })}
-                    required
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Status</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={shipment.status}
-                    onChange={(e) => setShipment({ ...shipment, status: e.target.value })}
-                    required
-                />
-            </Form.Group>
-            <Form.Group>
+
+            <div className='row'>
+                <div className='col-md-6'>
+                    <Form.Group>
+                        <Form.Label>Date</Form.Label>
+                        <Form.Control
+                            type="date"
+                            value={shipment.date}
+                            onChange={(e) => setShipment({ ...shipment, date: e.target.value })}
+                            required
+                        />
+                    </Form.Group>
+                </div>
+                <div className='col-md-6'>
+                    <Form.Group>
+                        <Form.Label>Arrival Date</Form.Label>
+                        <Form.Control
+                            type="date"
+                            value={shipment.arrivalDate}
+                            onChange={(e) => setShipment({ ...shipment, arrivalDate: e.target.value })}
+                            required
+                        />
+                    </Form.Group>
+                </div>
+
+            </div>
+
+
+            {/* <Form.Group>
                 <Form.Label>Order ID</Form.Label>
                 <Form.Control
                     type="text"
@@ -216,15 +305,54 @@ export const ShipmentForm = ({ shipment, setShipment }) => {
                     onChange={(e) => setShipment({ ...shipment, orderId: e.target.value })}
                     required
                 />
+            </Form.Group> */}
+            <Form.Group>
+                <Form.Label>Order ID</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={shipment.order&&shipment.order._id}
+                    onChange={(e) => setShipment({ ...shipment, order: e.target.value })}
+                    required
+                >
+                    <option value="">Select Order</option>
+                    {orders && orders.map((order) => (
+                        <option key={order._id} value={order._id}>
+                            {order.name} - {order._id}
+                        </option>
+                    ))}
+                </Form.Control>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Carrier ID</Form.Label>
                 <Form.Control
-                    type="text"
-                    value={shipment.carrierId}
-                    onChange={(e) => setShipment({ ...shipment, carrierId: e.target.value })}
+                    as="select"
+                    value={shipment.carrier&&shipment.carrier._id}
+                    onChange={(e) => setShipment({ ...shipment, carrier: e.target.value })}
                     required
-                />
+                >
+                    <option value="">Select carrier</option>
+                    {carriers && carriers.map((carrier) => (
+                        <option key={carrier._id} value={carrier._id}>
+                            {carrier.name} - {carrier._id}
+                        </option>
+                    ))}
+                </Form.Control>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Status</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={shipment.status}
+                    onChange={(e) => setShipment({ ...shipment, status: e.target.value })}
+                    required
+                >
+                    <option value="">Select Status</option>
+                    {/* Replace these options with your actual shipment statuses */}
+                    <option value="pending">Pending</option>
+                    <option value="in_transit">In Transit</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="delayed">Delayed</option>
+                </Form.Control>
             </Form.Group>
         </Form>
     );
@@ -232,7 +360,7 @@ export const ShipmentForm = ({ shipment, setShipment }) => {
 
 const shipmentData = [
     {
-        id: 1,
+        _id: 1,
         name: 'Shipment 1',
         date: '2023-01-15',
         arrivalDate: '2023-01-20',
@@ -241,7 +369,7 @@ const shipmentData = [
         carrierId: 'C001',
     },
     {
-        id: 2,
+        _id: 2,
         name: 'Shipment 2',
         date: '2023-02-10',
         arrivalDate: '2023-02-15',

@@ -6,7 +6,7 @@ const Shipment = mongoose.model(
         name: String,
         date: Date,
         arrivalDate: Date,
-        status: Boolean,
+        status: String,
         order: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Order"
@@ -17,7 +17,7 @@ const Shipment = mongoose.model(
         },
 
         created_on: { type: Date, default: Date.now, required: true },
-        created_by: { type: String, required: true },
+        created_by: String,
         updated_on: Date,
         updated_by: String,
 

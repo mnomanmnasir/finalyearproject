@@ -7,7 +7,7 @@ const app = express();
 require('dotenv').config();
 
 let corsOptions = {
-  origin: [`http://${process.env.HOST}`,`http://${process.env.HOST}:${process.env.PORT}`,`http://localhost:3000`],
+  origin: [`http://${process.env.HOST}`, `http://${process.env.HOST}:${process.env.PORT}`, `http://localhost:3000`],
 };
 
 app.use(cors(corsOptions));
@@ -55,6 +55,9 @@ require("./app/routes/inventory.routes")(app);
 require("./app/routes/warehouse.routes")(app);
 require("./app/routes/customer.routes")(app);
 require("./app/routes/order.routes")(app);
+require("./app/routes/carrier.routes")(app);
+require("./app/routes/shipment.routes")(app);
+require("./app/routes/dashboard.routes")(app);
 // require("./app/routes/social.routes")(app);
 // require("./app/routes/ticket.routes")(app);
 // require("./app/routes/card.routes")(app);

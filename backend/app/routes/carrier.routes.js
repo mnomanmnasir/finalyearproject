@@ -1,5 +1,5 @@
 const { authJwt } = require("../middlewares");
-const controller = require("../controllers/customer.controller");
+const controller = require("../controllers/carrier.controller");
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -10,9 +10,9 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/v1/customers", controller.getCustomers);
-  app.post("/api/v1/customer", controller.createCustomer);
-  app.put("/api/v1/customer", controller.updateCustomer);
-  app.delete("/api/v1/customer", controller.deleteCustomer);
+  app.get("/api/v1/carriers", controller.getCarriers);
+  app.post("/api/v1/carrier", controller.createCarrier);
+  app.put("/api/v1/carrier", controller.updateCarrier);
+  app.delete("/api/v1/carrier", controller.deleteCarrier);
 //   app.delete("/api/v1/card", [authJwt.verifyToken], deleteController.deleteUser);
 };

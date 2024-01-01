@@ -10,7 +10,7 @@ import Axios from 'axios';
 const Purchase = ({ Toggle }) => {
     return (
         <div>
-            <Navbar Toggle={Toggle} />
+            {/* <Navbar Toggle={Toggle} /> */}
             <PurchaseManager />
         </div>
     );
@@ -47,18 +47,6 @@ const PurchaseManager = () => {
             setLoading(false);
         }
     };
-    // const [products, setProducts] = useState([]);
-
-    // const fetchProductsFromAPI = async () => {
-    //     try {
-    //         const response = await Axios.get(baseUrl + '/products');
-    //         setProducts(response.data);
-    //         setLoading(false);
-    //     } catch (error) {
-    //         setError(error);
-    //         setLoading(false);
-    //     }
-    // };
 
     useEffect(() => {
         fetchPurchasesFromAPI();
@@ -231,9 +219,9 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
         <div>
             <ProductModal showProductModal={productModal} data={productData} handleCloseProductModal={handleCloseProductModal} />
 
-            <table className="table">
-                <thead>
-                    <tr>
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr className='text-center'>
                         <th>Company</th>
                         <th className='text-center'>Contact</th>
                         <th className='text-center'>Email</th>
