@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash, BsDashCircle } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineCheck, AiOutlineCloseCircle } from 'react-icons/ai';
 import { baseUrl } from '../App';
 import Axios from 'axios';
 
@@ -58,6 +58,7 @@ const OrderManager = () => {
             customerName: '',
             orderDate: '',
             status: '',
+            products: [{ name: '', quantity: 0, unitPrice: 0 }],
         });
         setShowModal(true);
     };
@@ -72,6 +73,22 @@ const OrderManager = () => {
     };
 
     const saveOrder = () => {
+
+          // Validate required fields
+          if (!currentOrder.name || !currentOrder.customer || !currentOrder.status) {
+            toast.warn('Please fill in all required fields.');
+            return;
+        }
+
+        const totalPayment = currentOrder.products.reduce((total, product) => {
+            return total + (product.quantity || 0) * (product.unitPrice || 0);
+        }, 0);
+
+        const updatedOrder = {
+            ...currentOrder,
+            pay: totalPayment,
+        };
+
         if (currentOrder.id) {
             // Update order in the list
             setOrders(
@@ -94,6 +111,10 @@ const OrderManager = () => {
         toast.info('Order deleted successfully');
     };
 
+      
+
+  
+
     return (
         <div className="order-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
@@ -101,9 +122,10 @@ const OrderManager = () => {
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary btn-sm" onClick={openModalToAdd}>
+                   
+                    <button className="btn btn-dark btn-sm" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
-                        Add Order
+                        Add 
                     </button>
                 </caption>
             </div>
@@ -118,7 +140,7 @@ const OrderManager = () => {
                         {currentOrder.id ? 'Edit Order' : 'Add Order'}
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
                     <OrderForm
                         order={currentOrder}
                         setOrder={setCurrentOrder}
@@ -128,8 +150,12 @@ const OrderManager = () => {
                     <Button variant="secondary" onClick={closeModal}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={saveOrder}>
+                    {/* <Button variant="primary" onClick={saveOrder}>
                         {currentOrder.id ? 'Save Changes' : 'Add Order'}
+                    </Button> */}
+                      <Button className='d-flex align-items-center justify-content-center' variant="success" onClick={saveOrder}>
+                        <AiOutlineCheck className='me-2' />
+                        {currentOrder._id ? 'Save Changes' : 'Add'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -194,11 +220,16 @@ export const OrderForm = ({ order, setOrder }) => {
             if (selectedProduct) {
                 updatedProducts[index]['_id'] = selectedProduct._id;
                 updatedProducts[index]['name'] = selectedProduct.name;
-                updatedProducts[index]['unitPrice'] = selectedProduct.unitPrice;
+                updatedProducts[index]['unitPrice'] = selectedProduct.unitPrice || 0;
             }
         }
 
-        setOrder({ ...order, products: updatedProducts });
+        // Calculate total payment based on quantity and unit price
+        const totalPayment = updatedProducts.reduce((total, product) => {
+            return total + (product.quantity || 0) * (product.unitPrice || 0);
+        }, 0);
+
+        setOrder({ ...order, products: updatedProducts, pay: totalPayment });
     };
 
     const addProduct = () => {
@@ -336,6 +367,7 @@ export const OrderForm = ({ order, setOrder }) => {
                             type="text"
                             value={order.pay}
                             onChange={(e) => setOrder({ ...order, pay: e.target.value })}
+                            disabled={order.products.some(product => product.quantity && product.unitPrice)}
                             required
                         />
                     </Form.Group>
