@@ -202,6 +202,7 @@ return (
         <Route path="/linechart" element={<Layout toggle={toggle} Toggle={Toggle} ><LineChart Toggle={Toggle} /></Layout>} />
       </Route>
       <Route path="/signIn" element={<SignIn />} />
+      <Route path="/login" element={<SignIn />} />
       <Route path="/logout" element={<Navigate to="/signIn" />} />
       <Route path="*" element={<Navigate to="/" />} />
 

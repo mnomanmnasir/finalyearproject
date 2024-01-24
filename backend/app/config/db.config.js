@@ -6,3 +6,5 @@ module.exports = {
   // DB: "nfcbiz_db"
   DB: "warehouse_db"
 };
+
+const uri = "mongodb+srv://ahadmansoori110:<password>@cluster0.zl2tt8h.mongodb.net/?retryWrites=true&w=majority"
