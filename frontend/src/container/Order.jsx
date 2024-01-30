@@ -52,7 +52,7 @@ const OrderManager = () => {
 
     const openModalToAdd = () => {
         setCurrentOrder({
-            id: null,
+            _id: null,
             name: '',
             customerId: '',
             customerName: '',
@@ -74,11 +74,11 @@ const OrderManager = () => {
 
     const saveOrder = () => {
 
-          // Validate required fields
-          if (!currentOrder.name || !currentOrder.customer || !currentOrder.status) {
-            toast.warn('Please fill in all required fields.');
-            return;
-        }
+        // Validate required fields
+        //   if (!currentOrder.name || !currentOrder.customer || !currentOrder.status) {
+        //     toast.warn('Please fill in all required fields.');
+        //     return;
+        // }
 
         const totalPayment = currentOrder.products.reduce((total, product) => {
             return total + (product.quantity || 0) * (product.unitPrice || 0);
@@ -89,11 +89,11 @@ const OrderManager = () => {
             pay: totalPayment,
         };
 
-        if (currentOrder.id) {
+        if (currentOrder._id) {
             // Update order in the list
             setOrders(
                 orders.map((o) =>
-                    o.id === currentOrder._id ? currentOrder : o
+                    o._id === currentOrder._id ? currentOrder : o
                 )
             );
             toast.success('Order updated successfully');
@@ -107,13 +107,9 @@ const OrderManager = () => {
     };
 
     const deleteOrder = (orderId) => {
-        setOrders(orders.filter((o) => o.id !== orderId));
+        setOrders(orders.filter((o) => o._id !== orderId));
         toast.info('Order deleted successfully');
     };
-
-      
-
-  
 
     return (
         <div className="order-manager mt-3 m-3">
@@ -122,10 +118,10 @@ const OrderManager = () => {
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                   
-                    <button className="btn btn-dark btn-sm" onClick={openModalToAdd}>
+
+                <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
-                        Add 
+                        Add Order
                     </button>
                 </caption>
             </div>
@@ -137,7 +133,7 @@ const OrderManager = () => {
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {currentOrder.id ? 'Edit Order' : 'Add Order'}
+                        {currentOrder._id ? 'Edit Order' : 'Add Order'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
@@ -147,15 +143,10 @@ const OrderManager = () => {
                     />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={closeModal}>
-                        Close
-                    </Button>
-                    {/* <Button variant="primary" onClick={saveOrder}>
+                    
+                    <Button variant="secondary" onClick={closeModal}>Close</Button>
+                    <Button variant="primary" onClick={saveOrder}>
                         {currentOrder.id ? 'Save Changes' : 'Add Order'}
-                    </Button> */}
-                      <Button className='d-flex align-items-center justify-content-center' variant="success" onClick={saveOrder}>
-                        <AiOutlineCheck className='me-2' />
-                        {currentOrder._id ? 'Save Changes' : 'Add'}
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -183,7 +174,7 @@ export const OrderTable = ({ orders, onEdit, onDelete }) => {
             </thead>
             <tbody>
                 {orders.map((order, index) => (
-                    <tr className='text-center' key={index}>
+                    <tr className='text-center' key={order._id}>
                         <td>{order.name}</td>
                         <td>{order.customer ? order.customer.name : ""}</td>
                         <td>{order.customer ? order.customer.contactNumber : ""}</td>
@@ -197,7 +188,7 @@ export const OrderTable = ({ orders, onEdit, onDelete }) => {
                             <Button variant="light" className='btn-sm' onClick={() => onEdit(order)}>
                                 <BsPencilSquare />
                             </Button>
-                            <Button variant="light" className='btn-sm' onClick={() => onDelete(order.id)}>
+                            <Button variant="light" className='btn-sm' onClick={() => onDelete(order._id)}>
                                 <BsTrash />
                             </Button>
                         </td>
