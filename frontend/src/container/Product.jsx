@@ -8,7 +8,7 @@ import Navbar from '../components/Navbar';
 import Axios from 'axios';
 import { baseUrl } from '../App';
 import { AiOutlinePlus } from 'react-icons/ai';
-
+import Helmet from './Helmet'
 
 
 const Product = () => {
@@ -118,7 +118,7 @@ const ProductManager = () => {
                 {/* <Button className="mb-3 btn-secondary btn-sm" disabled onClick={openModalToAdd}>
                     
                     Add Product</Button> */}
-                    <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
                     <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
                         Add Product
@@ -147,41 +147,44 @@ const ProductManager = () => {
 
 export const ProductTable = ({ products, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr>
-                    <th className='text-center'>SKU</th>
-                    <th className='text-center'>Name</th>
-                    <th className='text-center'>Description</th>
-                    <th className='text-center'>Unit Price</th>
-                    <th className='text-center'>Weight</th>
-                    <th className='text-center'>width</th>
-                    <th className='text-center'>depth</th>
-                    <th className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {products.map((product, index) => (
-                    <tr key={index}>
-                        <td className='text-center' >{product.sku}</td>
-                        <td className='text-center'>{product.name}</td>
-                        <td className='text-center'>{product.description}</td>
-                        <td className='text-center'>{product.unitPrice}</td>
-                        <td className='text-center'>{product.weight}</td>
-                        <td className='text-center'>{product.width}</td>
-                        <td className='text-center'>{product.depth}</td>
-                        <td className='text-center'>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(product)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button variant="light" className='btn-sm' onClick={() => onDelete(product.id)}>
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Helmet title='Products Manage'>
+
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr>
+                        <th className='text-center'>SKU</th>
+                        <th className='text-center'>Name</th>
+                        <th className='text-center'>Description</th>
+                        <th className='text-center'>Unit Price</th>
+                        <th className='text-center'>Weight</th>
+                        <th className='text-center'>width</th>
+                        <th className='text-center'>depth</th>
+                        <th className='text-center'>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {products.map((product, index) => (
+                        <tr key={index}>
+                            <td className='text-center' >{product.sku}</td>
+                            <td className='text-center'>{product.name}</td>
+                            <td className='text-center'>{product.description}</td>
+                            <td className='text-center'>{product.unitPrice}</td>
+                            <td className='text-center'>{product.weight}</td>
+                            <td className='text-center'>{product.width}</td>
+                            <td className='text-center'>{product.depth}</td>
+                            <td className='text-center'>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(product)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button variant="light" className='btn-sm' onClick={() => onDelete(product.id)}>
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 

@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus, AiOutlineCheck, AiOutlineCloseCircle } from 'react-icons/ai';
 import { baseUrl } from '../App';
 import Axios from 'axios';
-
+import Helmet from './Helmet';
 
 const Order = () => {
     return (
@@ -119,7 +119,7 @@ const OrderManager = () => {
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
 
-                <button className="btn btn-secondary" onClick={openModalToAdd}>
+                    <button className="btn btn-secondary" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
                         Add Order
                     </button>
@@ -143,7 +143,7 @@ const OrderManager = () => {
                     />
                 </Modal.Body>
                 <Modal.Footer>
-                    
+
                     <Button variant="secondary" onClick={closeModal}>Close</Button>
                     <Button variant="primary" onClick={saveOrder}>
                         {currentOrder.id ? 'Save Changes' : 'Add Order'}
@@ -157,45 +157,48 @@ const OrderManager = () => {
 
 export const OrderTable = ({ orders, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr className='text-center'>
-                    <th>Name</th>
-                    <th>Customer</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Products</th>
-                    <th>Payment</th>
-                    <th>Advance</th>
-                    <th>Order Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {orders.map((order, index) => (
-                    <tr className='text-center' key={order._id}>
-                        <td>{order.name}</td>
-                        <td>{order.customer ? order.customer.name : ""}</td>
-                        <td>{order.customer ? order.customer.contactNumber : ""}</td>
-                        <td>{order.customer ? order.customer.email : ""}</td>
-                        <td>{order.products ? order.products.length : 0}</td>
-                        <td>{order.pay}</td>
-                        <td>{order.advance}</td>
-                        <td>{order.orderDate}</td>
-                        <td>{order.status == true ? "true" : "false"}</td>
-                        <td>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(order)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button variant="light" className='btn-sm' onClick={() => onDelete(order._id)}>
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Helmet title='Users Orders'>
+
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr className='text-center'>
+                        <th>Name</th>
+                        <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Products</th>
+                        <th>Payment</th>
+                        <th>Advance</th>
+                        <th>Order Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {orders.map((order, index) => (
+                        <tr className='text-center' key={order._id}>
+                            <td>{order.name}</td>
+                            <td>{order.customer ? order.customer.name : ""}</td>
+                            <td>{order.customer ? order.customer.contactNumber : ""}</td>
+                            <td>{order.customer ? order.customer.email : ""}</td>
+                            <td>{order.products ? order.products.length : 0}</td>
+                            <td>{order.pay}</td>
+                            <td>{order.advance}</td>
+                            <td>{order.orderDate}</td>
+                            <td>{order.status == true ? "true" : "false"}</td>
+                            <td>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(order)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button variant="light" className='btn-sm' onClick={() => onDelete(order._id)}>
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 

@@ -5,14 +5,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { baseUrl } from '../App';
 import Axios from 'axios';
-import Typist from 'react-typist';
-import Typewritter from "./Typewritter";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../container/AuthContext';
 import Cookies from 'js-cookie';
 import video from '../assests/video.mp4'
 import { useTypewriter, Cursor } from 'react-simple-typewriter'
-
+import Helmet from './Helmet'
 
 
 
@@ -84,6 +82,7 @@ const SignIn = () => {
 
 
     return (
+        <Helmet title='Sign In'>
         <Container fluid className="p-0">
             <Row className="m-0">
                 <Col md={8} className="d-flex align-items-center p-0 mb-0 bg-black position-relative">
@@ -95,7 +94,7 @@ const SignIn = () => {
                         <source src={video} />
                     </video>
                     <div className="typewriter-container text-left  position-absolute top-0 start-0" style={{ position: 'absolute', zIndex: 1, fontFamily: 'Protest Guerrilla, sans-serif', fontSize: '24px', margin: '100px', marginLeft: '100px', fontWeight: 'bold', color: 'white', fontStyle: 'italic' }}>
-                        <h3>
+                        <h3 style={{fontWeight: 'bold'}}>
                             Welcome To Warehouse Management System
                         </h3>
                         <span>
@@ -166,6 +165,7 @@ const SignIn = () => {
             </Row>
 
         </Container >
+        </Helmet>
     );
 };
 

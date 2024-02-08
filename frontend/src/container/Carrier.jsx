@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { baseUrl } from '../App';
 import Axios from 'axios';
+import Helmet from './Helmet'
 
 const Carrier = () => {
     return (
@@ -177,36 +178,39 @@ const CarrierManager = () => {
 
 export const CarrierTable = ({ carriers, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr className='text-center'>
-                    <th>Name</th>
-                    <th>Contact Person</th>
-                    <th>Contact Number</th>
-                    <th className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {carriers.map((carrier) => (
-                    <tr className='text-center' key={carrier._id}>
-                        <td>{carrier.name}</td>
-                        <td>{carrier.contactPerson}</td>
-                        <td>{carrier.contactNumber}</td>
-                        <td className='text-center'>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(carrier)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button
-                                variant="light" className='btn-sm'
-                                onClick={() => onDelete(carrier._id)}
-                            >
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Helmet title='Add Carrier'>
+
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr className='text-center'>
+                        <th>Name</th>
+                        <th>Contact Person</th>
+                        <th>Contact Number</th>
+                        <th className='text-center'>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {carriers.map((carrier) => (
+                        <tr className='text-center' key={carrier._id}>
+                            <td>{carrier.name}</td>
+                            <td>{carrier.contactPerson}</td>
+                            <td>{carrier.contactNumber}</td>
+                            <td className='text-center'>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(carrier)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button
+                                    variant="light" className='btn-sm'
+                                    onClick={() => onDelete(carrier._id)}
+                                >
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 

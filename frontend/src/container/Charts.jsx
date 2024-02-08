@@ -83,7 +83,7 @@
 import React, { useState } from 'react';
 import Chart from 'react-apexcharts';
 import Donut from './Donut'
-
+import Helmet from './Helmet'
 
 const RadialProgressBar = ({ progressPercentage, overviewText }) => {
     const chartOptions = {
@@ -122,6 +122,8 @@ const LineChart = () => {
 
     return (
         <>
+        <Helmet title='Dashboard'>
+
             <div className='row'>
                 <div id="chart" className='col-6'>
                     {/* <div className="col-md-6">
@@ -149,7 +151,7 @@ const LineChart = () => {
                     </div>
                 </div>
             </div>
-
+        </Helmet>
         </>
     );
 };

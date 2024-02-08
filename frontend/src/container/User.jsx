@@ -8,7 +8,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 // import React from 'react'
 import PopUp from './Modal';
 import Navbar from '../components/Navbar';
-
+import Helmet from './Helmet'
 
 
 const User = () => {
@@ -19,6 +19,7 @@ const User = () => {
             < UserManager />
         </div >
     );
+    
 }
 
 export default User;
@@ -99,6 +100,9 @@ const UserManager = () => {
     //         setUsers([...users, newUserWithId]);
     //         toast.success('User added successfully');
     //     }
+
+
+
     //     setShowModal(false);
     // };
 
@@ -184,6 +188,8 @@ const UserManager = () => {
 
 export const UserTable = ({ users, onEdit, onDelete }) => {
     return (
+        <Helmet title='Add Users'>
+
         <table className="table table-hover table-bordered">
             <thead className='table-dark'>
                 <tr>
@@ -225,6 +231,7 @@ export const UserTable = ({ users, onEdit, onDelete }) => {
                 ))}
             </tbody>
         </table>
+        </Helmet>
     );
 };
 

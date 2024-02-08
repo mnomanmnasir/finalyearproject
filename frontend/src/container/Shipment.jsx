@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
-
+import Helmet from './Helmet'
 import { baseUrl } from '../App';
 import Axios from 'axios';
 
@@ -187,42 +187,45 @@ const ShipmentManager = () => {
 export const ShipmentTable = ({ shipments, onEdit, onDelete }) => {
 
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr className='text-center'>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Arrival Date</th>
-                    <th>Status</th>
-                    <th>Order ID</th>
-                    <th>Carrier ID</th>
-                    <th className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {shipments.map((shipment) => (
-                    <tr className='text-center' key={shipment._id}>
-                        <td>{shipment.name}</td>
-                        <td>{shipment.date}</td>
-                        <td>{shipment.arrivalDate}</td>
-                        <td>{shipment.status}</td>
-                        <td>{shipment.order ? shipment.order.name + " " + shipment.order._id : ""}</td>
-                        <td>{shipment.carrier ? shipment.carrier.name + " " + shipment.carrier._id : ""}</td>
-                        <td className='text-center'>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(shipment)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button
-                                variant="light" className='btn-sm'
-                                onClick={() => onDelete(shipment._id)}
-                            >
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Helmet title='Shipments System'>
+
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr className='text-center'>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Arrival Date</th>
+                        <th>Status</th>
+                        <th>Order ID</th>
+                        <th>Carrier ID</th>
+                        <th className='text-center'>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {shipments.map((shipment) => (
+                        <tr className='text-center' key={shipment._id}>
+                            <td>{shipment.name}</td>
+                            <td>{shipment.date}</td>
+                            <td>{shipment.arrivalDate}</td>
+                            <td>{shipment.status}</td>
+                            <td>{shipment.order ? shipment.order.name + " " + shipment.order._id : ""}</td>
+                            <td>{shipment.carrier ? shipment.carrier.name + " " + shipment.carrier._id : ""}</td>
+                            <td className='text-center'>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(shipment)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button
+                                    variant="light" className='btn-sm'
+                                    onClick={() => onDelete(shipment._id)}
+                                >
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 
@@ -310,7 +313,7 @@ export const ShipmentForm = ({ shipment, setShipment }) => {
                 <Form.Label>Order ID</Form.Label>
                 <Form.Control
                     as="select"
-                    value={shipment.order&&shipment.order._id}
+                    value={shipment.order && shipment.order._id}
                     onChange={(e) => setShipment({ ...shipment, order: e.target.value })}
                     required
                 >
@@ -326,7 +329,7 @@ export const ShipmentForm = ({ shipment, setShipment }) => {
                 <Form.Label>Carrier ID</Form.Label>
                 <Form.Control
                     as="select"
-                    value={shipment.carrier&&shipment.carrier._id}
+                    value={shipment.carrier && shipment.carrier._id}
                     onChange={(e) => setShipment({ ...shipment, carrier: e.target.value })}
                     required
                 >

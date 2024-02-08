@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 import Axios from 'axios';
 import { baseUrl } from '../App';
-
+import Helmet from './Helmet';
 
 const Inventory = () => {
     return (
@@ -141,90 +141,94 @@ const InventoryManager = () => {
     };
 
     return (
+        <Helmet>
 
-        <div className="inventory-manager mt-3 m-3">
-            <div className="d-flex justify-content-between">
-                <h3 className='mt-4'>Inventory</h3>
-                {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
+            <div className="inventory-manager mt-3 m-3">
+                <div className="d-flex justify-content-between">
+                    <h3 className='mt-4'>Inventory</h3>
+                    {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                 </Button> */}
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
-                        Inventory
-                    </button>
-                </caption>
+                    <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
+                        <button className="btn btn-secondary" onClick={openModalToAdd}>
+                            <AiOutlinePlus className="me-2" />
+                            Inventory
+                        </button>
+                    </caption>
+                </div>
+                <InventoryTable inventory={inventory} onEdit={openModalToEdit} onDelete={deleteInventoryItem} />
+                <Modal show={showModal} onHide={closeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            {currentInventory.id ? 'Edit Inventory Item' : 'Add Inventory Item'}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <InventoryForm
+                            inventoryItem={currentInventory}
+                            setInventoryItem={setCurrentInventory}
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={closeModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={saveInventoryItem}>
+                            {currentInventory._id ? 'Save Changes' : 'Add Inventory Item'}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <ToastContainer position="top-right" autoClose={5000} />
             </div>
-            <InventoryTable inventory={inventory} onEdit={openModalToEdit} onDelete={deleteInventoryItem} />
-            <Modal show={showModal} onHide={closeModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        {currentInventory.id ? 'Edit Inventory Item' : 'Add Inventory Item'}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <InventoryForm
-                        inventoryItem={currentInventory}
-                        setInventoryItem={setCurrentInventory}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={closeModal}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={saveInventoryItem}>
-                        {currentInventory._id ? 'Save Changes' : 'Add Inventory Item'}
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-            <ToastContainer position="top-right" autoClose={5000} />
-        </div>
+        </Helmet>
     );
 };
 
 export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
     return (
+        <Helmet title='Inventory System'>
 
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr className='text-center'>
-                    <th>Name</th>
-                    <th className='text-center'>Quantity On Hand</th>
-                    <th className='text-center'>Quantity Reserved</th>
-                    <th className='text-center'>Product Name</th>
-                    <th className='text-center'>Unit Price</th>
-                    {/* <th>Warehouse ID</th>
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr className='text-center'>
+                        <th>Name</th>
+                        <th className='text-center'>Quantity On Hand</th>
+                        <th className='text-center'>Quantity Reserved</th>
+                        <th className='text-center'>Product Name</th>
+                        <th className='text-center'>Unit Price</th>
+                        {/* <th>Warehouse ID</th>
                     <th>Warehouse Name</th> */}
-                    <th className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {inventory.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.name}</td>
-                        <td className='text-center'>{item.quantityOnHand}</td>
-                        <td className='text-center'>{item.quantityReserved}</td>
-                        <td className='text-center'>{item.product ? item.product.name : 'N/A'}</td>
-                        <td className='text-center'>{item.product ? item.product.unitPrice : 'N/A'}</td>
-                        {/* <td className='text-center'>{item.product.name}</td>
-                        <td className='text-center'>{item.product.unitPrice}</td> */}
-                        {/* <td>{item.warehouseId}</td>
-                        <td>{item.warehouseName}</td> */}
-                        <td className='text-center'>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(item)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button
-                                variant="light" className='btn-sm'
-                                onClick={() => onDelete(item.id)}
-                                disabled
-                            >
-                                <BsTrash />
-                            </Button>
-                        </td>
+                        <th className='text-center'>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {inventory.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.name}</td>
+                            <td className='text-center'>{item.quantityOnHand}</td>
+                            <td className='text-center'>{item.quantityReserved}</td>
+                            <td className='text-center'>{item.product ? item.product.name : 'N/A'}</td>
+                            <td className='text-center'>{item.product ? item.product.unitPrice : 'N/A'}</td>
+                            {/* <td className='text-center'>{item.product.name}</td>
+                        <td className='text-center'>{item.product.unitPrice}</td> */}
+                            {/* <td>{item.warehouseId}</td>
+                        <td>{item.warehouseName}</td> */}
+                            <td className='text-center'>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(item)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button
+                                    variant="light" className='btn-sm'
+                                    onClick={() => onDelete(item.id)}
+                                    disabled
+                                >
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 

@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { baseUrl } from '../App';
 import Axios from 'axios';
+import Helmet from './Helmet'
 
 const Customer = () => {
     return (
@@ -160,35 +161,37 @@ const CustomerManager = () => {
 
 export const CustomerTable = ({ customers, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr>
-                    <th className='text-center'>Name</th>
-                    <th className='text-center'>Contact Number</th>
-                    <th className='text-center'>Email</th>
-                    <th className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {customers.map((customer, index) => (
-                    <tr className='text-center' key={index}>
-                        <td className='text-center'>{customer.name}</td>
-                        <td className='text-center'>{customer.contactNumber}</td>
-                        <td className='text-center'>{customer.email}</td>
-                        <td className='text-center'>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(customer)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button
-                                variant="light" className='btn-sm'
-                                onClick={() => onDelete(customer._id)}>
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Helmet title='Add Customers'>
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr>
+                        <th className='text-center'>Name</th>
+                        <th className='text-center'>Contact Number</th>
+                        <th className='text-center'>Email</th>
+                        <th className='text-center'>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {customers.map((customer, index) => (
+                        <tr className='text-center' key={index}>
+                            <td className='text-center'>{customer.name}</td>
+                            <td className='text-center'>{customer.contactNumber}</td>
+                            <td className='text-center'>{customer.email}</td>
+                            <td className='text-center'>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(customer)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button
+                                    variant="light" className='btn-sm'
+                                    onClick={() => onDelete(customer._id)}>
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 

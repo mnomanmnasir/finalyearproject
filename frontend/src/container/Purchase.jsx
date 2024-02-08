@@ -6,6 +6,7 @@ import { BsPencilSquare, BsTrash, BsDashCircle } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { baseUrl } from '../App';
 import Axios from 'axios';
+import Helmet from './Helmet'
 
 const Purchase = ({ Toggle }) => {
     return (
@@ -118,6 +119,8 @@ const PurchaseManager = () => {
     };
 
     return (
+        <Helmet>
+
         <div className="purchase-manager m-2">
             <div className="d-flex justify-content-between">
                 <h3>Purchase</h3>
@@ -153,6 +156,7 @@ const PurchaseManager = () => {
             </Modal>
             <ToastContainer position="top-right" autoClose={5000} />
         </div>
+        </Helmet>
     );
 };
 
@@ -214,8 +218,9 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
         setProductModal(true)
     };
     const handleCloseProductModal = () => setProductModal(false);
-
+    
     return (
+        <Helmet title='Purchase Order'>
         <div>
             <ProductModal showProductModal={productModal} data={productData} handleCloseProductModal={handleCloseProductModal} />
 
@@ -263,6 +268,7 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
                 </tbody>
             </table>
         </div>
+        </Helmet>
     );
 };
 

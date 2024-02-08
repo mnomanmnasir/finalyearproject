@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Navbar from '../components/Navbar';
 import { AiOutlinePlus } from 'react-icons/ai';
-
+import Helmet from './Helmet';
 
 const Supplier = () => {
     return (
@@ -125,38 +125,41 @@ const SupplierManager = () => {
 
 export const SupplierTable = ({ suppliers, onEdit, onDelete }) => {
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr className='text-center'>
-                    <th>Supplier Name</th>
-                    <th>Contact Person</th>
-                    <th>Contact Number</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {suppliers.map((supplier) => (
-                    <tr className='text-center' key={supplier.id}>
-                        <td>{supplier.supplierName}</td>
-                        <td>{supplier.contactPerson}</td>
-                        <td>{supplier.contactNumber}</td>
-                        <td>{supplier.email}</td>
-                        <td>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(supplier)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button
-                                variant="light" className='btn-sm'
-                                onClick={() => onDelete(supplier.id)}
-                            >
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Helmet title='Add Supplier'>
+
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr className='text-center'>
+                        <th>Supplier Name</th>
+                        <th>Contact Person</th>
+                        <th>Contact Number</th>
+                        <th>Email</th>
+                        <th>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {suppliers.map((supplier) => (
+                        <tr className='text-center' key={supplier.id}>
+                            <td>{supplier.supplierName}</td>
+                            <td>{supplier.contactPerson}</td>
+                            <td>{supplier.contactNumber}</td>
+                            <td>{supplier.email}</td>
+                            <td>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(supplier)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button
+                                    variant="light" className='btn-sm'
+                                    onClick={() => onDelete(supplier.id)}
+                                >
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 

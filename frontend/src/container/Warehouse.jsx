@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,7 +7,7 @@ import Navbar from '../components/Navbar';
 import Axios from 'axios';
 import { baseUrl } from "../App"
 import { AiOutlinePlus } from 'react-icons/ai';
-
+import Helmet from './Helmet'
 
 
 const Warehouse = ({ Toggle }) => {
@@ -120,6 +119,7 @@ const WarehouseManager = () => {
         }
     };
 
+
     const deleteWarehouse = (warehouseId) => {
         setWarehouses(warehouses.filter(wh => wh._id !== warehouseId));
         toast.info('Warehouse deleted successfully');
@@ -163,40 +163,42 @@ const WarehouseManager = () => {
 export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
     // const row = [{ _id: "name", title: "Name" }, { _id: "address", title: "Address" }, { _id: "capacity", title: "Capacity" }, { _id: "supervisor", title: "Supervisor" }, { _id: "temperatureControlled", title: "Temperature" }, { _id: "status", title: "Status" }, { _id: "actions", title: "Actions" }];
     return (
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr>
-                    {/* {row.map((column, index) => <th key={index}>{column.title}</th>)} */}
-                    <th className='text-center'>Name</th>
-                    <th className='text-center'>Address</th>
-                    <th className='text-center'>Capacity</th>
-                    <th className='text-center'>Supervisor</th>
-                    <th className='text-center'>Temperature Controlled</th>
-                    <th className='text-center'>Status</th>
-                    <th className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {warehouses.map((warehouse) => (
-                    <tr key={warehouse._id} className='justify-content-center text-center'>
-                        <td className='text-center'>{warehouse.name}</td>
-                        <td className='text-center'>{warehouse.address}</td>
-                        <td className='text-center'>{warehouse.capacity}</td>
-                        <td className='text-center'>{warehouse.supervisor? warehouse.supervisor.firstName+" "+warehouse.supervisor.lastName:""}</td>
-                        <td className='text-center'>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
-                        <td className='text-center'>{warehouse.status}</td>
-                        <td className='text-center'>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse._id)}>
-                                <BsTrash />
-                            </Button>
-                        </td>
+        <Helmet title='Warehouse System'>
+            <table className="table table-hover table-bordered">
+                <thead className='table-dark'>
+                    <tr>
+                        {/* {row.map((column, index) => <th key={index}>{column.title}</th>)} */}
+                        <th className='text-center'>Name</th>
+                        <th className='text-center'>Address</th>
+                        <th className='text-center'>Capacity</th>
+                        <th className='text-center'>Supervisor</th>
+                        <th className='text-center'>Temperature Controlled</th>
+                        <th className='text-center'>Status</th>
+                        <th className='text-center'>Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {warehouses.map((warehouse) => (
+                        <tr key={warehouse._id} className='justify-content-center text-center'>
+                            <td className='text-center'>{warehouse.name}</td>
+                            <td className='text-center'>{warehouse.address}</td>
+                            <td className='text-center'>{warehouse.capacity}</td>
+                            <td className='text-center'>{warehouse.supervisor ? warehouse.supervisor.firstName + " " + warehouse.supervisor.lastName : ""}</td>
+                            <td className='text-center'>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
+                            <td className='text-center'>{warehouse.status}</td>
+                            <td className='text-center'>
+                                <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
+                                    <BsPencilSquare />
+                                </Button>
+                                <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse._id)}>
+                                    <BsTrash />
+                                </Button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Helmet>
     );
 };
 
@@ -267,7 +269,7 @@ export const WarehouseForm = ({ warehouse, setWarehouse }) => {
                 />
                 <datalist id="supervisorNames">
                     {users.map((prod, idx) => (
-                        <option key={idx} value={prod.firstName +" "+ prod._id} />
+                        <option key={idx} value={prod.firstName + " " + prod._id} />
                     ))}
                 </datalist>
             </Form.Group>
