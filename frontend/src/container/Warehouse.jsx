@@ -25,6 +25,7 @@ export default Warehouse;
 const WarehouseManager = () => {
     const [warehouses, setWarehouses] = useState(warehouseData);
     const [showModal, setShowModal] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
     const [currentWarehouse, setCurrentWarehouse] = useState({
         _id: null,
         name: '',
@@ -125,22 +126,55 @@ const WarehouseManager = () => {
         toast.info('Warehouse deleted successfully');
     };
 
+
+
+    const filteredWarehouses = warehouses.filter((warehouse) =>
+        warehouse.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        console.log('Search term:', e.target.value);
+    };
+
     return (
-        <div className="warehouse-manager mt-3 m-3 ">
+        <div className="warehouse-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h4 className='mt-4'>Warehouses</h4>
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
-
                     Add Warehouse</Button> */}
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
+                {/* <div>
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search by name"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                        <button className="btn btn-primary" type="button" onClick={openModalToAdd}>
+                            <AiOutlinePlus className="me-2" />
+                            Add Warehouse
+                        </button>
+                    </div>
+                </div> */}
+                <caption className='d-flex justify-content-between'>
+                    <input
+                        type="text"
+                        className="rounded-pill"
+                        placeholder="Search by Name"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                    <button className="btn btn-dark rounded-pill" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="" />
                         Add Warehouse
                     </button>
+
                 </caption>
             </div>
 
-            <WarehouseTable warehouses={warehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
+            <WarehouseTable warehouses={filteredWarehouses} onEdit={openModalToEdit} onDelete={deleteWarehouse} />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>{currentWarehouse._id ? 'Edit Warehouse' : 'Add Warehouse'}</Modal.Title>
@@ -150,7 +184,7 @@ const WarehouseManager = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>Close</Button>
-                    <Button variant="primary" onClick={saveWarehouse}>
+                    <Button variant="dark" onClick={saveWarehouse}>
                         {currentWarehouse._id ? 'Save Changes' : 'Add Warehouse'}
                     </Button>
                 </Modal.Footer>
@@ -162,42 +196,65 @@ const WarehouseManager = () => {
 
 export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
     // const row = [{ _id: "name", title: "Name" }, { _id: "address", title: "Address" }, { _id: "capacity", title: "Capacity" }, { _id: "supervisor", title: "Supervisor" }, { _id: "temperatureControlled", title: "Temperature" }, { _id: "status", title: "Status" }, { _id: "actions", title: "Actions" }];
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
+
+    const filteredWarehouses = warehouses.filter((warehouse) =>
+        warehouse.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
     return (
         <Helmet title='Warehouse System'>
-            <table className="table table-hover table-bordered">
-                <thead className='table-dark'>
-                    <tr>
-                        {/* {row.map((column, index) => <th key={index}>{column.title}</th>)} */}
-                        <th className='text-center'>Name</th>
-                        <th className='text-center'>Address</th>
-                        <th className='text-center'>Capacity</th>
-                        <th className='text-center'>Supervisor</th>
-                        <th className='text-center'>Temperature Controlled</th>
-                        <th className='text-center'>Status</th>
-                        <th className='text-center'>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {warehouses.map((warehouse) => (
-                        <tr key={warehouse._id} className='justify-content-center text-center'>
-                            <td className='text-center'>{warehouse.name}</td>
-                            <td className='text-center'>{warehouse.address}</td>
-                            <td className='text-center'>{warehouse.capacity}</td>
-                            <td className='text-center'>{warehouse.supervisor ? warehouse.supervisor.firstName + " " + warehouse.supervisor.lastName : ""}</td>
-                            <td className='text-center'>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
-                            <td className='text-center'>{warehouse.status}</td>
-                            <td className='text-center'>
-                                <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
-                                    <BsPencilSquare />
-                                </Button>
-                                <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse._id)}>
-                                    <BsTrash />
-                                </Button>
-                            </td>
+            {/* <div className=''>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search by name"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+            </div> */}
+
+            {filteredWarehouses.length === 0 ? (
+                <p>No warehouses found.</p>
+            ) : (
+
+                <table className="table table-hover table-bordered">
+                    <thead className='table-dark'>
+                        <tr>
+                            {/* {row.map((column, index) => <th key={index}>{column.title}</th>)} */}
+                            <th className='text-center'>Name</th>
+                            <th className='text-center'>Address</th>
+                            <th className='text-center'>Capacity</th>
+                            <th className='text-center'>Supervisor</th>
+                            <th className='text-center'>Temperature Controlled</th>
+                            <th className='text-center'>Status</th>
+                            <th className='text-center'>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {filteredWarehouses.map((warehouse) => (
+                            <tr key={warehouse._id} className='justify-content-center text-center'>
+                                <td className='text-center'>{warehouse.name}</td>
+                                <td className='text-center'>{warehouse.address}</td>
+                                <td className='text-center'>{warehouse.capacity}</td>
+                                <td className='text-center'>{warehouse.supervisor ? warehouse.supervisor.firstName + " " + warehouse.supervisor.lastName : ""}</td>
+                                <td className='text-center'>{warehouse.temperatureControlled ? 'Yes' : 'No'}</td>
+                                <td className='text-center'>{warehouse.status}</td>
+                                <td className='text-center'>
+                                    <Button variant="light" className='btn-sm' onClick={() => onEdit(warehouse)}>
+                                        <BsPencilSquare />
+                                    </Button>
+                                    <Button variant="light" className='btn-sm' onClick={() => onDelete(warehouse._id)}>
+                                        <BsTrash />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
         </Helmet>
     );
 };
