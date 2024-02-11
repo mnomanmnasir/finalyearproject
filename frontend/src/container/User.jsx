@@ -19,7 +19,7 @@ const User = () => {
             < UserManager />
         </div >
     );
-    
+
 }
 
 export default User;
@@ -141,6 +141,18 @@ const UserManager = () => {
         toast.info('User deleted successfully');
     };
 
+
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
+
+    const filteredUsers = users.filter((user) =>
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        console.log('Search term:', e.target.value);
+    };
+
     return (
         <div className="user-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
@@ -148,11 +160,19 @@ const UserManager = () => {
                 {/* <Button className="mb-3 btn-secondary btn-sm" onClick={openModalToAdd}>
                     Add User
                     </Button> */}
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
-                        Add User
+                <caption className='d-flex justify-content-between'>
+                    <input
+                        type="text"
+                        className="rounded-pill"
+                        placeholder="Search by Name"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                    <button className="btn btn-dark rounded-pill" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="" />
+                        Add Order
                     </button>
+
                 </caption>
             </div>
             {loading ? (
@@ -163,7 +183,7 @@ const UserManager = () => {
                 <>
                     {/* <Button className="mb-3" onClick={openModalToAdd}>Add User</Button>
                     Rest of your component code... */}
-                    <UserTable users={users} onEdit={openModalToEdit} onDelete={deleteUser} />
+                    <UserTable users={filteredUsers} onEdit={openModalToEdit} onDelete={deleteUser} />
                 </>
             )}
 
@@ -176,7 +196,7 @@ const UserManager = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>Close</Button>
-                    <Button variant="primary" onClick={saveUser}>
+                    <Button variant="dark" onClick={saveUser}>
                         {currentUser._id ? 'Save Changes' : 'Add User'}
                     </Button>
                 </Modal.Footer>
@@ -187,50 +207,62 @@ const UserManager = () => {
 };
 
 export const UserTable = ({ users, onEdit, onDelete }) => {
+
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
+
+    const filteredUsers = users.filter((user) =>
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <Helmet title='Add Users'>
 
-        <table className="table table-hover table-bordered">
-            <thead className='table-dark'>
-                <tr>
-                    <th className='text-center'>Email</th>
-                    <th className='text-center'>First Name</th>
-                    <th className='text-center'>Last Name</th>
-                    <th className='text-center'>Status</th>
-                    <th className='text-center'>Last Login</th>
-                    <th className='text-center'>Roles</th>
-                    {/* <th>Created On</th>
+            {filteredUsers.length === 0 ? (
+                <p>No Users found.</p>
+            ) : (
+
+                <table className="table table-hover table-bordered">
+                    <thead className='table-dark'>
+                        <tr>
+                            <th className='text-center'>Email</th>
+                            <th className='text-center'>First Name</th>
+                            <th className='text-center'>Last Name</th>
+                            <th className='text-center'>Status</th>
+                            <th className='text-center'>Last Login</th>
+                            <th className='text-center'>Roles</th>
+                            {/* <th>Created On</th>
                     <th>Created By</th>
                     <th>Updated On</th>
                     <th>Updated By</th> */}
-                    <th className='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {users.map((user, index) => (
-                    <tr className='text-center' key={index}>
-                        <td className='text-center'>{user.email}</td>
-                        <td className='text-center'>{user.firstName}</td>
-                        <td className='text-center'>{user.lastName}</td>
-                        <td className='text-center'>{user.status}</td>
-                        <td className='text-center'>{user.last_login ? user.last_login.toISOString() : ''}</td>
-                        <td className='text-center'>{user.name || user.roles[0].name}</td>
-                        {/* <td>{user.created_on ? user.created_on.toISOString() : ''}</td>
+                            <th className='text-center'>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredUsers.map((user, index) => (
+                            <tr className='text-center' key={index}>
+                                <td className='text-center'>{user.email}</td>
+                                <td className='text-center'>{user.firstName}</td>
+                                <td className='text-center'>{user.lastName}</td>
+                                <td className='text-center'>{user.status}</td>
+                                <td className='text-center'>{user.last_login ? user.last_login.toISOString() : ''}</td>
+                                <td className='text-center'>{user.name || user.roles[0].name}</td>
+                                {/* <td>{user.created_on ? user.created_on.toISOString() : ''}</td>
                         <td>{user.created_by}</td>
                         <td>{user.updated_on ? user.updated_on.toISOString() : ''}</td>
                         <td>{user.updated_by}</td> */}
-                        <td className='text-center'>
-                            <Button variant="light" className='btn-sm' onClick={() => onEdit(user)}>
-                                <BsPencilSquare />
-                            </Button>
-                            <Button variant="light" className='btn-sm' onClick={() => onDelete(user._id)}>
-                                <BsTrash />
-                            </Button>
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+                                <td className='text-center'>
+                                    <Button variant="light" className='btn-sm' onClick={() => onEdit(user)}>
+                                        <BsPencilSquare />
+                                    </Button>
+                                    <Button variant="light" className='btn-sm' onClick={() => onDelete(user._id)}>
+                                        <BsTrash />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
         </Helmet>
     );
 };

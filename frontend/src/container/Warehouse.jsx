@@ -198,6 +198,7 @@ export const WarehouseTable = ({ warehouses, onEdit, onDelete }) => {
     // const row = [{ _id: "name", title: "Name" }, { _id: "address", title: "Address" }, { _id: "capacity", title: "Capacity" }, { _id: "supervisor", title: "Supervisor" }, { _id: "temperatureControlled", title: "Temperature" }, { _id: "status", title: "Status" }, { _id: "actions", title: "Actions" }];
     const [searchTerm, setSearchTerm] = useState(''); // State for search term
 
+    
     const filteredWarehouses = warehouses.filter((warehouse) =>
         warehouse.name.toLowerCase().includes(searchTerm.toLowerCase())
     );

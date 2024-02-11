@@ -2,20 +2,26 @@
   /* display: flex; */
   justify-content: center;
   align-items: center;
-  /* height: 60vh; */
+  /* height: 54vh; */
   /* margin-left: 10%; */
-  /* width: 90vh; */
+  /* width: auto; */
   /* padding-left: -70%; */
-  /* object-fit: contain;
-  overflow: hidden;  */
+  object-fit: cover;
+  overflow: hidden; 
+}
+
+.slide {
+  position: relative;
+  width: 150vh; /* Adjust the width of the slide container */
+  height: 56vh;
+  overflow: hidden;
 }
 
 .slide img {
-  width: 80vh;
-  /* Adjust the width as needed */
-  height: -10vh;
-  /* padding-left: -10%; */
-  justify-content: center;
-  align-items: center;
-  object-fit: contain;
+  width: 100%; /* Set width to 100% to cover the entire container */
+  height: 56vh; /* Keep the height consistent */
+  position: absolute;
+  left: 0;
+  right: 0; /* Set right to 0 to make the image cover the entire width */
+  object-fit: cover;
 }

@@ -125,27 +125,9 @@ const LineChart = () => {
         <Helmet title='Dashboard'>
 
             <div className='row'>
-                <div id="chart" className='col-6'>
-                    {/* <div className="col-md-6">
-                        <RadialProgressBar progressPercentage={progress1} />
-                    </div> */}
-                    <div className='d-flex justify-content-between bg-grey rounded py-0 mb-1'>
-                        <RadialProgressBar overviewText='Overview 1' progressPercentage={progress1} />
-                        <div className="mx-2"></div>
-                        <RadialProgressBar progressPercentage={progress2} overviewText='Overview 2'  />
-                        {/* <Chart options={chartOptions} series={chartSeries} type="area" height={350} /> */}
-                    </div>
-                    <div className='d-flex justify-content-between bg-grey rounded'>
-                        <RadialProgressBar progressPercentage={progress3} overviewText='Overview 3' />
-                        <div className="mx-2"></div>
-                        <RadialProgressBar progressPercentage={progress4} overviewText='Overview 4'  />
-                        {/* <Chart options={chartOptions} series={chartSeries} type="area" height={350} /> */}
-                    </div>
-                    {/* <RadialProgressBar progressPercentage={progress3} />
-                        <RadialProgressBar progressPercentage={progress4} /> */}
-                </div>
+                
 
-                <div id="chart" className='col-6 py-3'>
+                <div id="chart" className='col-12 py-3'>
                     <div className='bg-white rounded'>
                         <Donut />
                     </div>

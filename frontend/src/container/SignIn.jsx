@@ -152,8 +152,7 @@ const SignIn = () => {
                                 </div>
                             </div>
 
-                            <Button variant="secondary" type="submit" className="mt-5 align-center w-25 rounded-pill text-center"
-                                style={buttonStyle}
+                            <Button variant="dark" type="submit" className="mt-5 align-center w-25 rounded-pill text-center"
                             >
                                 Login
                             </Button>

@@ -116,20 +116,39 @@ const CustomerManager = () => {
             toast.error('Error deleting customer');
         }
     };
+    
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
+    
+    const filteredCustomers = customers.filter((customer) =>
+        customer.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        console.log('Search term:', e.target.value);
+    };
 
     return (
         <div className="customer-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
                 <h3 className='mt-4'>Customer</h3>
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" /> customer
-                        {/* Add Customer */}
+                  <caption className='d-flex justify-content-between'>
+                    <input
+                        type="text"
+                        className="rounded-pill"
+                        placeholder="Search by Name"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                    <button className="btn btn-dark rounded-pill" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="" />
+                        Add Customer
                     </button>
+
                 </caption>
             </div>
             <CustomerTable
-                customers={customers}
+                customers={filteredCustomers}
                 onEdit={openModalToEdit}
                 onDelete={deleteCustomer}
             />
@@ -149,7 +168,7 @@ const CustomerManager = () => {
                     <Button variant="secondary" onClick={closeModal}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={saveCustomer}>
+                    <Button variant="dark" onClick={saveCustomer}>
                         {currentCustomer._id ? 'Save Changes' : 'Add Customer'}
                     </Button>
                 </Modal.Footer>
@@ -160,8 +179,21 @@ const CustomerManager = () => {
 };
 
 export const CustomerTable = ({ customers, onEdit, onDelete }) => {
+    
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
+
+    
+    const filteredCustomers = customers.filter((customer) =>
+        customer.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <Helmet title='Add Customers'>
+           
+           {filteredCustomers.length === 0 ? (
+                <p>No customer found.</p>
+            ) : (
+           
             <table className="table table-hover table-bordered">
                 <thead className='table-dark'>
                     <tr>
@@ -172,7 +204,7 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {customers.map((customer, index) => (
+                    {filteredCustomers.map((customer, index) => (
                         <tr className='text-center' key={index}>
                             <td className='text-center'>{customer.name}</td>
                             <td className='text-center'>{customer.contactNumber}</td>
@@ -190,7 +222,8 @@ export const CustomerTable = ({ customers, onEdit, onDelete }) => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> 
+            )}
         </Helmet>
     );
 };

@@ -86,7 +86,7 @@ const SupplierManager = () => {
                     Add Supplier
                 </Button> */}
                 <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
+                    <button className="btn btn-dark rounded-pill" onClick={openModalToAdd}>
                         <AiOutlinePlus className="me-2" />
                         Add Supplier
                     </button>
@@ -113,7 +113,7 @@ const SupplierManager = () => {
                     <Button variant="secondary" onClick={closeModal}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={saveSupplier}>
+                    <Button variant="dark" onClick={saveSupplier}>
                         {currentSupplier.id ? 'Save Changes' : 'Add Supplier'}
                     </Button>
                 </Modal.Footer>

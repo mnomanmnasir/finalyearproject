@@ -111,6 +111,20 @@ const ProductManager = () => {
         toast.info('Product deleted successfully');
     };
 
+    
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
+
+
+    const filteredProducts = products.filter((product) =>
+        product.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        console.log('Search term:', e.target.value);
+    };
+
     return (
         <div className="product-manager mt-3 m-3">
             <div className="d-flex justify-content-between">
@@ -118,14 +132,22 @@ const ProductManager = () => {
                 {/* <Button className="mb-3 btn-secondary btn-sm" disabled onClick={openModalToAdd}>
                     
                     Add Product</Button> */}
-                <caption className='text-black mt-2 fs-4 d-flex justify-content-between'>
-                    <button className="btn btn-secondary" onClick={openModalToAdd}>
-                        <AiOutlinePlus className="me-2" />
+                  <caption className='d-flex justify-content-between'>
+                    <input
+                        type="text"
+                        className="rounded-pill"
+                        placeholder="Search by Name"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                    <button className="btn btn-dark rounded-pill" onClick={openModalToAdd}>
+                        <AiOutlinePlus className="" />
                         Add Product
                     </button>
+
                 </caption>
             </div>
-            <ProductTable products={products} onEdit={openModalToEdit} onDelete={deleteProduct} />
+            <ProductTable products={filteredProducts} onEdit={openModalToEdit} onDelete={deleteProduct} />
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>{currentProduct.id ? 'Edit Product' : 'Add Product'}</Modal.Title>
@@ -135,7 +157,7 @@ const ProductManager = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={closeModal}>Close</Button>
-                    <Button variant="primary" onClick={saveProduct}>
+                    <Button variant="dark" onClick={saveProduct}>
                         {currentProduct._id ? 'Save Changes' : 'Add Product'}
                     </Button>
                 </Modal.Footer>
@@ -146,44 +168,58 @@ const ProductManager = () => {
 };
 
 export const ProductTable = ({ products, onEdit, onDelete }) => {
+
+
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
+
+
+    const filteredProducts = products.filter((product) =>
+        product.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <Helmet title='Products Manage'>
 
-            <table className="table table-hover table-bordered">
-                <thead className='table-dark'>
-                    <tr>
-                        <th className='text-center'>SKU</th>
-                        <th className='text-center'>Name</th>
-                        <th className='text-center'>Description</th>
-                        <th className='text-center'>Unit Price</th>
-                        <th className='text-center'>Weight</th>
-                        <th className='text-center'>width</th>
-                        <th className='text-center'>depth</th>
-                        <th className='text-center'>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product, index) => (
-                        <tr key={index}>
-                            <td className='text-center' >{product.sku}</td>
-                            <td className='text-center'>{product.name}</td>
-                            <td className='text-center'>{product.description}</td>
-                            <td className='text-center'>{product.unitPrice}</td>
-                            <td className='text-center'>{product.weight}</td>
-                            <td className='text-center'>{product.width}</td>
-                            <td className='text-center'>{product.depth}</td>
-                            <td className='text-center'>
-                                <Button variant="light" className='btn-sm' onClick={() => onEdit(product)}>
-                                    <BsPencilSquare />
-                                </Button>
-                                <Button variant="light" className='btn-sm' onClick={() => onDelete(product.id)}>
-                                    <BsTrash />
-                                </Button>
-                            </td>
+            {filteredProducts.length === 0 ? (
+                <p>No product found.</p>
+            ) : (
+
+                <table className="table table-hover table-bordered">
+                    <thead className='table-dark'>
+                        <tr>
+                            <th className='text-center'>SKU</th>
+                            <th className='text-center'>Name</th>
+                            <th className='text-center'>Description</th>
+                            <th className='text-center'>Unit Price</th>
+                            <th className='text-center'>Weight</th>
+                            <th className='text-center'>width</th>
+                            <th className='text-center'>depth</th>
+                            <th className='text-center'>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {filteredProducts.map((product, index) => (
+                            <tr key={index}>
+                                <td className='text-center' >{product.sku}</td>
+                                <td className='text-center'>{product.name}</td>
+                                <td className='text-center'>{product.description}</td>
+                                <td className='text-center'>{product.unitPrice}</td>
+                                <td className='text-center'>{product.weight}</td>
+                                <td className='text-center'>{product.width}</td>
+                                <td className='text-center'>{product.depth}</td>
+                                <td className='text-center'>
+                                    <Button variant="light" className='btn-sm' onClick={() => onEdit(product)}>
+                                        <BsPencilSquare />
+                                    </Button>
+                                    <Button variant="light" className='btn-sm' onClick={() => onDelete(product.id)}>
+                                        <BsTrash />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
         </Helmet>
     );
 };

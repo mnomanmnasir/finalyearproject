@@ -11,7 +11,7 @@ import './Donut.css'
 
 const Donut = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -29,6 +29,7 @@ const Donut = () => {
       <div className="slider-container">
         <Slider {...settings}>
           <div className='slide'>
+            {/* <div className="text mr-3">Text for Slide 1</div> */}
             <img src={sliderImg1} alt="Slide 1"  />
           </div>
           <div className='slide'>
