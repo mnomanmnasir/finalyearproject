@@ -91,17 +91,33 @@ const OrderManager = () => {
 
         if (currentOrder._id) {
             // Update order in the list
-            setOrders(
-                orders.map((o) =>
-                    o._id === currentOrder._id ? currentOrder : o
-                )
-            );
-            toast.success('Order updated successfully');
+            Axios.put(baseUrl + "/order", currentOrder)
+                .then(response => {
+                    setOrders(
+                        orders.map((o) =>
+                            o._id === currentOrder._id ? response.data : o
+                        )
+                    );
+                    toast.success('Order updated successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toast.error('Error updating purchase');
+                });
         } else {
             // Add new order
-            const newOrderWithId = { ...currentOrder, _id: Date.now() };
-            setOrders([...orders, newOrderWithId]);
-            toast.success('Order added successfully');
+            Axios.post(baseUrl + "/order", currentOrder)
+                .then(response => {
+                    setOrders([...orders, response.data]);
+                    toast.success('Order added successfully');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    toast.error('Error adding order');
+                });
+            // const newOrderWithId = { ...currentOrder, _id: Date.now() };
+            // setOrders([...orders, newOrderWithId]);
+            // toast.success('Order added successfully');
         }
         setShowModal(false);
     };
@@ -242,6 +258,7 @@ export const OrderForm = ({ order, setOrder }) => {
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
     const [products, setProducts] = useState([]);
+    const [customers, setCustomers] = useState([]);
     const [id, setId] = useState('');
 
     const fetchProductsFromAPI = async () => {
@@ -254,10 +271,21 @@ export const OrderForm = ({ order, setOrder }) => {
             setLoading(false);
         }
     };
+    const fetchCustomersFromAPI = async () => {
+        try {
+            const response = await Axios.get(baseUrl + '/customers');
+            setCustomers(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         // fetchordersFromAPI();
         fetchProductsFromAPI();
+        fetchCustomersFromAPI();
     }, []);
     return (
         <Form>
@@ -270,7 +298,7 @@ export const OrderForm = ({ order, setOrder }) => {
                     required
                 />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
                 <Form.Label>Customer ID</Form.Label>
                 <Form.Control
                     type="text"
@@ -278,15 +306,23 @@ export const OrderForm = ({ order, setOrder }) => {
                     onChange={(e) => setOrder({ ...order, customerId: e.target.value })}
                     required
                 />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group>
-                <Form.Label>Customer Name</Form.Label>
+                <Form.Label>Customer</Form.Label>
                 <Form.Control
-                    type="text"
-                    value={order.customerName}
-                    onChange={(e) => setOrder({ ...order, customerName: e.target.value })}
+                    as="select"
+                    // type="text"
+                    value={order.customer}
+                    onChange={(e) => setOrder({ ...order, customer: (e.target.value).split(" - ")[1] })}
                     required
-                />
+                >
+                    <option value="">Select customers</option>
+                    {customers.map((customer) => (
+                        <option key={customer._id} value={customer._id}>
+                            {customer.name} - {customer._id}
+                        </option>
+                    ))}
+                </Form.Control>
             </Form.Group>
             <Form.Group>
                 <div className='d-flex justify-content-between'>
@@ -381,13 +417,13 @@ export const OrderForm = ({ order, setOrder }) => {
             <Form.Group>
                 <Form.Label>Order Date</Form.Label>
                 <Form.Control
-                    type="text"
+                    type="date"
                     value={order.orderDate}
                     onChange={(e) => setOrder({ ...order, orderDate: e.target.value })}
                     required
                 />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
                 <Form.Label>Status</Form.Label>
                 <Form.Control
                     type="text"
@@ -395,6 +431,20 @@ export const OrderForm = ({ order, setOrder }) => {
                     onChange={(e) => setOrder({ ...order, status: e.target.value })}
                     required
                 />
+            </Form.Group> */}
+            <Form.Group>
+                <Form.Label>Status</Form.Label>
+                <Form.Select
+                    value={order.status}
+                    onChange={(e) => setOrder({ ...order, status: e.target.value })}
+                    required
+                >
+                    <option value="">Select Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="processed">Processed</option>
+                    <option value="fulfilled">Fulfilled</option>
+                    <option value="canceled">Canceled</option>
+                </Form.Select>
             </Form.Group>
         </Form>
     );

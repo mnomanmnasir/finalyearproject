@@ -65,7 +65,7 @@ const Putaway = () => {
     const savePutawayItem = async () => {
         try {
             let response;
-
+            console.log(currentItem);
             if (currentItem._id) {
                 // Update putaway item
                 response = await Axios.put(`${baseUrl}/putaway`, currentItem);
@@ -179,6 +179,7 @@ const Putaway = () => {
                                 ))}
                             </Form.Control>
                         </Form.Group>
+                        {console.log("currentItem", currentItem)}
                         {currentItem.purchaseId && purchaseIds.map((purchaseId) => {
                             if (purchaseId._id === currentItem.purchaseId) {
                                 return purchaseId.products.map((product, index) => (
@@ -187,21 +188,36 @@ const Putaway = () => {
                                         <b>{"P" + ++index + ") " + product.product.name + " | " + product.quantity}</b>
                                         <div className="row g-1">
                                             <div className="col">
-                                                <Form.Control type="text" placeholder="Quantity" value={product.quantity}/>
+                                                <Form.Control type="text" placeholder="Quantity" value={product.quantity} />
                                             </div>
                                             <div className="col">
-                                                <Form.Control type="text" placeholder="Pallet Number" />
+                                                <Form.Control type="text" placeholder="Pallet Number" value={product.pallet} onChange={(e) => {
+                                                    const updatedProducts = [...currentItem.purchaseId.products];
+                                                    updatedProducts[index].pallet = e.target.value;
+                                                    setCurrentItem({ ...currentItem, products: updatedProducts });
+                                                }} />
                                             </div>
                                             <div className="col">
-                                                <Form.Control as="select" placeholder="Rack">
-                                                    <option value="1">Rack 1</option>
-                                                    <option value="2">Rack 2</option>
-                                                    <option value="3">Rack 3</option>
-                                                    <option value="4">Rack 4</option>
+                                                <Form.Control as="select" placeholder="Rack" value={product.rack}
+                                                    onChange={(e) => {
+                                                        const updatedProducts = [...currentItem.purchaseId.products];
+                                                        updatedProducts[index].rack = e.target.value;
+                                                        setCurrentItem({ ...currentItem, products: updatedProducts });
+                                                    }
+                                                    }>
+                                                    <option value="">Select Rack Number</option>
+                                                    <option value="A">Rack A</option>
+                                                    <option value="B">Rack B</option>
+                                                    <option value="C">Rack C</option>
+                                                    <option value="D">Rack D</option>
                                                 </Form.Control>
                                             </div>
                                             <div className="col">
-                                                <Form.Control type="date" placeholder="Expiration Date" />
+                                                <Form.Control type="date" placeholder="Expiration Date" value={product.exp} onChange={(e) => {
+                                                    const updatedProducts = [...currentItem.purchaseId.products];
+                                                    updatedProducts[index].exp = e.target.value;
+                                                    setCurrentItem({ ...currentItem, products: updatedProducts });
+                                                }} />
                                             </div>
                                         </div>
                                     </div>
@@ -216,7 +232,7 @@ const Putaway = () => {
                 </Modal.Footer>
             </Modal>
             <ToastContainer />
-        </div>
+        </div >
     );
 };
 

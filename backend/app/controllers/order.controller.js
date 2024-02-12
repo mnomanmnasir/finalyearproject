@@ -23,9 +23,9 @@ exports.getOrders = async (req, res) => {
 exports.createOrder = async (req, res) => {
     const { customer, products, pay, advance, created_by } = req.body;
 
-    if (!customer || !products || products.length === 0 || !created_by) {
-        return res.status(400).json({ message: "Missing required fields" });
-    }
+    // if (!customer || !products || products.length === 0 || !created_by) {
+    //     return res.status(400).json({ message: "Missing required fields" });
+    // }
 
     try {
         // Check product availability (Example business logic)
@@ -40,6 +40,7 @@ exports.createOrder = async (req, res) => {
 
         // Create the order
         const newOrder = new Order({
+            // name,
             customer,
             orderDate: new Date(), // Set current date as order date
             status: true, // Assuming status is true when order is created

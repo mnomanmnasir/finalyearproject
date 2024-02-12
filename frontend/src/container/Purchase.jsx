@@ -121,41 +121,41 @@ const PurchaseManager = () => {
     return (
         <Helmet>
 
-        <div className="purchase-manager m-2">
-            <div className="d-flex justify-content-between">
-                <h3>Purchase</h3>
-                <Button className="mb-3 btn-sm btn-secondary" onClick={openModalToAdd}>
-                    Add Purchase
-                </Button>
+            <div className="purchase-manager m-2">
+                <div className="d-flex justify-content-between">
+                    <h3>Purchase</h3>
+                    <Button className="mb-3 btn-sm btn-secondary" onClick={openModalToAdd}>
+                        Add Purchase
+                    </Button>
+                </div>
+                <PurchaseTable
+                    purchases={purchases}
+                    onEdit={openModalToEdit}
+                    onDelete={deletePurchase}
+                />
+                <Modal show={showModal} onHide={closeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            {currentPurchase.id ? 'Edit Purchase' : 'Add Purchase'}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <PurchaseForm
+                            purchase={currentPurchase}
+                            setPurchase={setCurrentPurchase}
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={closeModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={savePurchase}>
+                            {currentPurchase._id ? 'Save Changes' : 'Add Purchase'}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <ToastContainer position="top-right" autoClose={5000} />
             </div>
-            <PurchaseTable
-                purchases={purchases}
-                onEdit={openModalToEdit}
-                onDelete={deletePurchase}
-            />
-            <Modal show={showModal} onHide={closeModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        {currentPurchase.id ? 'Edit Purchase' : 'Add Purchase'}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <PurchaseForm
-                        purchase={currentPurchase}
-                        setPurchase={setCurrentPurchase}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={closeModal}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={savePurchase}>
-                        {currentPurchase._id ? 'Save Changes' : 'Add Purchase'}
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-            <ToastContainer position="top-right" autoClose={5000} />
-        </div>
         </Helmet>
     );
 };
@@ -218,56 +218,56 @@ export const PurchaseTable = ({ purchases, onEdit, onDelete }) => {
         setProductModal(true)
     };
     const handleCloseProductModal = () => setProductModal(false);
-    
+
     return (
         <Helmet title='Purchase Order'>
-        <div>
-            <ProductModal showProductModal={productModal} data={productData} handleCloseProductModal={handleCloseProductModal} />
+            <div>
+                <ProductModal showProductModal={productModal} data={productData} handleCloseProductModal={handleCloseProductModal} />
 
-            <table className="table table-hover table-bordered">
-                <thead className='table-dark'>
-                    <tr className='text-center'>
-                        <th>Company</th>
-                        <th className='text-center'>Contact</th>
-                        <th className='text-center'>Email</th>
-                        <th className='text-center'>Payment</th>
-                        <th className='text-center'>Items</th>
-                        <th className='text-center'>Advance</th>
-                        <th className='text-center'>Status</th>
-                        <th className='text-center'>Reference</th>
-                        {/* <th>User</th> */}
-                        <th className='text-center'>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {purchases.map((purchase, index) => (
-                        <tr key={index}>
-                            <td>{purchase.company}</td>
-                            <td className='text-center'>{purchase.contact}</td>
-                            <td className='text-center'>{purchase.email}</td>
-                            <td className='text-center'>{purchase.pay}</td>
-                            <td className='text-center' onClick={() => handleShowProductModal(purchase.products)}>{purchase.products.length}</td>
-                            <td className='text-center'>{purchase.advance}</td>
-                            <td className='text-center'>{purchase.status}</td>
-                            <td className='text-center'>{purchase.reference}</td>
-                            {/* <td>{purchase.user}</td> */}
-                            <td className='text-center'>
-                                <Button variant="light" className='btn-sm' onClick={() => onEdit(purchase)}>
-                                    <BsPencilSquare />
-                                </Button>
-                                <Button
-                                    variant="light"
-                                    className='btn-sm'
-                                    onClick={() => onDelete(purchase.id)}
-                                >
-                                    <BsTrash />
-                                </Button>
-                            </td>
+                <table className="table table-hover table-bordered">
+                    <thead className='table-dark'>
+                        <tr className='text-center'>
+                            <th>Company</th>
+                            <th className='text-center'>Contact</th>
+                            <th className='text-center'>Email</th>
+                            <th className='text-center'>Payment</th>
+                            <th className='text-center'>Items</th>
+                            <th className='text-center'>Advance</th>
+                            <th className='text-center'>Status</th>
+                            <th className='text-center'>Reference</th>
+                            {/* <th>User</th> */}
+                            <th className='text-center'>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {purchases.map((purchase, index) => (
+                            <tr key={index}>
+                                <td>{purchase.company}</td>
+                                <td className='text-center'>{purchase.contact}</td>
+                                <td className='text-center'>{purchase.email}</td>
+                                <td className='text-center'>{purchase.pay}</td>
+                                <td className='text-center' onClick={() => handleShowProductModal(purchase.products)}>{purchase.products.length}</td>
+                                <td className='text-center'>{purchase.advance}</td>
+                                <td className='text-center'>{purchase.status}</td>
+                                <td className='text-center'>{purchase.reference}</td>
+                                {/* <td>{purchase.user}</td> */}
+                                <td className='text-center'>
+                                    <Button variant="light" className='btn-sm' onClick={() => onEdit(purchase)}>
+                                        <BsPencilSquare />
+                                    </Button>
+                                    <Button
+                                        variant="light"
+                                        className='btn-sm'
+                                        onClick={() => onDelete(purchase.id)}
+                                    >
+                                        <BsTrash />
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </Helmet>
     );
 };
@@ -310,6 +310,7 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
 
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
+    // const [payment, setPayment] = useState(0); // Error state
     const [products, setProducts] = useState([]);
     const [id, setId] = useState('');
 
@@ -329,6 +330,11 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
         fetchProductsFromAPI();
     }, []);
 
+    purchase.pay = purchase.products.reduce((acc, product) => {
+        return acc + (product.quantity * product.unitPrice);
+    }, 0);
+
+    purchase.advance = purchase.pay * 0.25;
     return (
         <Form>
             <Form.Group>
@@ -389,7 +395,7 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                                     list="productNames"
                                     className="form-control"
                                     placeholder="Product Name"
-                                    value={product.name}
+                                    value={product.product && product.product.name}
                                     onChange={(e) => handleProductChange(index, 'name', e.target.value)}
                                     required
                                 />
@@ -414,7 +420,7 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                                 <Form.Control
                                     type="number"
                                     placeholder="Unit Price"
-                                    value={product.unitPrice}
+                                    value={product.product && product.product.unitPrice}
                                     onChange={(e) => handleProductChange(index, 'unitPrice', parseInt(e.target.value) || '')}
                                     required
                                 />
@@ -430,15 +436,21 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                 ))}
 
             </Form.Group>
+
+            {/* {setPayment(purchase.products.reduce((acc, product) => {
+                return acc + (product.quantity * product.unitPrice);
+            }, 0))} */}
             <div className="row">
                 <div className="col-md-6">
                     <Form.Group>
                         <Form.Label>Payment</Form.Label>
                         <Form.Control
                             type="text"
+                            // value={purchase.pay}
                             value={purchase.pay}
                             onChange={(e) => setPurchase({ ...purchase, pay: e.target.value })}
                             required
+                            disabled
                         />
                     </Form.Group>
                 </div>
@@ -450,6 +462,7 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
                             value={purchase.advance}
                             onChange={(e) => setPurchase({ ...purchase, advance: parseInt(e.target.value) || 0 })}
                             required
+                            disabled
                         />
                     </Form.Group>
                 </div>
@@ -457,12 +470,22 @@ export const PurchaseForm = ({ purchase, setPurchase }) => {
 
             <Form.Group>
                 <Form.Label>Status</Form.Label>
-                <Form.Control
+                {/* <Form.Control
                     type="text"
                     value={purchase.status}
                     onChange={(e) => setPurchase({ ...purchase, status: e.target.value })}
                     required
-                />
+                /> */}
+                <Form.Control
+                    as="select"
+                    value={purchase.status}
+                    onChange={(e) => setPurchase({ ...purchase, status: e.target.value })}
+                    required
+                >
+                    <option value="ordered" selected>Ordered</option>
+                    <option value="received">Received</option>
+                    <option value="cancelled">Cancelled</option>
+                </Form.Control>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Reference</Form.Label>
