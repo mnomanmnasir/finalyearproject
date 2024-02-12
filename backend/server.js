@@ -24,14 +24,14 @@ const User = db.user;
 // mongodb+srv://ahadmansoori110:<password>@cluster0.zl2tt8h.mongodb.net/
   // .connect('mongodb+srv://umarcreator:tu0ce0f0@cluster0.cpl0ubc.mongodb.net/?retryWrites=true&w=majority', {
 db.mongoose
-  // .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-  //   useNewUrlParser: true,
-  //   useUnifiedTopology: true
-  // })
-  .connect('mongodb+srv://ahadmansoori110:mansoori17@cluster0.zl2tt8h.mongodb.net/?retryWrites=true&w=majority', {
+  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
+  // .connect('mongodb+srv://ahadmansoori110:mansoori17@cluster0.zl2tt8h.mongodb.net/?retryWrites=true&w=majority', {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true
+  // })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();

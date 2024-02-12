@@ -110,6 +110,7 @@ import Order from './container/Order';
 import Shipment from './container/Shipment';
 import User from './container/User';
 import Layout from './container/Layout';
+import Putaway from './container/Putaway';
 
 export const baseUrl = "http://localhost:8080/api/v1";
 
@@ -196,6 +197,7 @@ return (
         <Route path="/inventory" element={<Layout toggle={toggle} Toggle={Toggle} ><Inventory Toggle={Toggle} /></Layout>} />
         <Route path="/orders" element={<Layout toggle={toggle} Toggle={Toggle} ><Order Toggle={Toggle} /></Layout>} />
         <Route path="/shipments" element={<Layout toggle={toggle} Toggle={Toggle} ><Shipment Toggle={Toggle} /></Layout>} />
+        <Route path="/putaways" element={<Layout toggle={toggle} Toggle={Toggle} ><Putaway Toggle={Toggle} /></Layout>} />
         <Route path="/purchase" element={<Layout toggle={toggle} Toggle={Toggle} ><Purchase Toggle={Toggle} /></Layout>} />
         <Route path="/barchart" element={<Layout toggle={toggle} Toggle={Toggle} ><BarChart Toggle={Toggle} /></Layout>} />
         <Route path="/piechart" element={<Layout toggle={toggle} Toggle={Toggle} ><PieChart Toggle={Toggle} /></Layout>} />

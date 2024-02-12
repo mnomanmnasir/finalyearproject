@@ -187,8 +187,8 @@ export const ProductTable = ({ products, onEdit, onDelete }) => {
                 <table className="table table-hover table-bordered">
                     <thead className='table-dark'>
                         <tr>
-                            <th className='text-center'>SKU</th>
                             <th className='text-center'>Name</th>
+                            <th className='text-center'>SKU</th>
                             <th className='text-center'>Description</th>
                             <th className='text-center'>Unit Price</th>
                             <th className='text-center'>Weight</th>
@@ -200,8 +200,8 @@ export const ProductTable = ({ products, onEdit, onDelete }) => {
                     <tbody>
                         {filteredProducts.map((product, index) => (
                             <tr key={index}>
-                                <td className='text-center' >{product.sku}</td>
                                 <td className='text-center'>{product.name}</td>
+                                <td className='text-center' >{product.sku}</td>
                                 <td className='text-center'>{product.description}</td>
                                 <td className='text-center'>{product.unitPrice}</td>
                                 <td className='text-center'>{product.weight}</td>

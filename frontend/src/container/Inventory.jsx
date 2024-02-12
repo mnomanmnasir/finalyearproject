@@ -190,10 +190,10 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
             <table className="table table-hover table-bordered">
                 <thead className='table-dark'>
                     <tr className='text-center'>
-                        <th>Name</th>
+                        {/* <th>Name</th> */}
+                        <th className='text-center'>Product Name</th>
                         <th className='text-center'>Quantity On Hand</th>
                         <th className='text-center'>Quantity Reserved</th>
-                        <th className='text-center'>Product Name</th>
                         <th className='text-center'>Unit Price</th>
                         {/* <th>Warehouse ID</th>
                     <th>Warehouse Name</th> */}
@@ -203,10 +203,10 @@ export const InventoryTable = ({ inventory, onEdit, onDelete }) => {
                 <tbody>
                     {inventory.map((item, index) => (
                         <tr key={index}>
-                            <td>{item.name}</td>
+                            {/* <td>{item.name}</td> */}
+                            <td className='text-center'>{item.product ? item.product.name : 'N/A'}</td>
                             <td className='text-center'>{item.quantityOnHand}</td>
                             <td className='text-center'>{item.quantityReserved}</td>
-                            <td className='text-center'>{item.product ? item.product.name : 'N/A'}</td>
                             <td className='text-center'>{item.product ? item.product.unitPrice : 'N/A'}</td>
                             {/* <td className='text-center'>{item.product.name}</td>
                         <td className='text-center'>{item.product.unitPrice}</td> */}

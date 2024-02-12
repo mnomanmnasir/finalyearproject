@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 import video from '../assests/video.mp4'
 import { useTypewriter, Cursor } from 'react-simple-typewriter'
 import Helmet from './Helmet'
-import '../styles/signIn.css'
+// import '../styles/signIn.css'
 
 
 const SignIn = () => {

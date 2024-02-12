@@ -20,26 +20,43 @@ const Sidebar = () => {
                     <MdOutlineDashboard className="bi my-1 me-2 fs-5" />
                     <span>Dashboard</span>
                 </Link>
-                <Link to='/warehouse' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
+                {/* <Link to='/warehouse' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
                     <BiPurchaseTag className="fs-5 me-2 my-1 bi" />
-                    {/* <BiSolidDashboard className="bi my-1 me-2 fs-5"/> */}
                     <span >Warehouse</span>
+                </Link> */}
+                <Link to='/inventory' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
+                    <BiArchive className='bi my-1 me-2 fs-5' />
+                    <span >Inventory</span>
                 </Link>
-
+                <Link to='/products' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
+                    <BiLogoProductHunt className="bi-outline my-1 me-2 fs-5" />
+                    <span >Products</span>
+                </Link>
+                
+                <Link to='/purchase' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
+                    <BiShoppingBag className="fs-5 me-3" />
+                    <span >Purchase</span>
+                </Link>
+                <Link to='/putaways' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
+                    <BiCart className='bi my-1 me-2 fs-5' />
+                    <span >Putaways</span>
+                </Link>
+                <Link to='/orders' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
+                    <BiCart className='bi my-1 me-2 fs-5' />
+                    <span >Orders</span>
+                </Link>
+                <Link to='/shipments' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
+                    <BiPackage className="fs-5 me-3" />
+                    <span>shipments</span>
+                </Link>
                 <Link to='/user' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
                     <FaUserFriends
                         className="bi my-1 me-2 fs-5" />
-
                     <span >User</span>
                 </Link>
                 <Link to='/customers' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
                     <BiMessageAltEdit className="bi my-1 me-2 fs-5" />
                     <span >Customers</span>
-                </Link>
-
-                <Link to='/products' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
-                    <BiLogoProductHunt className="bi-outline my-1 me-2 fs-5" />
-                    <span >Products</span>
                 </Link>
                 <Link to='/suppliers' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
                     <BiSupport className="bi my-1 me-2 fs-5" />
@@ -53,27 +70,12 @@ const Sidebar = () => {
                     <BiTrafficCone className='bi my-1 me-2 fs-5' />
                     <span >Carriers</span>
                 </Link>
-                <Link to='/inventory' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
-                    <BiArchive className='bi my-1 me-2 fs-5' />
-                    <span >Inventory</span>
-                </Link>
-                <Link to='/orders' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
-                    <BiCart className='bi my-1 me-2 fs-5' />
-                    <span >Orders</span>
-                </Link>
-                <Link to='/purchase' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
-                    <BiShoppingBag className="fs-5 me-3" />
-                    <span >Purchase</span>
-                </Link>
+
 
                 {/* <Link to='piechart' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
                     <BiPieChart className="fs-5 me-3" />
                     <span>Pie Chart</span>
                 </Link> */}
-                <Link to='/shipments' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
-                    <BiPackage className="fs-5 me-3" />
-                    <span>Shipments</span>
-                </Link>
                 {/* <Link to='barchart' className="list-group-item list-group-item-action d-flex align-items-center mb-2 ">
                     <BiBarChart className="fs-5 me-3" />
                     <span>Bar Chart</span>

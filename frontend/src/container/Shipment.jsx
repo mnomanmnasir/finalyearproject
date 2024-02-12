@@ -118,8 +118,8 @@ const ShipmentManager = () => {
 
             setShowModal(false);
         } catch (error) {
-            console.error('Error saving shipment', error);
-            toast.error('Error saving shipment');
+            console.error('Error saving Shipment', error);
+            toast.error('Error saving Shipment');
         }
     };
 
@@ -135,8 +135,8 @@ const ShipmentManager = () => {
             setShipments(shipments.filter((s) => s._id !== shipmentId));
             toast.info('Shipment deleted successfully');
         } catch (error) {
-            console.error('Error deleting shipment', error);
-            toast.error('Error deleting shipment');
+            console.error('Error deleting Shipment', error);
+            toast.error('Error deleting Shipment');
         }
     };
 
