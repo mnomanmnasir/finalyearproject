@@ -13,6 +13,6 @@ module.exports = function (app) {
     app.get("/api/v1/orders", controller.getOrders);
     // app.get("/api/v1/order", controller.getOrders);
     app.post("/api/v1/order", controller.createOrder);
-    // app.put("/api/v1/order", controller.updateOrder);
+    app.put("/api/v1/order", controller.updateOrder);
     // app.delete("/api/v1/order", controller.deleteOrder);
 };
